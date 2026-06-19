@@ -180,20 +180,21 @@ function genPrompt(topic,diff,fmt){
   const dl=diff==='uber-hard'?'Difficulty: VERY HARD — a multi-step scenario with subtle, plausible distractors; prefer mcq with multiple correct (select_all), domc, or build_list.':'Difficulty: '+diff+'.';
   return ["You are an exam item writer for the dbt Analytics Engineering Certification (dbt Core 1.11).",
    'Using ONLY facts in the provided SOURCES, write exactly ONE practice question about: "'+topic+'".',dl,fl,
-   "Return ONLY a JSON object (no markdown fences/commentary): { \"format\":\"mcq|fitb|matching|build_list|domc|hotspot\", \"difficulty\":\""+diff+"\", \"stem\":\"...\", \"rationale\":\"exam-accurate why\", \"citations\":[{\"title\":\"<source>\",\"url\":\"<url>\"}], ...format fields... }",
-   "mcq: options:[{id,text,correct}] (4-5); if >1 correct add select_all:true. domc: options:[{text,correct}] (4-5 mix) + present_n:2 + unscored_after:1. fitb: {{b1}} tokens in stem + blanks:[{id,type:'dropdown',options,answer} or {id,type:'short_answer',accepted:[...]}]. matching: left[],right[],key{left:right}. build_list: items:[{id,text}], answer:{order:[ids]}. hotspot: code:'<short multiline SQL/YAML/CLI snippet>' and hotspots:[{id,text:'<exact substring copied verbatim from code>'}] (3-6 candidate areas) and correct:[ids] and num_selections:N — ask the user to click the offending line / correct config / right part of the snippet.",
-   "Ground strictly in SOURCES; exact dbt tokens; valid JSON only."].join("\n");}
+   "Return ONLY a JSON object (no markdown fences/commentary): { \"format\":\"mcq|fitb|matching|build_list|domc|hotspot\", \"difficulty\":\""+diff+"\", \"stem\":\"...\", \"rationale\":\"1-2 sentence exam-accurate why\", ...format fields... }",
+   "mcq: options:[{id,text,correct}] (4-5); if >1 correct add select_all:true. domc: options:[{id,text,correct}] — provide 8-10 options as a realistic mix of correct and incorrect; the learner answers YES/NO to a sequence of 5-8 of them and any single wrong answer fails the item; include present_n:6. fitb: {{b1}} tokens in stem + blanks:[{id,type:'dropdown',options,answer} or {id,type:'short_answer',accepted:[...]}]. matching: left[],right[],key{left:right}. build_list: items:[{id,text}], answer:{order:[ids]}. hotspot: code:'<short multiline SQL/YAML/CLI snippet>' and hotspots:[{id,text:'<exact substring copied verbatim from code>'}] (3-6 candidate areas) and correct:[ids] and num_selections:N — ask the user to click the offending line / correct config / right part of the snippet.",
+   "Ground strictly in SOURCES; use exact dbt tokens; output compact valid JSON only — no citations field, no extra keys, no commentary."].join("\n");}
 function extractJSON(t){if(typeof t!=='string')t=(t&&(t.text||t.output||t.completion))||JSON.stringify(t);
   let s=t.trim().replace(/^```(json)?/i,'').replace(/```$/,'').trim();const i=s.indexOf('{'),j=s.lastIndexOf('}');if(i>=0&&j>i)s=s.slice(i,j+1);return JSON.parse(s);}
+function pTimeout(p,ms,label){return Promise.race([Promise.resolve(p),new Promise(function(_,rej){setTimeout(function(){rej(new Error((label||'Request')+' timed out after '+Math.round(ms/1000)+'s — the AI didn\'t respond. Tap Try again.'));},ms);})]);}
 async function askJSON(topic,diff,fmt){
   if(!(window.cowork&&window.cowork.askClaude))throw new Error("Open this inside Cowork — it needs window.cowork.askClaude.");
-  const picks=rank(topic);const data=picks.map(p=>({title:p.title,url:p.url,content:p.text}));
-  const raw=await window.cowork.askClaude(genPrompt(topic,diff,fmt),data);const it=extractJSON(raw);it._sources=picks;return it;}
+  const picks=rank(topic).slice(0,3);const data=picks.map(p=>({title:p.title,url:p.url,content:(p.text||'').slice(0,1600)}));
+  const raw=await pTimeout(window.cowork.askClaude(genPrompt(topic,diff,fmt),data),60000,'Question generation');const it=extractJSON(raw);if(!it||!it.format)throw new Error('malformed question JSON');it._sources=picks;return it;}
 
 // ---------- question rendering / grading ----------
 function newAns(it){if(it.format==='mcq')return{sel:[]};if(it.format==='fitb')return{vals:{}};if(it.format==='matching')return{map:{}};
   if(it.format==='build_list')return{order:shuffle((it.items||[]).map(x=>x.id))};
-  if(it.format==='domc')return{queue:shuffle(it.options||[]).slice(0,it.present_n||(it.options||[]).length),step:0,done:false,correct:null};if(it.format==='hotspot')return{sel:[]};return{};}
+  if(it.format==='domc'){const opts=shuffle(it.options||[]);const want=Math.max(5,Math.min(8,it.present_n||6));return{queue:opts.slice(0,Math.min(want,opts.length)),step:0,done:false,correct:null};}if(it.format==='hotspot')return{sel:[]};return{};}
 function grade(it,A){if(it.format==='mcq'){const c=new Set((it.options||[]).filter(o=>o.correct).map(o=>o.id));const s=new Set(A.sel||[]);return c.size===s.size&&[...c].every(x=>s.has(x));}
   if(it.format==='fitb')return (it.blanks||[]).every(b=>{const v=(A.vals||{})[b.id]||'';return b.type==='dropdown'?v===b.answer:(b.accepted||[]).map(x=>x.trim().toLowerCase()).includes(v.trim().toLowerCase());});
   if(it.format==='matching')return (it.left||[]).every(l=>(A.map||{})[l]===it.key[l]);
@@ -594,19 +595,28 @@ function testTopic(){const sc=SESS.scope||{type:'all'};
   const d=rand(EXAM.domains);return{d,sub:rand(d.subs)};}
 function testDiff(){const DM={standard:['medium','medium','hard'],hard:['hard','hard','uber-hard'],uber:['uber-hard','uber-hard']};return rand(DM[SESS.diff]||['medium','hard','hard']);}
 function startQuiz(kind,len,opts){opts=opts||{};SESS={kind:'test',len:len,n:0,diff:opts.diff||'standard',scope:opts.scope||{type:'all',label:'All domains'},log:[],awaiting:false,cur:null};setStatus();testPresent();}
+function testGenSpec(){const tp=testTopic();return{topic:tp.sub,domainId:tp.d.id,domainName:tp.d.name,diff:testDiff(),fmt:rand(['mcq','mcq','fitb','matching','build_list','hotspot','domc'])};}
+function testGen(spec){return askJSON(spec.topic,spec.diff,spec.fmt).then(it=>({it,spec}));}
 async function testPresent(){
   if(SESS.n>=SESS.len)return testFinish();
-  SESS.n++;const tp=testTopic();SESS.cur={topic:tp.sub,domainId:tp.d.id,domainName:tp.d.name,item:null};setStatus();
+  SESS.n++;SESS.cur=null;setStatus();
   const b=addBot('<span class="spin"></span> Writing question '+SESS.n+' of '+SESS.len+'…');
-  let it;
-  try{it=await askJSON(tp.sub,testDiff(),rand(['mcq','mcq','fitb','matching','build_list','hotspot','domc']));}
-  catch(e){b.innerHTML='<div class="err">Could not generate this one.</div>';const r=document.createElement('button');r.className='chip';r.textContent='Try again';r.onclick=()=>{SESS.n--;b.remove();testPresent();};const w=document.createElement('div');w.className='chips';w.appendChild(r);b.appendChild(w);return;}
-  SESS.cur.item=it;SESS.awaiting='card';
-  renderCard(b,it,(ok)=>onTestGraded(b,ok));
+  const skip=()=>{const c=SESS.cur||{};SESS.awaiting=false;SESS.log.push({topic:c.topic,domainId:c.domainId,domainName:c.domainName,verdict:'skipped'});testPresent();};
+  const fail=(msg)=>{b.innerHTML='<div class="err">'+esc(msg||'Could not generate this one.')+'</div>';
+    const w=document.createElement('div');w.className='chips';
+    const r=document.createElement('button');r.className='chip';r.textContent='Try again';r.onclick=()=>{SESS.n--;b.remove();testPresent();};
+    const s=document.createElement('button');s.className='skipbtn';s.textContent='Skip →';s.onclick=skip;
+    w.append(r,s);b.appendChild(w);scroll();};
+  let q;
+  try{const pending=SESS.pending;SESS.pending=null;q=pending?await pending:await testGen(testGenSpec());}
+  catch(e){return fail('Could not generate this one. '+((e&&e.message)||''));}
+  if(!q||!q.it||!q.it.format)return fail('That question came back malformed — tap Try again.');
+  SESS.cur={topic:q.spec.topic,domainId:q.spec.domainId,domainName:q.spec.domainName,item:q.it};setStatus();SESS.awaiting='card';
+  try{renderCard(b,q.it,(ok)=>onTestGraded(b,ok));}
+  catch(e){return fail('Could not display this question — tap Try again.');}
   const ctl=b.querySelector('.ctl');
-  if(ctl){const sk=document.createElement('button');sk.className='skipbtn';sk.textContent='Skip →';
-    sk.onclick=()=>{SESS.awaiting=false;SESS.log.push({topic:SESS.cur.topic,domainId:SESS.cur.domainId,domainName:SESS.cur.domainName,verdict:'skipped'});testPresent();};
-    ctl.appendChild(sk);}
+  if(ctl){const sk=document.createElement('button');sk.className='skipbtn';sk.textContent='Skip →';sk.onclick=skip;ctl.appendChild(sk);}
+  if(SESS.n<SESS.len&&!SESS.pending){SESS.pending=testGen(testGenSpec()).catch(()=>null);}
   scroll();}
 function onTestGraded(b,ok){
   SESS.log.push({topic:SESS.cur.topic,domainId:SESS.cur.domainId,domainName:SESS.cur.domainName,verdict:ok?'correct':'incorrect'});
@@ -632,7 +642,7 @@ function ansKeyText(it){
   if(it.format==='hotspot')return (it.hotspots||[]).filter(h=>(it.correct||[]).includes(h.id)).map(h=>h.text).join(', ');
   return '';}
 function parseVerdict(out){const m=(out||'').match(/verdict:\s*(correct|partially correct|partial|incorrect|wrong)/i);if(!m)return'partial';const v=m[1].toLowerCase();if(v==='correct')return'correct';if(v.indexOf('partial')===0)return'partial';return'incorrect';}
-function askClaudeSafe(prompt,data){if(!(window.cowork&&window.cowork.askClaude))return Promise.reject(new Error('Open inside Cowork — needs window.cowork.askClaude.'));return window.cowork.askClaude(prompt,data||[]);}
+function askClaudeSafe(prompt,data){if(!(window.cowork&&window.cowork.askClaude))return Promise.reject(new Error('Open inside Cowork — needs window.cowork.askClaude.'));return pTimeout(window.cowork.askClaude(prompt,data||[]),60000,'Response');}
 async function testAnswer(text){addUser(text);const it=SESS.cur.item;SESS.awaiting='busy';const b=addBot('<span class="spin"></span> …');
   const data=(it._sources||[]).map(p=>({title:p.title,url:p.url,content:p.text}));
   const prompt="You are a warm, encouraging dbt Analytics Engineering certification tutor (dbt Core 1.11). A learner is doing a practice question. Use ONLY the SOURCES for facts and use exact dbt tokens (commands, flags, YAML keys, configs).\n\nQUESTION:\n"+qText(it)+"\n\nTHE CORRECT ANSWER: "+ansKeyText(it)+"\n\nLEARNER'S ANSWER: "+text+"\n\nRespond EXACTLY in this shape:\n- First line: 'Verdict: Correct' or 'Verdict: Partially correct' or 'Verdict: Incorrect'.\n- Then a friendly explanation. For multiple-choice, go through EACH option (A, B, C...) and say why it is correct or incorrect. For other formats, explain the right answer and where they went well or astray.\n- Be concise and exam-focused; name the source title(s) you used.\n- End with a short line inviting them to ask a follow-up about this question, or hit 'Next question'.";

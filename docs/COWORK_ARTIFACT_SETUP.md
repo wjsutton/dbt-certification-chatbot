@@ -26,13 +26,19 @@ discussing an answer, the end-of-test feedback) stays blank. So the app is run
 ## Install it (recommended — about 30 seconds)
 
 1. Open the Claude desktop app and start a **Cowork** session.
-2. **Connect this repo's folder** (use the folder picker / "select a folder" so
-   Cowork can read the files).
+2. **Connect the `dbt-certification-chatbot` repo folder** (use the folder
+   picker / "select a folder" so Cowork can read the files). Connect *only* this
+   folder for the install — see the caution below.
 3. Paste this prompt:
 
-   > Read `quiz/generator.html` from this repo and register it as a live Cowork
-   > artifact with the id `dbt-question-generator` (call `create_artifact` with
-   > that file as `html_path`). Then open it.
+   > Read `quiz/generator.html` from the **dbt-certification-chatbot** repo and
+   > register it as a live Cowork artifact with the id `dbt-question-generator`
+   > (call `create_artifact` with that file as `html_path`). Then open it.
+
+> ⚠️ **Only have one copy of `quiz/generator.html`.** If you keep a second copy
+> of this project elsewhere (e.g. a separate "Claude Project" folder) and both
+> are connected, Claude may read the *older* copy and you'll see a stale UI.
+> Connect just the repo, or make sure every copy is in sync, before installing.
 
 4. Claude registers it. **"Dbt Question Generator"** now appears in your Cowork
    artifacts sidebar and reopens any time — it persists across sessions.

@@ -1,0 +1,17 @@
+dbt Certification Coach
+=======================
+
+This repository contains study material derived from the official dbt
+documentation (docs.getdbt.com), the dbt Developer Blog, and the dbt
+Analytics Engineering Certification study guide, all © dbt Labs.
+
+The files under `raw/` are excerpts of dbt Labs documentation, retained for
+study purposes with a `source_url` in each file's frontmatter linking to the
+original. The `wiki/` summaries and `quiz/` questions are derivative study
+notes. This repository is intended for internal team use; do not redistribute
+the dbt-sourced content externally without observing dbt Labs' terms.
+
+dbt™ and dbt Labs™ are trademarks of dbt Labs, Inc. This project is not
+affiliated with or endorsed by dbt Labs.
+
+Target version: dbt Core 1.11.

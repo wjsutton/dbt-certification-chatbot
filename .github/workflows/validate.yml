@@ -1,0 +1,19 @@
+name: validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  validate-bank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install jsonschema openpyxl
+      - name: Grounding gate (every quiz item must cite an existing source)
+        run: python quiz/validate_bank.py
+      - name: MCP core smoke test
+        run: python tests/test_quizcore.py
+      - name: Coverage report
+        run: python quiz/coverage.py

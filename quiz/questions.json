@@ -1,0 +1,2891 @@
+{
+  "version": 1,
+  "generated": "2026-06-12",
+  "items": [
+    {
+      "id": "d07-state-mcq-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Understanding state & state selection",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "Which selectors require a comparison manifest supplied via `--state`? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "state:modified",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "result:fail",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "source_status:fresher",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "tag:nightly",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "config.materialized:incremental",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "state:, result:, and source_status: all compare against artifacts from a prior run, so they need --state. tag: and config: read the current project only.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Node selector methods",
+          "wiki": "wiki/sources/methods.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/methods"
+        }
+      ]
+    },
+    {
+      "id": "d07-retry-domc-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Using dbt retry",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "Is the statement a TRUE property of `dbt retry`?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "It resumes the last invocation from the point of failure using run_results.json",
+          "correct": true
+        },
+        {
+          "text": "It re-runs all upstream dependencies again from scratch",
+          "correct": false
+        },
+        {
+          "text": "After a fully successful run it finishes as a no-op",
+          "correct": true
+        },
+        {
+          "text": "In dbt Core you can override --select on the retry",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "retry reads run_results.json and resumes failed/skipped nodes without re-running successful upstreams; it is a no-op after success; in Core the prior selection is inherited and cannot be overridden.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt retry command",
+          "wiki": "wiki/sources/retry.md",
+          "url": "https://docs.getdbt.com/reference/commands/retry"
+        }
+      ]
+    },
+    {
+      "id": "d07-state-fitb-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Understanding state & state selection",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "To build only the models that changed versus production, run: `dbt run --select \"{{b1}}\" --state {{b2}}`",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "state:modified",
+            "state:old",
+            "result:error",
+            "state:unmodified"
+          ],
+          "answer": "state:modified"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "path/to/artifacts",
+            "path/to/prod/artifacts",
+            "path/to/prod",
+            "path/to/state"
+          ]
+        }
+      ],
+      "rationale": "state:modified selects new + changed nodes by comparing to the manifest passed with --state (a path to a directory of prior artifacts).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About local state in dbt",
+          "wiki": "wiki/sources/state-selection.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/state-selection"
+        }
+      ]
+    },
+    {
+      "id": "d07-slimci-build-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Understanding state & state selection",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order the steps of a Slim CI run that builds only changed models.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "1",
+          "text": "Retrieve the production manifest to use as --state"
+        },
+        {
+          "id": "2",
+          "text": "Select state:modified to find changed nodes"
+        },
+        {
+          "id": "3",
+          "text": "Use --defer so unbuilt parents resolve to production"
+        },
+        {
+          "id": "4",
+          "text": "Build and test only the modified subset"
+        }
+      ],
+      "answer": {
+        "order": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "rationale": "Slim CI = compare against prod state (state:modified) and defer unbuilt parents to prod, so CI only builds/tests what changed.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Defer",
+          "wiki": "wiki/sources/defer.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/defer"
+        },
+        {
+          "title": "About local state in dbt",
+          "wiki": "wiki/sources/state-selection.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/state-selection"
+        }
+      ]
+    },
+    {
+      "id": "d07-defer-mcq-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Understanding state & state selection",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "With `--defer --state <path>`, when does dbt resolve a `ref()` to the state (production) relation instead of the current target?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Only when the node is unselected AND does not exist in the current database (or --favor-state is set)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Always, for every ref in the project",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Only for ephemeral models",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Only when the node is part of the selected set",
+          "correct": false
+        }
+      ],
+      "rationale": "Defer resolves to state only if the node is not selected and is missing from the target db (or --favor-state). Ephemeral models are never deferred.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Defer",
+          "wiki": "wiki/sources/defer.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/defer"
+        }
+      ]
+    },
+    {
+      "id": "d07-methods-match-01",
+      "domain": "07 \u2014 Leveraging the dbt state",
+      "subtopic": "Understanding state & state selection",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each selector method to what it selects.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "state:modified",
+        "result:fail",
+        "source_status:fresher",
+        "test_type:unit"
+      ],
+      "right": [
+        "Nodes that are new or changed vs the state manifest",
+        "Tests that failed on the prior run",
+        "Sources whose data is fresher than prior state",
+        "Unit tests"
+      ],
+      "key": {
+        "state:modified": "Nodes that are new or changed vs the state manifest",
+        "result:fail": "Tests that failed on the prior run",
+        "source_status:fresher": "Sources whose data is fresher than prior state",
+        "test_type:unit": "Unit tests"
+      },
+      "rationale": "These are distinct node-selection methods; result: and source_status: also require --state.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Node selector methods",
+          "wiki": "wiki/sources/methods.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/methods"
+        }
+      ]
+    },
+    {
+      "id": "d01-mat-mcq-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Understanding core dbt materializations",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "According to the 'Golden Rule of Materializations', what is the recommended progression?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Start with a view; make it a table when it's slow to query; make it incremental when the table is slow to build",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Start with a table; downgrade to a view to save storage",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Always build incrementally from the start",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Start ephemeral; promote to a view when queried",
+          "correct": false
+        }
+      ],
+      "rationale": "Start simple: view -> table (when too slow to query) -> incremental (when too slow to build).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Best practices for materializations",
+          "wiki": "raw/docs__best-practices__materializations__5-best-practices.md",
+          "url": "https://docs.getdbt.com/best-practices/materializations/5-best-practices"
+        }
+      ]
+    },
+    {
+      "id": "d01-emptysample-mcq-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Validating logic/schema in dry-runs (--empty flag)",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "How do `--empty` and `--sample` differ?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "--empty limits refs/sources to zero rows; --sample builds against a time-based slice of real data",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "--empty skips tests; --sample skips models",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Both build the full dataset but --sample is faster",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "--sample is only for Python models",
+          "correct": false
+        }
+      ],
+      "rationale": "--empty builds schema-only (zero rows) to validate dependencies; --sample includes a time-based sample of real data and needs event_time. --sample is ignored for Python models.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About the --sample flag",
+          "wiki": "wiki/sources/sample-flag.md",
+          "url": "https://docs.getdbt.com/docs/build/sample-flag"
+        }
+      ]
+    },
+    {
+      "id": "d01-sources-mcq-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Identifying & verifying raw object dependencies",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "A query reads from sample_data.public.customer, .orders, .nation, and .region (all in database `sample_data`, schema `public`). How many sources and tables are defined in sources.yml?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "1 source with 4 tables",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "1 source with 5 tables",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "4 sources with 4 tables",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "4 sources with 5 tables",
+          "correct": false
+        }
+      ],
+      "rationale": "A source maps to one database+schema combination. All four tables share sample_data.public, so it's 1 source with 4 tables.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add sources to your DAG",
+          "wiki": "raw/docs__docs__build__sources.md",
+          "url": "https://docs.getdbt.com/docs/build/sources"
+        }
+      ]
+    },
+    {
+      "id": "d01-refactor-build-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Modularity & DRY principles",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order the steps for refactoring legacy SQL into dbt models.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "1",
+          "text": "Migrate the SQL 1:1 into dbt"
+        },
+        {
+          "id": "2",
+          "text": "Implement sources instead of raw table references"
+        },
+        {
+          "id": "3",
+          "text": "Choose a refactoring strategy (in-place vs alongside)"
+        },
+        {
+          "id": "4",
+          "text": "Implement CTE groupings and cosmetic cleanup"
+        },
+        {
+          "id": "5",
+          "text": "Split into staging/intermediate/marts layers"
+        },
+        {
+          "id": "6",
+          "text": "Audit outputs vs the legacy query"
+        }
+      ],
+      "answer": {
+        "order": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "rationale": "The guide's order: migrate 1:1, add sources, pick a strategy, CTE groupings, separate into layers, then audit with audit_helper.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Refactoring legacy SQL to dbt",
+          "wiki": "raw/docs__guides__refactoring-legacy-sql.md",
+          "url": "https://docs.getdbt.com/guides/refactoring-legacy-sql"
+        }
+      ]
+    },
+    {
+      "id": "d01-config-fitb-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Defining configurations in dbt_project.yml",
+      "format": "fitb",
+      "difficulty": "easy",
+      "stem": "In dbt_project.yml, the default materialization is {{b1}}, and a config is distinguished from a folder name by the {{b2}} prefix.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "view",
+            "table",
+            "incremental",
+            "ephemeral"
+          ],
+          "answer": "view"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "+",
+            "'+'",
+            "plus"
+          ]
+        }
+      ],
+      "rationale": "Views are the default materialization; the + prefix marks a config (e.g. +materialized) vs a folder name. Configs cascade, most-specific wins.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Best practices for materializations",
+          "wiki": "raw/docs__best-practices__materializations__5-best-practices.md",
+          "url": "https://docs.getdbt.com/best-practices/materializations/5-best-practices"
+        }
+      ]
+    },
+    {
+      "id": "d04-deferclone-match-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each property to defer or clone.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "Lazily references prebuilt models (no new objects)",
+        "Eagerly copies a schema (real, persisted objects)",
+        "Best suited to CI",
+        "Best suited to CD",
+        "Objects usable in downstream BI tools"
+      ],
+      "right": [
+        "defer",
+        "clone",
+        "defer",
+        "clone",
+        "clone"
+      ],
+      "key": {
+        "Lazily references prebuilt models (no new objects)": "defer",
+        "Eagerly copies a schema (real, persisted objects)": "clone",
+        "Best suited to CI": "defer",
+        "Best suited to CD": "clone",
+        "Objects usable in downstream BI tools": "clone"
+      },
+      "rationale": "Defer is lazy (no objects, CI); clone is eager zero-copy (real persisted objects usable in BI, CD).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "To defer or to clone, that is the question",
+          "wiki": "raw/docs__blog__to-defer-or-to-clone.md",
+          "url": "https://docs.getdbt.com/blog/to-defer-or-to-clone"
+        }
+      ]
+    },
+    {
+      "id": "d04-clone-domc-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "Is the statement TRUE about `dbt clone`?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "It uses zero-copy cloning where available to copy a schema almost instantly",
+          "correct": true
+        },
+        {
+          "text": "Cloned objects persist in the target schema after the operation",
+          "correct": true
+        },
+        {
+          "text": "Cloned data always stays in sync with the source (no drift)",
+          "correct": false
+        },
+        {
+          "text": "It can copy from multiple source schemas into one target at once",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "Clone zero-copies metadata to create persisted objects; it is point-in-time so data can drift, and it copies one source schema to one target.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "To defer or to clone, that is the question",
+          "wiki": "raw/docs__blog__to-defer-or-to-clone.md",
+          "url": "https://docs.getdbt.com/blog/to-defer-or-to-clone"
+        }
+      ]
+    },
+    {
+      "id": "d05-severity-mcq-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Implementing various testing steps in the workflow",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "Per 'test smarter', which test failures should be set to ERROR severity (pipeline-failing)? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Customer-facing numbers",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Numbers used for financial decisions",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Executive-facing numbers",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Nice-to-know checks with no immediate action",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "High-impact (customer-facing, financial, executive) failures should be errors; nice-to-knows should be warnings or removed.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Test smarter not harder: add the right tests",
+          "wiki": "raw/docs__blog__test-smarter-not-harder.md",
+          "url": "https://docs.getdbt.com/blog/test-smarter-not-harder"
+        }
+      ]
+    },
+    {
+      "id": "d05-where-mcq-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Using generic, singular, custom, custom generic, and unit tests",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "You have a large incremental model and want a not_null test that does NOT scan the whole table every run. Which test config achieves this?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "The `where` config to restrict the rows tested",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "The `limit` config to cap rows tested",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "`store_failures` to reuse previous results",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "`error_if` to stop at a minimum number of failures",
+          "correct": false
+        }
+      ],
+      "rationale": "A `where` clause on the test restricts the data scanned (e.g. to a recent date range), avoiding a full-table test each run.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Data test configurations",
+          "wiki": "raw/docs__reference__data-test-configs.md",
+          "url": "https://docs.getdbt.com/reference/data-test-configs"
+        }
+      ]
+    },
+    {
+      "id": "d05-wheretests-mcq-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Implementing various testing steps in the workflow",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "A source feeds a top-priority pipeline. How should you configure its source freshness check?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Run dbt source freshness in the job and set severity to error so stale data fails the job",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Set severity to warn so it never fails the job",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Skip freshness; only test primary keys",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Only check freshness in development",
+          "correct": false
+        }
+      ],
+      "rationale": "For sources feeding high-priority categories, run dbt source freshness in job commands at error severity so the job fails on stale data.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Test smarter: Where should tests go in your pipeline?",
+          "wiki": "raw/docs__blog__test-smarter-where-tests-should-go.md",
+          "url": "https://docs.getdbt.com/blog/test-smarter-where-tests-should-go"
+        }
+      ]
+    },
+    {
+      "id": "d02-contract-mcq-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Adding contracts to models to ensure the shape of models",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "You added a check constraint and enabled the model contract, but `dbt run` fails with a parsing error about an invalid configuration for the created_at column. What resolves it while keeping the constraint?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Define the data_type for created_at in the YAML",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Remove the check constraint from created_at",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Change the materialization from table to view",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Add a unique test to created_at",
+          "correct": false
+        }
+      ],
+      "rationale": "A contract requires each column's data_type; the parsing error is fixed by correcting the YAML (defining data_type), not by dropping the constraint or changing materialization.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Model contracts",
+          "wiki": "raw/docs__docs__mesh__govern__model-contracts.md",
+          "url": "https://docs.getdbt.com/docs/mesh/govern/model-contracts"
+        }
+      ]
+    },
+    {
+      "id": "d02-constraints-mcq-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Defining constraints in YAML to enforce data integrity at the platform level",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "Which statement about not_null and check constraints in dbt is correct?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "They are enforced only after a model is built, so dbt treats them as definable but not part of the contract's build-time guarantee",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "They are enforced at parse time before any SQL runs",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "They are identical to dbt data tests",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "They are unsupported on all data platforms",
+          "correct": false
+        }
+      ],
+      "rationale": "Because many platforms enforce not_null/check only after rows are populated, dbt considers them definable-but-not-enforced at build time (unlike data_type, which is contract-checked preflight).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "constraints",
+          "wiki": "raw/docs__reference__resource-properties__constraints.md",
+          "url": "https://docs.getdbt.com/reference/resource-properties/constraints"
+        }
+      ]
+    },
+    {
+      "id": "d03-build-mcq-01",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Understanding logged error messages",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "In `dbt build`, a not_null test FAILs and the downstream model is SKIPped. How can you let downstream models proceed while still being warned?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Set warn_if/error_if thresholds so the failure escalates to a warning, which does not block downstream nodes",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Add --fail-fast to the run",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Set job_execution_timeout_seconds in profiles.yml",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Run dbt run and dbt test separately; there is no other option",
+          "correct": false
+        }
+      ],
+      "rationale": "In dbt build, tests run before dependent models and a hard FAIL skips them. warn_if/error_if let you control when a test is a warning vs an error; a warning doesn't block downstream. --fail-fast does not unblock skipped nodes.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Data test configurations",
+          "wiki": "raw/docs__reference__data-test-configs.md",
+          "url": "https://docs.getdbt.com/reference/data-test-configs"
+        }
+      ]
+    },
+    {
+      "id": "d01a-sources-mcq-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Identifying & verifying raw object dependencies",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "What does selecting a raw table with `{{ source('jaffle_shop', 'orders') }}` accomplish in a dbt model? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "dbt compiles it to the fully-qualified table name (e.g. raw.jaffle_shop.orders)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "It creates a dependency between the model and the source table in the DAG",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "It automatically materializes the source as a table in your schema",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "It lets dbt calculate and test source freshness for that table",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "It hard-codes database.schema.table so the reference can't be re-mapped",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "{{ source() }} compiles to the full database.schema.table and registers a model\u2192source dependency (lineage). It does not materialize the source; freshness needs a separate freshness/loaded_at_field config; and using source() is what avoids hard-coded references, enabling re-mapping in one config file.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add sources to your DAG",
+          "wiki": "wiki/sources/sources.md",
+          "url": "https://docs.getdbt.com/docs/build/sources"
+        }
+      ]
+    },
+    {
+      "id": "d01a-materializations-matching-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Understanding core dbt materializations",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each materialization to its defining behavior.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "view",
+        "table",
+        "incremental",
+        "ephemeral"
+      ],
+      "right": [
+        "The default; rebuilt each run via create view as",
+        "Rebuilt each run via create table as; fast to query",
+        "Inserts or updates only new records since the last run",
+        "Builds no warehouse object; interpolated as a CTE into dependents"
+      ],
+      "key": {
+        "view": "The default; rebuilt each run via create view as",
+        "table": "Rebuilt each run via create table as; fast to query",
+        "incremental": "Inserts or updates only new records since the last run",
+        "ephemeral": "Builds no warehouse object; interpolated as a CTE into dependents"
+      },
+      "rationale": "View is the default (create view as); table uses create table as and is fast to query; incremental only processes new records; ephemeral creates no object and is interpolated as a __dbt__cte__ CTE.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Materializations",
+          "wiki": "wiki/sources/materializations.md",
+          "url": "https://docs.getdbt.com/docs/build/materializations"
+        }
+      ]
+    },
+    {
+      "id": "d01a-materializations-fitb-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Understanding core dbt materializations",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "Per the Golden Rule of Materializations: start with a view; when it's too slow to query, make it a {{b1}}; when that's too slow to {{b2}}, make it incremental.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "table",
+            "ephemeral",
+            "materialized_view",
+            "snapshot"
+          ],
+          "answer": "table"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "build",
+            "build it",
+            "rebuild"
+          ]
+        }
+      ],
+      "rationale": "The Golden Rule escalates view \u2192 table (when too slow to query) \u2192 incremental (when the table is too slow to build).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Best practices for materializations",
+          "wiki": "wiki/sources/materializations-5-best-practices.md",
+          "url": "https://docs.getdbt.com/best-practices/materializations/5-best-practices"
+        }
+      ]
+    },
+    {
+      "id": "d01a-refactor-build-list-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Modularity & DRY principles",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order the steps of the dbt process for refactoring legacy SQL into modular models.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "1",
+          "text": "Migrate the legacy SQL 1:1 into a .sql file under /models and dbt run"
+        },
+        {
+          "id": "2",
+          "text": "Implement sources with {{ source() }} instead of raw table references"
+        },
+        {
+          "id": "3",
+          "text": "Choose a refactoring strategy (alongside is recommended)"
+        },
+        {
+          "id": "4",
+          "text": "Implement the 4-part CTE groupings and cosmetic cleanup"
+        },
+        {
+          "id": "5",
+          "text": "Separate transformations into staging / intermediate / marts layers"
+        },
+        {
+          "id": "6",
+          "text": "Audit dbt output vs legacy SQL with the audit_helper package"
+        }
+      ],
+      "answer": {
+        "order": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "rationale": "The guide's six steps: migrate 1:1, add sources, choose a strategy (alongside), build CTE groupings, split into standardized layers, then audit with audit_helper.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Refactoring legacy SQL to dbt",
+          "wiki": "wiki/sources/refactoring-legacy-sql.md",
+          "url": "https://docs.getdbt.com/guides/refactoring-legacy-sql"
+        }
+      ]
+    },
+    {
+      "id": "d01a-nodeselection-domc-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Logical flow of models & clean DAGs",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "Is the statement a TRUE description of dbt graph-operator selection syntax?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "`my_model+` selects my_model and all of its children (descendants)",
+          "correct": true
+        },
+        {
+          "text": "`@my_model` selects my_model, its children, and the parents of those children",
+          "correct": true
+        },
+        {
+          "text": "`+my_model` selects my_model and all of its children",
+          "correct": false
+        },
+        {
+          "text": "The comma operator (`,`) forms a union of two selections",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "Trailing + selects descendants; @ adds the parents of a node's children; leading +my_model selects ancestors (not children); the comma is an intersection, while a space is the union.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Node selection syntax overview",
+          "wiki": "wiki/sources/syntax.md",
+          "url": "https://docs.getdbt.com/reference/node-selection/syntax"
+        }
+      ]
+    },
+    {
+      "id": "d01a-projectyml-mcq-01",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Defining configurations in dbt_project.yml",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "In `dbt_project.yml`, what is the purpose of the `+` prefix on a key such as `+materialized: table`?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "It distinguishes a config from a folder/resource-path name, and the config cascades to that folder and its subfolders (most-specific scope wins)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "It selects the model and all of its children, like the graph operator",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "It marks the config as required and fails the run if it is unset",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "It is only valid in model properties YAML files, not in dbt_project.yml",
+          "correct": false
+        }
+      ],
+      "rationale": "Inside dbt_project.yml the + prefix marks a key as a config (not a folder name); such folder-level configs cascade to every model in the directory and nested subdirectories, with the more specific scope overriding. The graph-operator + is unrelated, and underscores/dashes naming is a separate rule.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "dbt_project.yml reference",
+          "wiki": "wiki/sources/dbt_project.yml.md",
+          "url": "https://docs.getdbt.com/reference/dbt_project.yml"
+        }
+      ]
+    },
+    {
+      "id": "d01b-build-runs-everything",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Commands: build, run, test, docs, show, snapshot, seed",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "Which single dbt command runs models, runs tests, executes snapshots, and loads seeds \u2014 all in DAG order \u2014 in one pass?",
+      "options": [
+        {
+          "id": "a",
+          "text": "dbt run",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "dbt build",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "dbt test",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "dbt compile",
+          "correct": false
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "`dbt build` runs models, tests tests, snapshots snapshots, and seeds seeds (and, from v1.11, builds functions) in DAG order. `dbt run` applies only to models and does not run tests, snapshots, or seeds.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt build command",
+          "wiki": "wiki/sources/build.md",
+          "url": "https://docs.getdbt.com/reference/commands/build"
+        },
+        {
+          "title": "About dbt run command",
+          "wiki": "wiki/sources/run.md",
+          "url": "https://docs.getdbt.com/reference/commands/run"
+        }
+      ]
+    },
+    {
+      "id": "d01b-empty-flag-fitb",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Validating logic/schema in dry-runs (--empty flag)",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "To validate that your models are semantically correct without expensive input reads, run a schema-only dry run by adding the {{b1}} flag, which limits refs and sources to {{b2}} rows.",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "short_answer",
+          "accepted": [
+            "--empty",
+            "empty",
+            "`--empty`"
+          ]
+        },
+        {
+          "id": "b2",
+          "type": "dropdown",
+          "options": [
+            "zero",
+            "one",
+            "ten",
+            "all"
+          ],
+          "answer": "zero"
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "The `--empty` flag limits refs and sources to zero rows; dbt still executes the model SQL against the warehouse to validate dependencies and that models build, but avoids expensive reads of input data.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About the --empty flag",
+          "wiki": "wiki/sources/empty-flag.md",
+          "url": "https://docs.getdbt.com/docs/build/empty-flag"
+        }
+      ]
+    },
+    {
+      "id": "d01b-packages-deps-install",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Using dbt Packages",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "After listing a package in your packages.yml (or dependencies.yml) file, which command installs it, and into which directory does it install by default?",
+      "options": [
+        {
+          "id": "a",
+          "text": "dbt deps \u2014 installs into the dbt_packages directory",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "dbt run \u2014 installs into the target directory",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "dbt seed \u2014 installs into the seeds directory",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "dbt clean \u2014 installs into the logs directory",
+          "correct": false
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "You run `dbt deps` to install packages. They install into the `dbt_packages` directory (the default `packages-install-path`), which git ignores by default. `dbt deps` also pins packages via `package-lock.yml`.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Packages",
+          "wiki": "wiki/sources/packages.md",
+          "url": "https://docs.getdbt.com/docs/build/packages"
+        }
+      ]
+    },
+    {
+      "id": "d01b-python-model-signature",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Creating Python Models",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "Every dbt Python model lives in a .py file and defines a function named model that takes two parameters: def model({{b1}}, {{b2}}). Inside it, read an upstream model into a DataFrame with dbt.{{b3}}(\"upstream_model_name\"). The function must return a single DataFrame.",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "short_answer",
+          "accepted": [
+            "dbt"
+          ]
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "session"
+          ]
+        },
+        {
+          "id": "b3",
+          "type": "dropdown",
+          "options": [
+            "ref",
+            "source",
+            "config",
+            "this"
+          ],
+          "answer": "ref"
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "A dbt Python model defines `def model(dbt, session)` and must return a single DataFrame. Use `dbt.ref(\"...\")` to read another model and `dbt.source(\"src\",\"tbl\")` to read a source.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Python models",
+          "wiki": "wiki/sources/python-models.md",
+          "url": "https://docs.getdbt.com/docs/build/python-models"
+        }
+      ]
+    },
+    {
+      "id": "d01b-grants-add-vs-clobber",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Providing access with the grants config",
+      "format": "domc",
+      "difficulty": "hard",
+      "stem": "A model inherits `+grants: select: ['user_a', 'user_b']` from dbt_project.yml. You want the model to grant select to user_a, user_b, AND user_c. Is this model-level config block correct for that goal?",
+      "options": [
+        {
+          "text": "{{ config(grants = {'+select': ['user_c']}) }} \u2014 uses the + prefix to ADD user_c to the inherited grantees",
+          "correct": true
+        },
+        {
+          "text": "{{ config(grants = {'select': ['user_c']}) }} \u2014 clobbers and grants select to user_c only",
+          "correct": false
+        },
+        {
+          "text": "{{ config(grants = {'select': []}) }} \u2014 revokes all grants instead of adding",
+          "correct": false
+        },
+        {
+          "text": "Delete the +grants section so dbt stops managing grants",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "By default grants 'merge and clobber' \u2014 a more-specific config replaces the grantee list. Prefixing the privilege with `+` ('+select') ADDS the new grantees instead, so the model grants select to user_a, user_b, and user_c.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "grants",
+          "wiki": "wiki/sources/grants.md",
+          "url": "https://docs.getdbt.com/reference/resource-configs/grants"
+        }
+      ]
+    },
+    {
+      "id": "d01b-snapshot-strategy-requires",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Creating snapshots in YAML",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each snapshot YAML config to its requirement or role.",
+      "left": [
+        "strategy: timestamp",
+        "strategy: check",
+        "unique_key",
+        "relation"
+      ],
+      "right": [
+        "Requires an updated_at column to detect changes",
+        "Requires check_cols (a column list or 'all') to detect changes",
+        "The primary key column(s) or expression identifying each record (always required)",
+        "Points the snapshot at its input, e.g. source('jaffle_shop','orders') or ref('my_model')"
+      ],
+      "key": {
+        "strategy: timestamp": "Requires an updated_at column to detect changes",
+        "strategy: check": "Requires check_cols (a column list or 'all') to detect changes",
+        "unique_key": "The primary key column(s) or expression identifying each record (always required)",
+        "relation": "Points the snapshot at its input, e.g. source('jaffle_shop','orders') or ref('my_model')"
+      },
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "In YAML snapshots (v1.9+), `strategy` and `unique_key` are required; the `timestamp` strategy additionally requires `updated_at`, and the `check` strategy requires `check_cols` (a list or `all`). `relation` names the source/model the snapshot reads.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add snapshots to your DAG",
+          "wiki": "wiki/sources/snapshots.md",
+          "url": "https://docs.getdbt.com/docs/build/snapshots"
+        }
+      ]
+    },
+    {
+      "id": "d01b-incremental-strategy-pick",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Selecting the optimal incremental strategy",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "Which statements about dbt's built-in incremental strategies are correct? (Select all that apply.)",
+      "select_all": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "The `append` strategy does not check for duplicates, so repeated source records produce duplicate rows.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "The `merge` strategy without a `unique_key` behaves like `append`.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "`insert_overwrite` replaces entire partitions wholesale rather than updating individual rows.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "`delete+insert` is the recommended way to implement type-2 slowly changing dimensions.",
+          "correct": false
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "`append` inserts without deduplicating; `merge` without a `unique_key` behaves like `append`; `insert_overwrite` replaces whole partitions. For SCD2 you should use dbt snapshots, not `delete+insert`.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About incremental strategy",
+          "wiki": "wiki/sources/incremental-strategy.md",
+          "url": "https://docs.getdbt.com/docs/build/incremental-strategy"
+        }
+      ]
+    },
+    {
+      "id": "d01b-microbatch-config-order",
+      "domain": "01 \u2014 Developing & optimizing dbt models",
+      "subtopic": "Advanced materializations such as microbatch",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order these config keys to complete a microbatch incremental model config block: materialized='incremental', then the strategy, then the time column it filters on, then the start-of-time boundary, then the batch granularity.",
+      "items": [
+        {
+          "id": "i1",
+          "text": "materialized='incremental'"
+        },
+        {
+          "id": "i2",
+          "text": "incremental_strategy='microbatch'"
+        },
+        {
+          "id": "i3",
+          "text": "event_time='session_start'"
+        },
+        {
+          "id": "i4",
+          "text": "begin='2020-01-01'"
+        },
+        {
+          "id": "i5",
+          "text": "batch_size='day'"
+        }
+      ],
+      "answer": {
+        "order": [
+          "i1",
+          "i2",
+          "i3",
+          "i4",
+          "i5"
+        ]
+      },
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "rationale": "A microbatch model sets `materialized='incremental'` and `incremental_strategy='microbatch'`, then the required `event_time` column, `begin` (beginning of time for initial/full-refresh builds), and `batch_size` (hour/day/month/year). This matches the documented example order.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About microbatch incremental models",
+          "wiki": "wiki/sources/incremental-microbatch.md",
+          "url": "https://docs.getdbt.com/docs/build/incremental-microbatch"
+        }
+      ]
+    },
+    {
+      "id": "d02-contract-fitb-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Adding contracts to ensure model shape",
+      "format": "fitb",
+      "difficulty": "hard",
+      "stem": "A contracted **incremental** model must set `on_schema_change` to `{{b1}}` or `fail`; using `{{b2}}` is disallowed because it removes deleted columns, which is a breaking change for contracted models.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "append_new_columns",
+            "ignore",
+            "sync_all_columns",
+            "rebuild"
+          ],
+          "answer": "append_new_columns"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "sync_all_columns"
+          ]
+        }
+      ],
+      "rationale": "Contracted incremental models require on_schema_change set to append_new_columns or fail. sync_all_columns also removes columns that disappeared from the query, and removing existing columns is a breaking change for contracted models, so it is disallowed.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "contract (resource config)",
+          "wiki": "wiki/sources/contract.md",
+          "url": "https://docs.getdbt.com/reference/resource-configs/contract"
+        }
+      ]
+    },
+    {
+      "id": "d02-constraints-matching-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Defining constraints in YAML for data integrity",
+      "format": "matching",
+      "difficulty": "hard",
+      "stem": "Match each data platform to how it handles a column-level `check` constraint defined in a dbt model contract.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "Postgres",
+        "Snowflake",
+        "Redshift",
+        "Databricks"
+      ],
+      "right": [
+        "Supports and enforces check constraints",
+        "Does not support check; dbt skips it and raises a warning",
+        "Does not allow column checks at table creation time",
+        "Supports not_null and check constraints (via alter statements)"
+      ],
+      "key": {
+        "Postgres": "Supports and enforces check constraints",
+        "Snowflake": "Does not support check; dbt skips it and raises a warning",
+        "Redshift": "Does not allow column checks at table creation time",
+        "Databricks": "Supports not_null and check constraints (via alter statements)"
+      },
+      "rationale": "Postgres enforces all ANSI constraints plus check. Snowflake does not support check syntax \u2014 dbt skips it and warns. Redshift only enforces not_null and does not allow column checks at creation time. Databricks allows not_null and check constraints, applied via alter statements.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "constraints (resource property)",
+          "wiki": "wiki/sources/constraints.md",
+          "url": "https://docs.getdbt.com/reference/resource-properties/constraints"
+        }
+      ]
+    },
+    {
+      "id": "d02-constraints-domc-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Defining constraints in YAML for data integrity",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "Is the statement a TRUE requirement or behavior of dbt `constraints`?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "Constraints require the model to be materialized as table or incremental and to enforce a contract",
+          "correct": true
+        },
+        {
+          "text": "Most analytical data platforms enforce only the not_null constraint",
+          "correct": true
+        },
+        {
+          "text": "Constraints work on ephemeral and view models too",
+          "correct": false
+        },
+        {
+          "text": "Setting warn_unenforced: False removes the constraint from the templated DDL entirely",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "Constraints require table/incremental materialization plus an enforced contract, and most platforms enforce only not_null. They never apply to view/ephemeral models. warn_unenforced: False only skips the warning \u2014 the constraint is still included in the DDL (warn_unsupported: False is what excludes it).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "constraints (resource property)",
+          "wiki": "wiki/sources/constraints.md",
+          "url": "https://docs.getdbt.com/reference/resource-properties/constraints"
+        }
+      ]
+    },
+    {
+      "id": "d02-versions-fitb-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Creating model versions & deprecating old ones",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "All versions of a model keep the model's original name. `ref('dim_customers')` resolves to the `{{b1}}` version, while you pin version 2 with `ref('dim_customers', {{b2}})`. To sunset an old version with a migration window, set a `{{b3}}` (first-class since dbt Core 1.6).",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "latest",
+            "oldest",
+            "prerelease",
+            "first"
+          ],
+          "answer": "latest"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "v=2",
+            "v = 2"
+          ]
+        },
+        {
+          "id": "b3",
+          "type": "short_answer",
+          "accepted": [
+            "deprecation_date"
+          ]
+        }
+      ],
+      "rationale": "An unpinned ref resolves to the latest version; ref('dim_customers', v=2) pins to a specific version. dbt Core 1.6 introduced first-class model deprecation via deprecation_date, giving consumers a migration window.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Model versions",
+          "wiki": "wiki/sources/model-versions.md",
+          "url": "https://docs.getdbt.com/docs/mesh/govern/model-versions"
+        }
+      ]
+    },
+    {
+      "id": "d02-versions-buildlist-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Creating model versions & deprecating old ones",
+      "format": "build_list",
+      "difficulty": "medium",
+      "stem": "Order the steps a model producer follows to manage change across an organization when introducing a breaking change to a versioned model.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "s1",
+          "text": "Develop a new version of the model"
+        },
+        {
+          "id": "s2",
+          "text": "Bump the latest_version to the new version as the canonical source of truth"
+        },
+        {
+          "id": "s3",
+          "text": "Slate the old version for deprecation by setting a deprecation_date"
+        },
+        {
+          "id": "s4",
+          "text": "Update downstream references to the new version"
+        },
+        {
+          "id": "s5",
+          "text": "Remove the old version"
+        }
+      ],
+      "answer": {
+        "order": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s5"
+        ]
+      },
+      "rationale": "The Model versions doc describes managing change as: develop a new version, bump the latest, slate the old version for deprecation, update downstream references, then remove the old version.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Model versions",
+          "wiki": "wiki/sources/model-versions.md",
+          "url": "https://docs.getdbt.com/docs/mesh/govern/model-versions"
+        }
+      ]
+    },
+    {
+      "id": "d02-governance-mcq-01",
+      "domain": "02 \u2014 Managing dbt models governance",
+      "subtopic": "Model governance overview",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "Which model governance feature is NOT available in dbt Core (it requires a dbt Enterprise-tier plan)?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Model contracts",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Model versions",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Model access (public / private)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Project dependencies (cross-project ref)",
+          "correct": true
+        }
+      ],
+      "rationale": "All governance features are available in dbt Core and the dbt platform EXCEPT project dependencies (cross-project ref), which relies on the always-on metadata service and is available only on dbt Enterprise-tier plans.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About model governance",
+          "wiki": "wiki/sources/about-model-governance.md",
+          "url": "https://docs.getdbt.com/docs/mesh/govern/about-model-governance"
+        }
+      ]
+    },
+    {
+      "id": "d03-error-type-step-matching",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Understanding logged error messages",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each step dbt performs when you run a command to the error type it raises if that step fails.",
+      "left": [
+        "Initialize (is this a dbt project / can dbt connect to the warehouse)",
+        "Parsing (Jinja in .sql valid, .yml valid)",
+        "Graph validation (compile dependencies into an acyclic graph)",
+        "SQL execution (run the models)"
+      ],
+      "right": [
+        "Runtime Error",
+        "Compilation Error",
+        "Dependency Error",
+        "Database Error"
+      ],
+      "key": {
+        "Initialize (is this a dbt project / can dbt connect to the warehouse)": "Runtime Error",
+        "Parsing (Jinja in .sql valid, .yml valid)": "Compilation Error",
+        "Graph validation (compile dependencies into an acyclic graph)": "Dependency Error",
+        "SQL execution (run the models)": "Database Error"
+      },
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Debug errors maps each pipeline step to an error type: Initialize -> Runtime Error, Parsing -> Compilation Error, Graph validation -> Dependency Error (e.g. 'Found a cycle:'), SQL execution -> Database Error. The error type tells you which step failed.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Debug errors",
+          "wiki": "wiki/sources/debug-errors.md",
+          "url": "https://docs.getdbt.com/guides/debug-errors"
+        }
+      ]
+    },
+    {
+      "id": "d03-target-dirs-mcq",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Troubleshooting using compiled code",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "When debugging, which directory contains plain `select` statements you can copy straight into a query editor to inspect a model's compiled output?",
+      "options": [
+        {
+          "id": "a",
+          "text": "target/compiled",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "target/run",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "logs/dbt.log",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "target/manifest",
+          "correct": false
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Per Debug errors, target/compiled holds the select statements you can run in any query editor. target/run holds the SQL dbt executes to build models, and logs/dbt.log records all queries dbt runs.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Debug errors",
+          "wiki": "wiki/sources/debug-errors.md",
+          "url": "https://docs.getdbt.com/guides/debug-errors"
+        }
+      ]
+    },
+    {
+      "id": "d03-compile-vs-parse-fitb",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Troubleshooting using compiled code",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "To reproduce one node's compiled SQL on demand, run `dbt compile --select \"stg_orders\"`. To read and validate your project code WITHOUT connecting to the data warehouse, use the `dbt {{b1}}` command instead. The compiled SQL is written to the {{b2}} directory.",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "parse",
+            "compile",
+            "debug",
+            "build"
+          ],
+          "answer": "parse"
+        },
+        {
+          "id": "b2",
+          "type": "dropdown",
+          "options": [
+            "target/",
+            "logs/",
+            "models/",
+            "dbt_packages/"
+          ],
+          "answer": "target/"
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "The compile docs state that to read/validate project code without connecting to the warehouse you use dbt parse, and that compiled SQL files are written to the target/ directory.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt compile command",
+          "wiki": "wiki/sources/compile.md",
+          "url": "https://docs.getdbt.com/reference/commands/compile"
+        }
+      ]
+    },
+    {
+      "id": "d03-yaml-indentation-domc",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Troubleshooting .yml compilation errors",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "dbt run fails with: Compilation Error \u2014 'Syntax error near line 5 ... mapping values are not allowed in this context'. Is the proposed cause the correct first thing to check?",
+      "options": [
+        {
+          "text": "Incorrect indentation in the .yml file at the cited line",
+          "correct": true
+        },
+        {
+          "text": "A key that dbt does not recognize, such as 'hello', in the .yml file",
+          "correct": false
+        },
+        {
+          "text": "A missing {% endmacro %} tag in a macro .sql file",
+          "correct": false
+        },
+        {
+          "text": "A cycle in the model DAG that must be broken with {{ this }}",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Per Debug errors, an 'invalid YAML' / 'mapping values are not allowed in this context' Compilation Error is usually an indentation problem at the cited line. An unrecognized key produces a different 'Additional properties are not allowed' error; missing {% endmacro %} is a Jinja error; a cycle is a Dependency Error.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Debug errors",
+          "wiki": "wiki/sources/debug-errors.md",
+          "url": "https://docs.getdbt.com/guides/debug-errors"
+        }
+      ]
+    },
+    {
+      "id": "d03-slim-ci-build-list",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Developing, implementing & testing a fix before merge",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order the steps for developing and testing a fix before merging it, following dbt best-practice workflows.",
+      "items": [
+        {
+          "id": "s1",
+          "text": "Create a git branch for the bug fix"
+        },
+        {
+          "id": "s2",
+          "text": "Edit the model and run only what changed locally with the model selection syntax"
+        },
+        {
+          "id": "s3",
+          "text": "Run a sandboxed slim-CI check: dbt build -s state:modified+ --defer --state path/to/prod/artifacts"
+        },
+        {
+          "id": "s4",
+          "text": "Open a Pull Request and have the change reviewed before merging into main"
+        }
+      ],
+      "answer": {
+        "order": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ]
+      },
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "rationale": "Best practices for workflows: manage the project in git with branches, run only the model you're working on locally, gate the merge with a sandboxed slim-CI check comparing to prior production artifacts (state:modified+ --defer --state), and review every change in a Pull Request before merging into a production branch such as main.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Best practices for workflows",
+          "wiki": "wiki/sources/best-practice-workflows.md",
+          "url": "https://docs.getdbt.com/best-practices/best-practice-workflows"
+        }
+      ]
+    },
+    {
+      "id": "d03-env-var-prefix-fitb",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Managing dbt behavior with flags",
+      "format": "fitb",
+      "difficulty": "hard",
+      "stem": "Flags (global configs) can be set in dbt_project.yml under a `flags:` dictionary, environment variables, and CLI options. In dbt Core v1.11+, the environment-variable prefix for engine flags is {{b1}} (for example, fail_fast becomes {{b1}}FAIL_FAST), whereas v1.10 and earlier used the {{b2}} prefix.",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "short_answer",
+          "accepted": [
+            "DBT_ENGINE_",
+            "DBT_ENGINE",
+            "dbt_engine_"
+          ]
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "DBT_",
+            "DBT",
+            "dbt_"
+          ]
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "About flags (global configs): v1.10 and earlier use the DBT_ prefix, while v1.11+ uses the DBT_ENGINE_ prefix for engine flag environment variables.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About flags (global configs)",
+          "wiki": "wiki/sources/about-global-configs.md",
+          "url": "https://docs.getdbt.com/reference/global-configs/about-global-configs"
+        }
+      ]
+    },
+    {
+      "id": "d03-behavior-flags-mcq",
+      "domain": "03 \u2014 Debugging data modeling errors",
+      "subtopic": "Managing dbt behavior with flags",
+      "format": "mcq",
+      "difficulty": "hard",
+      "stem": "Which statements about behavior-change flags in dbt are correct? (Select all that apply.)",
+      "select_all": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "They must be set in the `flags:` dictionary in dbt_project.yml.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "They move through Introduction (disabled by default), Maturity (enabled by default), then Removal.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "After opting out by setting a flag to false, you can stop the deprecation warnings using warn_error_options.silence.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "dbt beginning to raise a new warning (rather than an error) is itself a behavior change.",
+          "correct": false
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Behavior changes doc: behavior-change flags must live in the flags: dictionary in dbt_project.yml; they progress Introduction -> Maturity -> Removal; opting out keeps deprecation warnings which can be silenced via warn_error_options.silence. A new warning is explicitly NOT a behavior change (only a new error is).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Behavior changes",
+          "wiki": "wiki/sources/behavior-changes.md",
+          "url": "https://docs.getdbt.com/reference/global-configs/behavior-changes"
+        }
+      ]
+    },
+    {
+      "id": "d04-retry-mcq-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Troubleshooting & managing failure points in the DAG",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "A `dbt build` failed partway through the DAG. You fix the offending model and want to resume without rebuilding the models that already succeeded. Which command does this, and which artifact does it read?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "`dbt retry`, which reads `run_results.json` to resume from the point of failure",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "`dbt run --full-refresh`, which reads `manifest.json`",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "`dbt clone`, which reads `run_results.json`",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "`dbt build --select state:modified`, which reads `catalog.json`",
+          "correct": false
+        }
+      ],
+      "rationale": "`dbt retry` reads `run_results.json` from the prior invocation and resumes from the failed/skipped nodes, leaving already-successful upstream nodes alone.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt retry command",
+          "wiki": "wiki/sources/retry.md",
+          "url": "https://docs.getdbt.com/reference/commands/retry"
+        }
+      ]
+    },
+    {
+      "id": "d04-clone-fullrefresh-fitb-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "`dbt clone` reads the source nodes from the directory given by the {{b1}} flag. By default it will not recreate pre-existing relations in the target; to force it to overwrite them you add the {{b2}} flag.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "--state",
+            "--defer",
+            "--target",
+            "--select"
+          ],
+          "answer": "--state"
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "--full-refresh",
+            "full-refresh",
+            "--full_refresh"
+          ]
+        }
+      ],
+      "rationale": "`dbt clone --state path/to/artifacts` selects the source; by default it skips pre-existing relations, and `--full-refresh` recreates them.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt clone command",
+          "wiki": "wiki/sources/clone.md",
+          "url": "https://docs.getdbt.com/reference/commands/clone"
+        }
+      ]
+    },
+    {
+      "id": "d04-ci-clone-build-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order the two CI commands so that modified incremental models build in incremental (not full-refresh) mode in a PR-specific schema.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "1",
+          "text": "dbt clone --select state:modified+,config.materialized:incremental,state:old"
+        },
+        {
+          "id": "2",
+          "text": "dbt build --select state:modified+"
+        }
+      ],
+      "answer": {
+        "order": [
+          "1",
+          "2"
+        ]
+      },
+      "rationale": "Cloning the pre-existing incremental models first seeds them into the PR schema so `is_incremental` is true; the subsequent `dbt build` then runs them in incremental mode.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Clone incremental models as the first step of your CI job",
+          "wiki": "wiki/sources/clone-incremental-models.md",
+          "url": "https://docs.getdbt.com/best-practices/clone-incremental-models"
+        }
+      ]
+    },
+    {
+      "id": "d04-state-old-domc-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "domc",
+      "difficulty": "hard",
+      "stem": "Is the statement a correct reason for including `state:old` in the CI clone selection `state:modified+,config.materialized:incremental,state:old`?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "It excludes brand-new incremental models, which should full-refresh in CI just as they will in prod",
+          "correct": true
+        },
+        {
+          "text": "It makes the selection more explicit so dbt won't try to clone models with no relation in the state manifest",
+          "correct": true
+        },
+        {
+          "text": "It forces every cloned model to rebuild with --full-refresh",
+          "correct": false
+        },
+        {
+          "text": "It is required or the clone command errors out on existing models",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "Brand-new incremental models don't exist in the prior state, so they should full-refresh; `state:old` excludes them explicitly. Without it you only get a benign 'No relation found in state manifest' message, not an error.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Clone incremental models as the first step of your CI job",
+          "wiki": "wiki/sources/clone-incremental-models.md",
+          "url": "https://docs.getdbt.com/best-practices/clone-incremental-models"
+        }
+      ]
+    },
+    {
+      "id": "d04-defer-clone-match-02",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each characteristic to the strategy it describes (defer or clone).",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "Implicit, activated via the --defer flag",
+        "Explicit, run as its own command",
+        "Creates no database objects of its own",
+        "Point-in-time copy that can drift from source",
+        "Can dynamically mix multiple source schemas"
+      ],
+      "right": [
+        "defer",
+        "clone",
+        "Creates no objects (defer)",
+        "Drifts (clone)",
+        "Multiple sources (defer)"
+      ],
+      "key": {
+        "Implicit, activated via the --defer flag": "defer",
+        "Explicit, run as its own command": "clone",
+        "Creates no database objects of its own": "Creates no objects (defer)",
+        "Point-in-time copy that can drift from source": "Drifts (clone)",
+        "Can dynamically mix multiple source schemas": "Multiple sources (defer)"
+      },
+      "rationale": "Defer is implicit (`--defer`), creates no objects, never drifts, and can mix multiple sources; clone is an explicit command producing persisted, point-in-time objects from one source to one target.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "To defer or to clone, that is the question",
+          "wiki": "wiki/sources/to-defer-or-to-clone.md",
+          "url": "https://docs.getdbt.com/blog/to-defer-or-to-clone"
+        }
+      ]
+    },
+    {
+      "id": "d04-zerocopy-mcq-01",
+      "domain": "04 \u2014 Troubleshooting & optimizing pipelines",
+      "subtopic": "Using dbt clone",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "What does `dbt clone` create when the data platform does NOT support zero-copy cloning of the source object?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "A simple pointer view (`select * from` the source object)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "A full physical copy of all the underlying data",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Nothing \u2014 the command errors and aborts",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "An ephemeral CTE that is inlined at compile time",
+          "correct": false
+        }
+      ],
+      "rationale": "On platforms with zero-copy cloning (Snowflake, Databricks, BigQuery) dbt clones the table; otherwise it falls back to a pointer view that selects from the source object.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt clone command",
+          "wiki": "wiki/sources/clone.md",
+          "url": "https://docs.getdbt.com/reference/commands/clone"
+        }
+      ]
+    },
+    {
+      "id": "d05-data-tests-mcq-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Generic, singular, custom, custom generic & unit tests",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "Which four data tests does dbt ship with **out of the box** as built-in generic tests? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "`unique`",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "`not_null`",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "`accepted_values`",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "`relationships`",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "`mutually_exclusive_ranges`",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "`not_constant`",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "dbt ships four built-in generic data tests: `unique`, `not_null`, `accepted_values`, and `relationships`. `mutually_exclusive_ranges` and `not_constant` are from the dbt_utils package, not built in.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add data tests to your DAG",
+          "wiki": "wiki/sources/data-tests.md",
+          "url": "https://docs.getdbt.com/docs/build/data-tests"
+        }
+      ]
+    },
+    {
+      "id": "d05-singular-vs-generic-fitb-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Generic, singular, custom, custom generic & unit tests",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "A one-off assertion saved as a single `select` `.sql` file in your `tests/` directory is a {{b1}} data test, whereas a parameterized query defined in a `{% test %}` block and referenced by name in YAML is a {{b2}} data test.",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "singular",
+            "generic",
+            "unit",
+            "schema"
+          ],
+          "answer": "singular"
+        },
+        {
+          "id": "b2",
+          "type": "dropdown",
+          "options": [
+            "singular",
+            "generic",
+            "unit",
+            "snapshot"
+          ],
+          "answer": "generic"
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Singular data tests are one-off `.sql` files in the `tests/` directory; generic data tests are parameterized `{% test %}` blocks referenced by name in `.yml` on models, columns, sources, seeds, or snapshots.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add data tests to your DAG",
+          "wiki": "wiki/sources/data-tests.md",
+          "url": "https://docs.getdbt.com/docs/build/data-tests"
+        }
+      ]
+    },
+    {
+      "id": "d05-unit-vs-data-domc-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Generic, singular, custom, custom generic & unit tests",
+      "format": "domc",
+      "difficulty": "medium",
+      "stem": "Is the statement a TRUE difference between **unit tests** and **data tests** in dbt?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "text": "Unit tests validate modeling logic against static inputs *before* the model is materialized, whereas data tests run *after* a model is built",
+          "correct": true
+        },
+        {
+          "text": "A unit test result is always 0 (pass) or 1 (fail), while a data test reports the number of failing records",
+          "correct": true
+        },
+        {
+          "text": "Unit test YAML definitions can live in the `tests/` directory alongside singular tests",
+          "correct": false
+        },
+        {
+          "text": "dbt Labs recommends running unit tests in production to save compute",
+          "correct": false
+        }
+      ],
+      "present_n": 2,
+      "unscored_after": 1,
+      "rationale": "Unit tests run before materialization (TDD) and return a single 0/1 exit code per test case; data tests run after build and report failing-row counts. Unit test YAML must live under `model-paths`, not `tests/`, and unit tests should run in dev/CI, not production.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Unit tests",
+          "wiki": "wiki/sources/unit-tests.md",
+          "url": "https://docs.getdbt.com/docs/build/unit-tests"
+        }
+      ]
+    },
+    {
+      "id": "d05-custom-generic-fitb-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Generic, singular, custom, custom generic & unit tests",
+      "format": "fitb",
+      "difficulty": "hard",
+      "stem": "Every custom generic test should accept one or both standard arguments: `{{b1}}` (the resource it's defined on, always named this even for a source or seed) and `{{b2}}` (the column it's defined on, for column-level tests).",
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "short_answer",
+          "accepted": [
+            "model"
+          ]
+        },
+        {
+          "id": "b2",
+          "type": "short_answer",
+          "accepted": [
+            "column_name"
+          ]
+        }
+      ],
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Generic tests accept the standard arguments `model` (always named `model`, even when the resource is a source, seed, or snapshot) and `column_name` (for column-level tests).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Writing custom generic data tests",
+          "wiki": "wiki/sources/writing-custom-generic-tests.md",
+          "url": "https://docs.getdbt.com/best-practices/writing-custom-generic-tests"
+        }
+      ]
+    },
+    {
+      "id": "d05-test-configs-matching-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Testing assumptions for models and sources",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each data test config key to what it does.",
+      "left": [
+        "`severity`",
+        "`store_failures`",
+        "`where`",
+        "`error_if`"
+      ],
+      "right": [
+        "Sets whether a failing test is treated as `error` or `warn`",
+        "Saves failing rows to a table (in the `dbt_test__audit` schema) before counting",
+        "Filters the set of rows a test evaluates",
+        "Sets a threshold condition above which the test fails with error severity",
+        "Caps how many rows the test query returns"
+      ],
+      "key": {
+        "`severity`": "Sets whether a failing test is treated as `error` or `warn`",
+        "`store_failures`": "Saves failing rows to a table (in the `dbt_test__audit` schema) before counting",
+        "`where`": "Filters the set of rows a test evaluates",
+        "`error_if`": "Sets a threshold condition above which the test fails with error severity"
+      },
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "`severity` is error|warn; `store_failures` persists failing rows to the `dbt_test__audit` schema; `where` filters evaluated rows; `error_if`/`warn_if` set thresholds. The extra option (`limit`) is the distractor.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Data test configurations",
+          "wiki": "wiki/sources/data-test-configs.md",
+          "url": "https://docs.getdbt.com/reference/data-test-configs"
+        }
+      ]
+    },
+    {
+      "id": "d05-config-precedence-build-list-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Testing assumptions for models and sources",
+      "format": "build_list",
+      "difficulty": "hard",
+      "stem": "Order these config locations for a **specific instance of a generic data test** from **highest precedence to lowest** (most specific wins).",
+      "items": [
+        {
+          "id": "1",
+          "text": "The test instance's `.yml` properties"
+        },
+        {
+          "id": "2",
+          "text": "The generic test's SQL `config()` block"
+        },
+        {
+          "id": "3",
+          "text": "`dbt_project.yml`"
+        }
+      ],
+      "answer": {
+        "order": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "rationale": "For a generic test instance, configs apply hierarchically by specificity: the instance's `.yml` properties override the generic SQL definition's `config()`, which overrides values set in `dbt_project.yml`.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Data test configurations",
+          "wiki": "wiki/sources/data-test-configs.md",
+          "url": "https://docs.getdbt.com/reference/data-test-configs"
+        }
+      ]
+    },
+    {
+      "id": "d05-prioritize-severity-mcq-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Implementing testing steps in the workflow",
+      "format": "mcq",
+      "difficulty": "medium",
+      "stem": "Per the *test smarter, not harder* framework, which concerns should be **pipeline-failing** (set to `severity: error`)? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Customer-facing data",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Data used for financial decisions",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Executive-facing data",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Any nice-to-know concern you might act on someday",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "High-impact concerns \u2014 customer-facing, used for financial decisions, or executive-facing \u2014 get `error` severity. Everything else is a nice-to-know: set to `warn` or remove it.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Test smarter not harder: add the right tests to your dbt project",
+          "wiki": "wiki/sources/test-smarter-not-harder.md",
+          "url": "https://docs.getdbt.com/blog/test-smarter-not-harder"
+        }
+      ]
+    },
+    {
+      "id": "d05-where-tests-go-matching-01",
+      "domain": "05 \u2014 Implementing dbt tests",
+      "subtopic": "Implementing testing steps in the workflow",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each pipeline layer to the testing guidance from *where should tests go in your pipeline?*",
+      "left": [
+        "Sources",
+        "Staging",
+        "Marts"
+      ],
+      "right": [
+        "Test fixable-at-the-source issues and run `dbt source freshness` (severity `error` for top-priority sources)",
+        "Focus on business-anomaly detection; don't re-test your own cleanup",
+        "Add unit tests for complex transformation logic plus anomaly tests on net-new columns",
+        "Only ever add `not_null` tests, nowhere else"
+      ],
+      "key": {
+        "Sources": "Test fixable-at-the-source issues and run `dbt source freshness` (severity `error` for top-priority sources)",
+        "Staging": "Focus on business-anomaly detection; don't re-test your own cleanup",
+        "Marts": "Add unit tests for complex transformation logic plus anomaly tests on net-new columns"
+      },
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "rationale": "Sources get fixable-at-source tests + `dbt source freshness` (error for critical sources); staging focuses on business anomalies without re-testing cleanup; marts add unit tests for complex logic and anomaly tests on new calculated fields. The last option is a distractor.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Test smarter not harder: Where should tests go in your pipeline?",
+          "wiki": "wiki/sources/test-smarter-where-tests-should-go.md",
+          "url": "https://docs.getdbt.com/blog/test-smarter-where-tests-should-go"
+        }
+      ]
+    },
+    {
+      "id": "d06-exposure-required-mcq-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing dbt exposures",
+      "format": "mcq",
+      "difficulty": "easy",
+      "stem": "Which properties are **required** when declaring an exposure in YAML? (Select all that apply.)",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "name",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "type",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "owner",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "depends_on",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "maturity",
+          "correct": false
+        }
+      ],
+      "select_all": true,
+      "rationale": "name (unique, snake_case), type (one of dashboard/notebook/analysis/ml/application), and owner (name or email) are required. depends_on is 'expected' but not required, and maturity is optional.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add Exposures to your DAG",
+          "wiki": "wiki/sources/exposures.md",
+          "url": "https://docs.getdbt.com/docs/build/exposures"
+        }
+      ]
+    },
+    {
+      "id": "d06-exposure-select-fitb-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing dbt exposures",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "To run an exposure named `weekly_jaffle_report` together with all of the models that feed it, use:\n\n`dbt run -s {{b1}}weekly_jaffle_report`",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "short_answer",
+          "accepted": [
+            "+exposure:",
+            "+exposure: "
+          ]
+        }
+      ],
+      "rationale": "The exposure: selection method targets an exposure; the leading + operator pulls in its upstream parents (the resources that feed it), e.g. dbt run -s +exposure:weekly_jaffle_report.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Add Exposures to your DAG",
+          "wiki": "wiki/sources/exposures.md",
+          "url": "https://docs.getdbt.com/docs/build/exposures"
+        }
+      ]
+    },
+    {
+      "id": "d06-exposure-type-matching-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing dbt exposures",
+      "format": "matching",
+      "difficulty": "medium",
+      "stem": "Match each exposure property to its correct description.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "left": [
+        "type",
+        "maturity",
+        "owner",
+        "label"
+      ],
+      "right": [
+        "One of dashboard, notebook, analysis, ml, application",
+        "One of high, medium, low \u2014 confidence/stability of the exposure",
+        "Requires name or email; supports name and email only",
+        "Human-friendly name that may contain spaces and capital letters"
+      ],
+      "key": {
+        "type": "One of dashboard, notebook, analysis, ml, application",
+        "maturity": "One of high, medium, low \u2014 confidence/stability of the exposure",
+        "owner": "Requires name or email; supports name and email only",
+        "label": "Human-friendly name that may contain spaces and capital letters"
+      },
+      "rationale": "type categorizes the exposure in docs; maturity (high/medium/low) signals confidence; owner needs name or email; label provides a display name since name itself must be snake_case.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "Exposure properties",
+          "wiki": "wiki/sources/exposure-properties.md",
+          "url": "https://docs.getdbt.com/reference/exposure-properties"
+        }
+      ]
+    },
+    {
+      "id": "d06-freshness-output-fitb-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing source freshness",
+      "format": "fitb",
+      "difficulty": "medium",
+      "stem": "When `dbt source freshness` completes, it writes a JSON file to the path {{b1}} by default. To send it elsewhere, pass the {{b2}} flag.",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "blanks": [
+        {
+          "id": "b1",
+          "type": "dropdown",
+          "options": [
+            "target/sources.json",
+            "target/manifest.json",
+            "target/run_results.json",
+            "logs/sources.json"
+          ],
+          "answer": "target/sources.json"
+        },
+        {
+          "id": "b2",
+          "type": "dropdown",
+          "options": [
+            "--output",
+            "--state",
+            "--select",
+            "--target-path"
+          ],
+          "answer": "--output"
+        }
+      ],
+      "rationale": "dbt source freshness saves results to target/sources.json; the destination is overridden with -o / --output (e.g. --output target/source_freshness.json).",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt source command",
+          "wiki": "wiki/sources/source.md",
+          "url": "https://docs.getdbt.com/reference/commands/source"
+        }
+      ]
+    },
+    {
+      "id": "d06-freshness-behavior-domc-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing source freshness",
+      "format": "domc",
+      "difficulty": "hard",
+      "stem": "Is the statement a TRUE property of source freshness in dbt Core 1.11?",
+      "scoring": {
+        "method": "default",
+        "points": 1
+      },
+      "present_n": 2,
+      "unscored_after": 1,
+      "options": [
+        {
+          "text": "If neither warn_after nor error_after is provided in a freshness block, dbt will not calculate freshness for those tables.",
+          "correct": true
+        },
+        {
+          "text": "Setting `freshness: null` on a table excludes it from freshness calculations.",
+          "correct": true
+        },
+        {
+          "text": "`dbt build` automatically runs source freshness checks before building models.",
+          "correct": false
+        },
+        {
+          "text": "A table-level freshness block is merged with, rather than overriding, the source-level block.",
+          "correct": false
+        }
+      ],
+      "rationale": "Freshness needs at least one of warn_after/error_after or it is skipped; freshness: null excludes a table. dbt build does NOT run freshness, and table-level blocks OVERRIDE (not merge with) source-level blocks.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "freshness (resource property)",
+          "wiki": "wiki/sources/freshness.md",
+          "url": "https://docs.getdbt.com/reference/resource-properties/freshness"
+        },
+        {
+          "title": "Source freshness",
+          "wiki": "wiki/sources/source-freshness.md",
+          "url": "https://docs.getdbt.com/docs/deploy/source-freshness"
+        }
+      ]
+    },
+    {
+      "id": "d06-freshness-config-build-list-01",
+      "domain": "06 \u2014 External dependencies",
+      "subtopic": "Implementing source freshness",
+      "format": "build_list",
+      "difficulty": "medium",
+      "stem": "Order the steps to monitor source staleness so that a downstream run can target only models whose sources have new data.",
+      "scoring": {
+        "method": "weighted",
+        "points": 1
+      },
+      "items": [
+        {
+          "id": "s1",
+          "text": "Add a freshness block with warn_after/error_after and a loaded_at_field to the source config"
+        },
+        {
+          "id": "s2",
+          "text": "Run `dbt source freshness`, which queries the sources and writes target/sources.json"
+        },
+        {
+          "id": "s3",
+          "text": "Pass the prior sources.json via --state on a later invocation"
+        },
+        {
+          "id": "s4",
+          "text": "Select only refreshed models with the source_status:fresher method"
+        }
+      ],
+      "answer": {
+        "order": [
+          "s1",
+          "s2",
+          "s3",
+          "s4"
+        ]
+      },
+      "rationale": "You first declare freshness thresholds and the loaded_at_field, then run dbt source freshness to produce target/sources.json, then supply that artifact via --state, enabling source_status:fresher to pick only models whose sources have newer data.",
+      "version_target": "dbt-core-1.11",
+      "citations": [
+        {
+          "title": "About dbt source command",
+          "wiki": "wiki/sources/source.md",
+          "url": "https://docs.getdbt.com/reference/commands/source"
+        },
+        {
+          "title": "freshness (resource property)",
+          "wiki": "wiki/sources/freshness.md",
+          "url": "https://docs.getdbt.com/reference/resource-properties/freshness"
+        }
+      ]
+    }
+  ]
+}

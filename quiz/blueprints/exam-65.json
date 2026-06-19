@@ -1,0 +1,19 @@
+{
+  "name": "Mock exam (65)",
+  "total": 65,
+  "duration_minutes": 120,
+  "pass_pct": 65,
+  "domain_counts": {
+    "01 — Developing & optimizing dbt models": 28,
+    "02 — Managing dbt models governance": 10,
+    "03 — Debugging data modeling errors": 9,
+    "04 — Troubleshooting & optimizing pipelines": 4,
+    "05 — Implementing dbt tests": 6,
+    "06 — External dependencies": 4,
+    "07 — Leveraging the dbt state": 4
+  },
+  "format_mix": {
+    "mcq": 0.60, "domc": 0.12, "fitb": 0.12, "matching": 0.08, "build_list": 0.08, "hotspot": 0.0
+  },
+  "notes": "Domain counts are proportional to sub-topic count (dbt does not publish per-domain weights); tune to observed exam emphasis. Hotspot is 0 until image-based items are authored."
+}

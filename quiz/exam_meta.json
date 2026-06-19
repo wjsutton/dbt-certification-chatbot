@@ -1,0 +1,20 @@
+{
+  "logistics": {"version":"dbt Core 1.11","questions":65,"duration":"2 hours","pass":"65%","format":"Online proctored","price":"$200","languages":"English & Japanese","expires":"2 years"},
+  "formats": [
+    {"name":"Multiple choice","desc":"Pick one or more correct options from a list (supports select-all-that-apply)."},
+    {"name":"Fill in the blank","desc":"Complete a statement using dropdowns or short-answer fields."},
+    {"name":"Matching","desc":"Pair items from two sets (e.g. selector method to what it selects)."},
+    {"name":"Hot spot","desc":"Click the correct area on an image / code block."},
+    {"name":"Build list","desc":"Arrange items into the correct order or sequence."},
+    {"name":"DOMC","desc":"Discrete Option Multiple Choice: options appear one at a time with YES/NO; a single wrong response fails the item, forward-only."}
+  ],
+  "domains": [
+    {"id":"01","name":"Developing & optimizing dbt models","weight":28,"subs":["Identifying & verifying raw object dependencies","Understanding core dbt materializations","Modularity & DRY principles","Commands: build, run, test, docs, show, snapshot, seed","Logical flow of models & clean DAGs","Defining configurations in dbt_project.yml","Using dbt Packages","Creating Python Models","Providing access with the grants config","Creating snapshots in YAML","Selecting the optimal incremental strategy","Validating logic/schema in dry-runs (--empty flag)","Running models in sample mode (--sample flag)","Advanced materializations such as microbatch"]},
+    {"id":"02","name":"Managing dbt models governance","weight":10,"subs":["Adding contracts to ensure model shape","Creating model versions & deprecating old ones","Defining constraints in YAML for data integrity","Model governance overview","Data product management (reading)"]},
+    {"id":"03","name":"Debugging data modeling errors","weight":9,"subs":["Understanding logged error messages","Troubleshooting using compiled code","Troubleshooting .yml compilation errors","Developing, implementing & testing a fix before merge","Managing dbt behavior with flags"]},
+    {"id":"04","name":"Troubleshooting & optimizing pipelines","weight":4,"subs":["Troubleshooting & managing failure points in the DAG","Using dbt clone"]},
+    {"id":"05","name":"Implementing dbt tests","weight":6,"subs":["Generic, singular, custom, custom generic & unit tests","Testing assumptions for models and sources","Implementing testing steps in the workflow"]},
+    {"id":"06","name":"External dependencies","weight":4,"subs":["Implementing dbt exposures","Implementing source freshness"]},
+    {"id":"07","name":"Leveraging the dbt state","weight":4,"subs":["Understanding state & state selection","Using dbt retry"]}
+  ]
+}

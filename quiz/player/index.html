@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dbt Cert — Exam Practice</title>
+<style>
+  :root{--bg:#0f1419;--panel:#1a2230;--panel2:#222d3d;--line:#33415a;--ink:#e6edf3;--mut:#9fb0c3;
+        --accent:#ff694a;--good:#2ea043;--bad:#e5534b;--warn:#d29922;--chip:#2b3850;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:#6cb6ff}
+  .wrap{max-width:820px;margin:0 auto;padding:24px}
+  h1{font-size:22px;margin:0 0 4px} h2{font-size:17px;margin:0 0 12px}
+  .sub{color:var(--mut);margin:0 0 20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .chip{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--mut)}
+  button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 14px;cursor:pointer;font-size:14px}
+  button:hover{border-color:var(--accent)}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#1a1208;font-weight:600}
+  button.ghost{background:transparent}
+  select,input[type=text]{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}
+  label.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer}
+  label.opt:hover{border-color:var(--accent)} label.opt.sel{border-color:var(--accent);background:#26303f}
+  label.opt.correct{border-color:var(--good);background:#13241a} label.opt.wrong{border-color:var(--bad);background:#2a1718}
+  .mut{color:var(--mut)} .small{font-size:13px}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .timer{font-variant-numeric:tabular-nums;font-weight:600}
+  .progress{height:6px;background:var(--panel2);border-radius:999px;overflow:hidden;margin:10px 0 0}
+  .progress > div{height:100%;background:var(--accent);width:0%}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+  .pill.good{background:#13241a;color:#5ad17a;border:1px solid var(--good)}
+  .pill.bad{background:#2a1718;color:#ff8a80;border:1px solid var(--bad)}
+  .blank{display:inline-block;min-width:120px}
+  ul.build{list-style:none;padding:0;margin:8px 0}
+  ul.build li{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;margin:6px 0;background:var(--panel2)}
+  ul.build li .ord{display:flex;flex-direction:column;gap:2px}
+  ul.build li button{padding:2px 8px;font-size:12px;line-height:1}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kbd{background:#0b0f14;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+  code{background:#0b0f14;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+  .hidden{display:none}
+  .feedback{margin-top:12px;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--panel2)}
+  .cite{font-size:13px;margin-top:6px}
+  .scorebig{font-size:40px;font-weight:700}
+  .dombtns{display:flex;gap:12px;margin-top:14px}
+  .dombtns button{flex:1;padding:14px}
+  table.brk{width:100%;border-collapse:collapse;margin-top:10px}
+  table.brk td,table.brk th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div><strong>dbt Analytics Engineering</strong> <span class="chip">Exam practice · v1.11</span></div>
+    <div id="timer" class="timer mut"></div>
+  </div>
+
+  <!-- START -->
+  <div id="start" class="card">
+    <h1>Practice exam</h1>
+    <p class="sub" id="bankstat">Loading question bank…</p>
+    <div id="loaderr" class="hidden">
+      <p class="small mut">Couldn't auto-load <code>questions.json</code> (browsers block local file reads). Pick it:</p>
+      <input type="file" id="file" accept="application/json">
+    </div>
+    <div id="startcfg" class="hidden">
+      <div class="row" style="margin-bottom:12px">
+        <label>Mode
+          <select id="mode"><option value="practice">Practice (instant feedback)</option>
+          <option value="exam">Exam (timed, locked)</option></select></label>
+        <label>Questions <select id="count"></select></label>
+        <label>Domain <select id="domain"><option value="">All domains</option></select></label>
+      </div>
+      <button class="primary" id="begin">Start</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="hidden">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div><span class="chip" id="qdomain"></span> <span class="chip" id="qfmt"></span> <span class="chip" id="qdiff"></span></div>
+        <div class="mut small" id="qcount"></div>
+      </div>
+      <div class="progress"><div id="bar"></div></div>
+      <h2 id="stem" style="margin-top:16px"></h2>
+      <div id="body"></div>
+      <div id="feedback" class="feedback hidden"></div>
+    </div>
+    <div class="row" style="justify-content:space-between">
+      <button class="ghost" id="prev">← Back</button>
+      <div class="row">
+        <button id="check" class="hidden">Check answer</button>
+        <button class="primary" id="next">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="review" class="hidden"></div>
+
+  <p class="small mut" style="text-align:center;margin-top:24px">Grounded in the dbt cert wiki · every item cites its source.</p>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let BANK=null, CFG={}, ORDER=[], ANS={}, IDX=0, T0=0, TID=null, DEADLINE=0;
+const FMT={mcq:"Multiple choice",fitb:"Fill in the blank",matching:"Matching",build_list:"Build list",domc:"DOMC",hotspot:"Hotspot"};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+// minimal inline-code/`backtick` -> <code>
+const md=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+
+function loadBank(){
+  fetch('../questions.json').then(r=>{if(!r.ok)throw 0;return r.json();})
+    .then(initBank).catch(()=> $('#loaderr').classList.remove('hidden'));
+  $('#file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
+    const rd=new FileReader();rd.onload=()=>initBank(JSON.parse(rd.result));rd.readAsText(f);});
+}
+function initBank(data){
+  BANK=data; const items=data.items;
+  $('#bankstat').textContent=`${items.length} questions · ${new Set(items.map(i=>i.domain)).size} domains · ${new Set(items.map(i=>i.format)).size} formats`;
+  $('#loaderr').classList.add('hidden'); $('#startcfg').classList.remove('hidden');
+  const cs=$('#count'); [5,10,items.length].filter((v,i,a)=>v<=items.length&&a.indexOf(v)===i)
+    .forEach(n=>cs.add(new Option(n===items.length?`All (${n})`:n,n)));
+  const ds=$('#domain'); [...new Set(items.map(i=>i.domain))].sort().forEach(d=>ds.add(new Option(d,d)));
+  $('#begin').onclick=begin;
+}
+function begin(){
+  CFG.mode=$('#mode').value; const n=+$('#count').value; const dom=$('#domain').value;
+  let pool=BANK.items.filter(i=>!dom||i.domain===dom);
+  ORDER=shuffle(pool).slice(0,n); ANS={}; IDX=0;
+  $('#start').classList.add('hidden'); $('#quiz').classList.remove('hidden');
+  if(CFG.mode==='exam'){DEADLINE=Date.now()+Math.max(5,Math.round(n*120/65))*60000; tick(); TID=setInterval(tick,1000);}
+  else { $('#timer').textContent=''; }
+  $('#check').classList.toggle('hidden',CFG.mode!=='practice');
+  render();
+}
+function tick(){const ms=DEADLINE-Date.now(); if(ms<=0){clearInterval(TID);return finish();}
+  const m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000); $('#timer').textContent=`⏱ ${m}:${String(s).padStart(2,'0')}`;
+  $('#timer').className='timer '+(ms<60000?'':'mut');}
+
+function render(){
+  const it=ORDER[IDX];
+  $('#qdomain').textContent=it.domain; $('#qfmt').textContent=FMT[it.format]; $('#qdiff').textContent=it.difficulty;
+  $('#qcount').textContent=`Question ${IDX+1} of ${ORDER.length}`;
+  $('#bar').style.width=((IDX)/ORDER.length*100)+'%';
+  $('#stem').innerHTML=md(it.stem); $('#feedback').classList.add('hidden'); $('#feedback').innerHTML='';
+  $('#prev').disabled=IDX===0;
+  $('#next').textContent = IDX===ORDER.length-1 ? 'Finish ▸' : 'Next →';
+  const B=$('#body'); B.innerHTML=''; renderers[it.format](it,B);
+  if(CFG.mode==='practice' && ANS[it.id] && ANS[it.id].checked) showFeedback(it);
+}
+const renderers={
+  mcq(it,B){const a=ANS[it.id]||(ANS[it.id]={sel:[]}); const multi=it.select_all;
+    it.options.forEach(o=>{const id=`o_${o.id}`;
+      const L=document.createElement('label');L.className='opt';L.innerHTML=
+        `<input type="${multi?'checkbox':'radio'}" name="mcq" value="${o.id}"> <span>${md(o.text)}</span>`;
+      const inp=L.querySelector('input'); inp.checked=a.sel.includes(o.id);
+      inp.onchange=()=>{ if(multi){a.sel=[...B.querySelectorAll('input:checked')].map(x=>x.value);}
+        else a.sel=[o.id]; a.checked=false; };
+      B.appendChild(L);});
+    if(multi){const h=document.createElement('p');h.className='small mut';h.textContent='Select all that apply.';B.appendChild(h);} },
+  fitb(it,B){const a=ANS[it.id]||(ANS[it.id]={vals:{}});
+    const p=document.createElement('p');
+    it.stem.split(/(\{\{[a-z0-9]+\}\})/i).forEach(seg=>{
+      const m=seg.match(/^\{\{([a-z0-9]+)\}\}$/i);
+      if(m){const bl=it.blanks.find(b=>b.id===m[1]); let el;
+        if(bl.type==='dropdown'){el=document.createElement('select');
+          el.innerHTML='<option value=""></option>'+bl.options.map(o=>`<option ${a.vals[bl.id]===o?'selected':''}>${esc(o)}</option>`).join('');}
+        else{el=document.createElement('input');el.type='text';el.placeholder='type…';if(a.vals[bl.id])el.value=a.vals[bl.id];}
+        el.className='blank';el.dataset.b=bl.id;
+        el.oninput=el.onchange=()=>{a.vals[bl.id]=el.value;a.checked=false;};
+        p.appendChild(el);}
+      else{const sp=document.createElement('span');sp.innerHTML=md(seg);p.appendChild(sp);}
+    });
+    B.appendChild(p);
+  },
+  matching(it,B){const a=ANS[it.id]||(ANS[it.id]={map:{}}); const rights=shuffle(it.right.filter((v,i,arr)=>arr.indexOf(v)===i));
+    const g=document.createElement('div');g.className='match-grid';
+    it.left.forEach(l=>{const cell=document.createElement('div');
+      cell.innerHTML=`<div class="small">${md(l)}</div>`;
+      const sel=document.createElement('select');sel.innerHTML=`<option value=""></option>`+rights.map(r=>`<option ${a.map[l]===r?'selected':''}>${esc(r)}</option>`).join('');
+      sel.onchange=()=>{a.map[l]=sel.value;a.checked=false;}; cell.appendChild(sel); g.appendChild(cell);});
+    B.appendChild(g);},
+  build_list(it,B){const a=ANS[it.id]||(ANS[it.id]={order:shuffle(it.items.map(x=>x.id))});
+    const ul=document.createElement('ul');ul.className='build';
+    const draw=()=>{ul.innerHTML='';a.order.forEach((id,i)=>{const item=it.items.find(x=>x.id===id);
+      const li=document.createElement('li');
+      li.innerHTML=`<div class="ord"><button data-up>▲</button><button data-dn>▼</button></div><div><span class="mut">${i+1}.</span> ${md(item.text)}</div>`;
+      li.querySelector('[data-up]').onclick=()=>{if(i>0){[a.order[i-1],a.order[i]]=[a.order[i],a.order[i-1]];a.checked=false;draw();}};
+      li.querySelector('[data-dn]').onclick=()=>{if(i<a.order.length-1){[a.order[i+1],a.order[i]]=[a.order[i],a.order[i+1]];a.checked=false;draw();}};
+      ul.appendChild(li);});};
+    draw();B.appendChild(ul);
+    const h=document.createElement('p');h.className='small mut';h.textContent='Use ▲ ▼ to set the correct order.';B.appendChild(h);},
+  domc(it,B){let a=ANS[it.id]; const n=it.present_n||it.options.length;
+    if(!a){a=ANS[it.id]={queue:shuffle(it.options).slice(0,n),step:0,resp:[],done:false,correct:null};}
+    const prompt=document.createElement('div');
+    if(a.done){ B.innerHTML=`<p class="mut">You answered this DOMC item. <span class="pill ${a.correct?'good':'bad'}">${a.correct?'correct':'incorrect'}</span></p>`; return; }
+    const opt=a.queue[a.step];
+    prompt.innerHTML=`<p class="small mut">DOMC — respond YES or NO. One wrong response fails the item; you cannot go back.</p>
+      <div class="card" style="margin:8px 0"><strong>${md(opt.text)}</strong></div>`;
+    const btns=document.createElement('div');btns.className='dombtns';
+    const answer=(yes)=>{ const good = yes===opt.correct; a.resp.push({t:opt.text,yes,good});
+      if(!good){a.done=true;a.correct=false;}
+      else { a.step++; if(a.step>=a.queue.length){a.done=true;a.correct=true;} }
+      a.checked=a.done; render(); if(a.done && CFG.mode==='practice') showFeedback(it); };
+    const y=document.createElement('button');y.className='primary';y.textContent='YES';y.onclick=()=>answer(true);
+    const no=document.createElement('button');no.textContent='NO';no.onclick=()=>answer(false);
+    btns.append(y,no); prompt.appendChild(btns); B.appendChild(prompt);
+    $('#next').classList.toggle('hidden',!a.done && CFG.mode==='exam'? false:false);
+  }
+};
+
+// ---- grading ----
+function grade(it){const a=ANS[it.id]; if(!a) return {correct:false,score:0};
+  switch(it.format){
+    case 'mcq':{const correct=new Set(it.options.filter(o=>o.correct).map(o=>o.id));
+      const sel=new Set(a.sel||[]); const ok=correct.size===sel.size&&[...correct].every(x=>sel.has(x));
+      return {correct:ok,score:ok?1:0};}
+    case 'fitb':{let n=0;it.blanks.forEach(b=>{const v=(a.vals||{})[b.id]||'';
+      if(b.type==='dropdown'){if(v===b.answer)n++;}
+      else{const norm=x=>x.trim().toLowerCase();if((b.accepted||[]).map(norm).includes(norm(v)))n++;}});
+      const ok=n===it.blanks.length;return {correct:ok,score:n/it.blanks.length};}
+    case 'matching':{let n=0;it.left.forEach(l=>{if((a.map||{})[l]===it.key[l])n++;});
+      const ok=n===it.left.length;return {correct:ok,score:n/it.left.length};}
+    case 'build_list':{const ord=a.order||[];const key=it.answer.order;
+      let n=0;key.forEach((id,i)=>{if(ord[i]===id)n++;});const ok=n===key.length;
+      const weighted=it.scoring.method==='weighted';return {correct:ok,score:ok?1:(weighted?n/key.length:0)};}
+    case 'domc':{return {correct:!!a.correct,score:a.correct?1:0};}
+    default:return {correct:false,score:0};
+  }}
+
+function showFeedback(it){const g=grade(it);const f=$('#feedback');f.classList.remove('hidden');
+  // mark mcq options
+  if(it.format==='mcq'){[...$('#body').querySelectorAll('label.opt')].forEach((L,i)=>{const o=it.options[i];
+    if(o.correct)L.classList.add('correct'); if((ANS[it.id].sel||[]).includes(o.id)&&!o.correct)L.classList.add('wrong');});}
+  f.innerHTML=`<div><span class="pill ${g.correct?'good':'bad'}">${g.correct?'Correct':'Incorrect'}</span>
+     ${g.score>0&&g.score<1?`<span class="mut small"> · partial ${Math.round(g.score*100)}%</span>`:''}</div>
+    <p style="margin:8px 0 4px">${md(it.rationale)}</p>
+    <div class="cite mut">Source: ${it.citations.map(c=>`<a href="../../${c.wiki}">${esc(c.title||c.wiki)}</a>${c.url?` · <a href="${c.url}">dbt docs ↗</a>`:''}`).join(' &nbsp;|&nbsp; ')}</div>`;
+  ANS[it.id].checked=true;}
+
+$('#next').onclick=()=>{const it=ORDER[IDX]; if(CFG.mode==='exam')captureExam(it);
+  if(IDX===ORDER.length-1)return finish(); IDX++; render();};
+$('#prev').onclick=()=>{if(IDX>0){IDX--;render();}};
+$('#check').onclick=()=>{showFeedback(ORDER[IDX]);};
+function captureExam(it){ /* answers already live in ANS via input handlers */ }
+
+function finish(){ if(TID)clearInterval(TID); $('#quiz').classList.add('hidden');
+  let total=0,got=0; const byDom={};
+  ORDER.forEach(it=>{const g=grade(it);total++;got+=g.score;
+    const d=it.domain;(byDom[d]=byDom[d]||{n:0,s:0});byDom[d].n++;byDom[d].s+=g.score;});
+  const pct=Math.round(got/total*100); const pass=pct>=(BANK.pass_pct||65);
+  let rows=Object.entries(byDom).sort().map(([d,o])=>`<tr><td>${esc(d)}</td><td>${o.s.toFixed(1)}/${o.n}</td><td>${Math.round(o.s/o.n*100)}%</td></tr>`).join('');
+  let cards=ORDER.map((it,i)=>{const g=grade(it);
+    return `<div class="card"><div class="row" style="justify-content:space-between">
+      <div class="small mut">Q${i+1} · ${esc(it.domain)} · ${FMT[it.format]}</div>
+      <span class="pill ${g.correct?'good':'bad'}">${g.correct?'correct':(g.score>0?`partial ${Math.round(g.score*100)}%`:'incorrect')}</span></div>
+      <p style="margin:8px 0">${md(it.stem)}</p>
+      <p class="small">${md(it.rationale)}</p>
+      <div class="cite mut">Source: ${it.citations.map(c=>`<a href="../../${c.wiki}">${esc(c.title||c.wiki)}</a>${c.url?` · <a href="${c.url}">dbt docs ↗</a>`:''}`).join(' | ')}</div></div>`;}).join('');
+  $('#review').classList.remove('hidden');
+  $('#review').innerHTML=`<div class="card" style="text-align:center">
+      <div class="scorebig">${pct}%</div>
+      <p><span class="pill ${pass?'good':'bad'}">${pass?'PASS':'Below pass'}</span> <span class="mut small">(pass ≥ ${BANK.pass_pct||65}%)</span></p>
+      <table class="brk"><tr><th>Domain</th><th>Score</th><th>%</th></tr>${rows}</table>
+      <div style="margin-top:14px"><button class="primary" onclick="location.reload()">Take another</button></div>
+    </div><h2>Review</h2>${cards}`;
+  window.scrollTo(0,0);
+}
+loadBank();
+</script>
+</body>
+</html>

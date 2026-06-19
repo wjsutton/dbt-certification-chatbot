@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dbt-cert-wiki/quiz/item.schema.json",
+  "title": "dbt cert quiz item",
+  "type": "object",
+  "required": ["id", "domain", "subtopic", "format", "difficulty", "stem", "scoring", "rationale", "citations", "version_target"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "domain": {"type": "string"},
+    "subtopic": {"type": "string"},
+    "format": {"enum": ["mcq", "fitb", "matching", "hotspot", "build_list", "domc"]},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "stem": {"type": "string", "minLength": 8},
+    "scoring": {
+      "type": "object",
+      "required": ["method"],
+      "additionalProperties": false,
+      "properties": {
+        "method": {"enum": ["default", "partial", "cutscore", "weighted", "manual"]},
+        "points": {"type": "number", "minimum": 0},
+        "min_for_full": {"type": "number"}
+      }
+    },
+    "rationale": {"type": "string", "minLength": 10},
+    "version_target": {"const": "dbt-core-1.11"},
+    "citations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["wiki"],
+        "additionalProperties": false,
+        "properties": {
+          "title": {"type": "string"},
+          "wiki": {"type": "string", "pattern": "^(wiki|raw)/"},
+          "url": {"type": "string", "format": "uri"}
+        }
+      }
+    },
+    "options": {"type": "array"},
+    "select_all": {"type": "boolean"},
+    "selection_limit": {"type": "integer", "minimum": 1},
+    "blanks": {"type": "array"},
+    "left": {"type": "array"},
+    "right": {"type": "array"},
+    "key": {"type": "object"},
+    "items": {"type": "array"},
+    "answer": {},
+    "present_n": {"type": "integer", "minimum": 1},
+    "unscored_after": {"type": "integer", "minimum": 0}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"format": {"const": "mcq"}}},
+      "then": {
+        "required": ["options"],
+        "properties": {
+          "options": {
+            "type": "array", "minItems": 2,
+            "items": {
+              "type": "object", "required": ["id", "text", "correct"], "additionalProperties": false,
+              "properties": {"id": {"type": "string"}, "text": {"type": "string"}, "correct": {"type": "boolean"}}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"format": {"const": "domc"}}},
+      "then": {
+        "required": ["options"],
+        "properties": {
+          "options": {
+            "type": "array", "minItems": 2,
+            "items": {
+              "type": "object", "required": ["text", "correct"], "additionalProperties": false,
+              "properties": {"text": {"type": "string"}, "correct": {"type": "boolean"}}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"format": {"const": "fitb"}}},
+      "then": {
+        "required": ["blanks"],
+        "properties": {
+          "blanks": {
+            "type": "array", "minItems": 1,
+            "items": {
+              "type": "object", "required": ["id", "type"], "additionalProperties": false,
+              "properties": {
+                "id": {"type": "string"},
+                "type": {"enum": ["dropdown", "short_answer"]},
+                "options": {"type": "array", "items": {"type": "string"}},
+                "answer": {"type": "string"},
+                "accepted": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"format": {"const": "matching"}}},
+      "then": {
+        "required": ["left", "right", "key"],
+        "properties": {
+          "left": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+          "right": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+          "key": {"type": "object"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"format": {"const": "build_list"}}},
+      "then": {
+        "required": ["items", "answer"],
+        "properties": {
+          "items": {
+            "type": "array", "minItems": 2,
+            "items": {"type": "object", "required": ["id", "text"], "properties": {"id": {"type": "string"}, "text": {"type": "string"}}}
+          },
+          "answer": {"type": "object", "required": ["order"], "properties": {"order": {"type": "array", "items": {"type": "string"}}}}
+        }
+      }
+    }
+  ]
+}

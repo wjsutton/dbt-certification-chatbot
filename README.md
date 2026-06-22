@@ -16,10 +16,26 @@ CLAUDE.md   operating manual for the LLM wiki maintainer
 PRD.md      product requirements
 ```
 
+## Quickstart (Claude Cowork)
+
+Fastest path — run the generator as a live **Cowork artifact**. In the Claude
+desktop app (Cowork mode), connect the folder containing this repo, then paste:
+
+```
+Read `quiz/generator.html` from this folder and register it as a live Cowork
+artifact with the id `dbt-question-generator` — call create_artifact with that
+file as html_path (no mcp_tools needed). Then open it.
+```
+
+This registers the app as a live artifact and opens it. It must be Cowork — the
+AI features run on `window.cowork.askClaude`, so no server, keys, or connectors
+are needed. To push later edits, ask: `Update the dbt-question-generator
+artifact from quiz/generator.html.`
+
 ## Four ways to use it
 
 1. **Live Cowork artifact (recommended for the team).** `quiz/generator.html` is
-   a single self-contained app — Test, Learn, Interview, and a full timed,
+   a single self-contained app — Test, Learn, and a full timed,
    Caveon-style **mock-exam simulator** — that runs as a live artifact inside the
    Claude desktop app's Cowork mode. Generation, tutoring, and grading run on
    `window.cowork.askClaude`, grounded in the embedded wiki; no server or keys.

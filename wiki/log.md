@@ -97,3 +97,8 @@ Append-only timeline. Prefix entries `## [YYYY-MM-DD] <op> | <subject>` so they 
 - Created wiki/notes/interview-prompt-unit-tests.md: self-contained copy-paste
   interviewer prompt for unit tests, emphasising the unit-vs-data-test contrast.
   Grounded in unit-tests/data-tests. Linked from index.md.
+
+## [2026-06-27] note | Cram sheet
+- Created wiki/notes/cram-sheet.md: consolidated one-page review of the exact
+  tokens missed across five practice rounds, grouped by topic with doc links.
+  Linked from index.md.

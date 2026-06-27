@@ -17,6 +17,7 @@ Catalog of the wiki. Read this first when answering a query.
 - [What's new for the dbt Core 1.11 certification](notes/whats-new-in-1.11.md) — `done`
 - [Interview prompt — microbatch incremental models](notes/interview-prompt-microbatch.md) — `done`
 - [Interview prompt — unit tests](notes/interview-prompt-unit-tests.md) — `done`
+- [Cram sheet — missed tokens (dbt Core 1.11)](notes/cram-sheet.md) — `done`
 
 ## Contents (by exam domain, sub-topic & source)
 

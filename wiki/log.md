@@ -86,3 +86,9 @@ Append-only timeline. Prefix entries `## [YYYY-MM-DD] <op> | <subject>` so they 
 - Created wiki/notes/whats-new-in-1.11.md: version-tagged feature diff (v1.9–v1.11)
   distinguishing in-scope 1.11 content from out-of-scope v1.12 items.
 - Linked from index.md (new Notes section).
+
+## [2026-06-27] note | Interview prompt — microbatch
+- Created wiki/notes/interview-prompt-microbatch.md: self-contained copy-paste
+  prompt that turns a fresh Claude chat into an adaptive interviewer on the
+  microbatch incremental strategy. Grounded in incremental-microbatch/-strategy/
+  -models-overview. Linked from index.md.

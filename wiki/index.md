@@ -15,6 +15,7 @@ Catalog of the wiki. Read this first when answering a query.
 
 ## Notes
 - [What's new for the dbt Core 1.11 certification](notes/whats-new-in-1.11.md) — `done`
+- [Interview prompt — microbatch incremental models](notes/interview-prompt-microbatch.md) — `done`
 
 ## Contents (by exam domain, sub-topic & source)
 

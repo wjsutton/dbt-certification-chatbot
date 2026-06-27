@@ -92,3 +92,8 @@ Append-only timeline. Prefix entries `## [YYYY-MM-DD] <op> | <subject>` so they 
   prompt that turns a fresh Claude chat into an adaptive interviewer on the
   microbatch incremental strategy. Grounded in incremental-microbatch/-strategy/
   -models-overview. Linked from index.md.
+
+## [2026-06-27] note | Interview prompt — unit tests
+- Created wiki/notes/interview-prompt-unit-tests.md: self-contained copy-paste
+  interviewer prompt for unit tests, emphasising the unit-vs-data-test contrast.
+  Grounded in unit-tests/data-tests. Linked from index.md.

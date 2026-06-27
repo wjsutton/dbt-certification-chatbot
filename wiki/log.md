@@ -81,3 +81,8 @@ Append-only timeline. Prefix entries `## [YYYY-MM-DD] <op> | <subject>` so they 
 ## [2026-06-12] ingest | Domains 01-06 fully ingested + questions
 - Added ~50 source summaries (sources/), filled all concept syntheses (status: done).
 - Question bank grown to 66 items across all 7 domains and 5 formats.
+
+## [2026-06-27] note | What's new in 1.11
+- Created wiki/notes/whats-new-in-1.11.md: version-tagged feature diff (v1.9–v1.11)
+  distinguishing in-scope 1.11 content from out-of-scope v1.12 items.
+- Linked from index.md (new Notes section).

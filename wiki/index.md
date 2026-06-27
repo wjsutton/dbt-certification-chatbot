@@ -13,6 +13,9 @@ Catalog of the wiki. Read this first when answering a query.
 - [Overview](overview.md)
 - [Change log](log.md)
 
+## Notes
+- [What's new for the dbt Core 1.11 certification](notes/whats-new-in-1.11.md) — `done`
+
 ## Contents (by exam domain, sub-topic & source)
 
 ### [01 — Developing & optimizing dbt models](concepts/01-developing-and-optimizing-dbt-models.md)

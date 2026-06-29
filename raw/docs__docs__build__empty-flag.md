@@ -2,7 +2,7 @@
 title: "About the `--empty` flag"
 source_url: https://docs.getdbt.com/docs/build/empty-flag
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About the `--empty` flag

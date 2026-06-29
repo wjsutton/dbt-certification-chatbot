@@ -2,7 +2,7 @@
 title: "About dbt test command"
 source_url: https://docs.getdbt.com/reference/commands/test
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About dbt test command

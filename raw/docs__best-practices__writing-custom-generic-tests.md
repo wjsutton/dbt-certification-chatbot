@@ -2,7 +2,7 @@
 title: "Writing custom generic data tests"
 source_url: https://docs.getdbt.com/best-practices/writing-custom-generic-tests
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Writing custom generic data tests

@@ -2,7 +2,7 @@
 title: "Syntax overview"
 source_url: https://docs.getdbt.com/reference/node-selection/syntax
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Syntax overview

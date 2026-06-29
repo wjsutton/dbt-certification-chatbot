@@ -1,7 +1,7 @@
 ---
 title: "Index"
 tags: [index]
-updated: 2026-06-12
+updated: 2026-06-29
 ---
 
 
@@ -18,7 +18,7 @@ Catalog of the wiki. Read this first when answering a query.
 ### [01 — Developing & optimizing dbt models](concepts/01-developing-and-optimizing-dbt-models.md)
 
 - **Identifying & verifying raw object dependencies** — [Add sources to your DAG](../sources/sources.md) · [Source configurations](../sources/source-configs.md) · [Source freshness](../sources/source-freshness.md)
-- **Understanding core dbt materializations** — [Materializations](../sources/materializations.md) · [Materializations best practices](../sources/materializations-1-guide-overview.md) · [Best practices for materializations](../sources/materializations-5-best-practices.md)
+- **Understanding core dbt materializations** — [Materializations](../sources/materializations.md) · [Materialization best practices (guide)](../sources/materializations-1-guide-overview.md) · [Best practices for materializations](../sources/materializations-5-best-practices.md)
 - **Modularity & DRY principles** — [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md) · [Refactoring legacy SQL to dbt](../sources/refactoring-legacy-sql.md) · [The dbt Viewpoint](../sources/viewpoint.md)
 - **Commands: build, run, test, docs, show, snapshot, seed** — [About dbt build command](../sources/build.md) · [About dbt run command](../sources/run.md) · [About dbt test command](../sources/test.md) · [About dbt docs commands](../sources/cmd-docs.md) · [dbt Command reference](../sources/dbt-commands.md) · [About dbt snapshot command](../sources/snapshot.md) · [About dbt seed command](../sources/seed.md)
 - **Logical flow of models & clean DAGs** — [Syntax overview](../sources/syntax.md) · [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md)
@@ -57,7 +57,7 @@ Catalog of the wiki. Read this first when answering a query.
 
 - **Generic, singular, custom, custom generic & unit tests** — [Add data tests to your DAG](../sources/data-tests.md) · [Unit tests](../sources/unit-tests.md) · [Writing custom generic data tests](../sources/writing-custom-generic-tests.md) · [Data test configurations](../sources/data-test-configs.md)
 - **Testing assumptions for models and sources** — [Add data tests to your DAG](../sources/data-tests.md)
-- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests to your dbt project](../sources/test-smarter-not-harder.md) · [Test smarter not harder: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
+- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests](../sources/test-smarter-not-harder.md) · [Test smarter: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
 
 ### [06 — External dependencies](concepts/06-external-dependencies.md)
 
@@ -133,11 +133,11 @@ Catalog of the wiki. Read this first when answering a query.
 - [Best practices for workflows](../raw/docs__best-practices__best-practice-workflows.md) · `Doc` · [source](https://docs.getdbt.com/best-practices/best-practice-workflows)
 - [Clone incremental models as the first step of your CI job](../raw/docs__best-practices__clone-incremental-models.md) · `Doc` · [source](https://docs.getdbt.com/best-practices/clone-incremental-models)
 - [How we structure our dbt projects](../raw/docs__best-practices__how-we-structure__1-guide-overview.md) · `Doc` · [source](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview)
-- [Materializations best practices](../raw/docs__best-practices__materializations__1-guide-overview.md) · `Guide` · [source](https://docs.getdbt.com/best-practices/materializations/1-guide-overview)
+- [Materialization best practices (guide)](../raw/docs__best-practices__materializations__1-guide-overview.md) · `Guide` · [source](https://docs.getdbt.com/best-practices/materializations/1-guide-overview)
 - [Best practices for materializations](../raw/docs__best-practices__materializations__5-best-practices.md) · `Doc` · [source](https://docs.getdbt.com/best-practices/materializations/5-best-practices)
 - [Writing custom generic data tests](../raw/docs__best-practices__writing-custom-generic-tests.md) · `Guide` · [source](https://docs.getdbt.com/best-practices/writing-custom-generic-tests)
-- [Test smarter not harder: add the right tests to your dbt project](../raw/docs__blog__test-smarter-not-harder.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-not-harder)
-- [Test smarter not harder: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go)
+- [Test smarter not harder: add the right tests](../raw/docs__blog__test-smarter-not-harder.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-not-harder)
+- [Test smarter: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go)
 - [To defer or to clone, that is the question](../raw/docs__blog__to-defer-or-to-clone.md) · `Blog` · [source](https://docs.getdbt.com/blog/to-defer-or-to-clone)
 - [The dbt Viewpoint](../raw/docs__community__resources__viewpoint.md) · `Doc` · [source](https://docs.getdbt.com/community/resources/viewpoint)
 - [Add data tests to your DAG](../raw/docs__docs__build__data-tests.md) · `Doc` · [source](https://docs.getdbt.com/docs/build/data-tests)

@@ -2,7 +2,7 @@
 title: "dbt Command reference"
 source_url: https://docs.getdbt.com/reference/dbt-commands
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # dbt Command reference
@@ -70,5 +70,6 @@ Commands marked ❌ indicate write commands, commands marked ✅ indicate read c
 | [snapshot](https://docs.getdbt.com/reference/commands/snapshot) | Executes "snapshot" jobs defined in a project |  ❌ | All tools <br /> All [supported versions](https://docs.getdbt.com/docs/dbt-versions) |
 | [source](https://docs.getdbt.com/reference/commands/source) | Provides tools for working with source data (including validating that sources are "fresh") | ✅ | All tools<br /> All [supported versions](https://docs.getdbt.com/docs/dbt-versions) |
 | [test](https://docs.getdbt.com/reference/commands/test) | Executes tests defined in a project  |  ✅ | All tools <br /> All [supported versions](https://docs.getdbt.com/docs/dbt-versions) <br /> fusion flag `--warn-error` not yet supported  |
+| [`wizard`](https://docs.getdbt.com/docs/dbt-ai/wizard-cli-reference) | Starts an agentic dbt development session with wizard from the command line | N/A | Local development <br />  [All supported versions](https://docs.getdbt.com/docs/dbt-versions) |
 
 Note, use the [`--version`](https://docs.getdbt.com/reference/commands/version) flag to display the installed core or platform_cli version. (Not applicable for the studio_ide). Available on all [supported versions](https://docs.getdbt.com/docs/dbt-versions).

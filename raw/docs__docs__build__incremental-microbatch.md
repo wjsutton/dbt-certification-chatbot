@@ -2,7 +2,7 @@
 title: "About microbatch incremental models"
 source_url: https://docs.getdbt.com/docs/build/incremental-microbatch
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About microbatch incremental models

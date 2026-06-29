@@ -2,7 +2,7 @@
 title: "How we structure our dbt projects"
 source_url: https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # How we structure our dbt projects

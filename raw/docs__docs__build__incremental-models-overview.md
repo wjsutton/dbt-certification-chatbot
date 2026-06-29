@@ -2,7 +2,7 @@
 title: "About incremental models"
 source_url: https://docs.getdbt.com/docs/build/incremental-models-overview
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About incremental models
@@ -10,6 +10,10 @@ fetched: 2026-06-12
 Incremental models in dbt is a [materialization](https://docs.getdbt.com/docs/build/materializations) strategy designed to efficiently update your data warehouse tables by only transforming and loading new or changed data since the last run. Instead of processing your entire dataset every time, incremental models append or update only the new rows, significantly reducing the time and resources required for your data transformations.
 
 This page will provide you with a brief overview of incremental models, their importance in data transformations, and the core concepts of incremental materializations in dbt.
+
+> **Build idempotent incremental models**
+>
+> Incremental models are stateful, so they're the easiest place to accidentally break [idempotence](https://docs.getdbt.com/best-practices/idempotence) &mdash; the expectation that re-running a model produces the same result. Before you configure one, review [Idempotence in dbt](https://docs.getdbt.com/best-practices/idempotence#idempotence-and-incremental-models).
 
 ## Understand incremental models
 

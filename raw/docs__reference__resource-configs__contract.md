@@ -2,7 +2,7 @@
 title: "docs__reference__resource-configs__contract.md"
 source_url: https://docs.getdbt.com/reference/resource-configs/contract
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 When the `contract` configuration is enforced, dbt will ensure that your model's returned dataset exactly matches the attributes you have defined in YAML:

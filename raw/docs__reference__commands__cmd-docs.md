@@ -2,7 +2,7 @@
 title: "About dbt docs commands"
 source_url: https://docs.getdbt.com/reference/commands/cmd-docs
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About dbt docs commands

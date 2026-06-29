@@ -2,7 +2,7 @@
 title: "About dbt build command"
 source_url: https://docs.getdbt.com/reference/commands/build
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About dbt build command

@@ -2,7 +2,7 @@
 title: "Clone incremental models as the first step of your CI job"
 source_url: https://docs.getdbt.com/best-practices/clone-incremental-models
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Clone incremental models as the first step of your CI job

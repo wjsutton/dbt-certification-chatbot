@@ -2,7 +2,7 @@
 title: "Model versions"
 source_url: https://docs.getdbt.com/docs/mesh/govern/model-versions
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Model versions

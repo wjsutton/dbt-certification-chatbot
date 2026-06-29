@@ -2,7 +2,7 @@
 title: "The dbt Viewpoint"
 source_url: https://docs.getdbt.com/community/resources/viewpoint
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # The dbt Viewpoint

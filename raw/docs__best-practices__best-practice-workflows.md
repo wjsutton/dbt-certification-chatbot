@@ -2,7 +2,7 @@
 title: "Best practices for workflows"
 source_url: https://docs.getdbt.com/best-practices/best-practice-workflows
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Best practices for workflows

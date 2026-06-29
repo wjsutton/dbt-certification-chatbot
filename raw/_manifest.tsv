@@ -1,58 +1,56 @@
 file	title	method	chars	source_url
-docs__best-practices__best-practice-workflows.md	Best practices for workflows	md-endpoint	14184	https://docs.getdbt.com/best-practices/best-practice-workflows
-docs__best-practices__clone-incremental-models.md	Clone incremental models as the first step of your CI job	md-endpoint	6057	https://docs.getdbt.com/best-practices/clone-incremental-models
-docs__best-practices__how-we-structure__1-guide-overview.md	How we structure our dbt projects	md-endpoint	8367	https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview
-docs__best-practices__materializations__1-guide-overview.md	Materializations best practices	md-endpoint	2189	https://docs.getdbt.com/best-practices/materializations/1-guide-overview
-docs__best-practices__materializations__5-best-practices.md	Best practices for materializations	md-endpoint	2902	https://docs.getdbt.com/best-practices/materializations/5-best-practices
-docs__best-practices__writing-custom-generic-tests.md	Writing custom generic data tests	md-endpoint	8045	https://docs.getdbt.com/best-practices/writing-custom-generic-tests
-docs__blog__essential-dbt-project-checklist.md	Your Essential dbt Project Checklist	md-endpoint	3660	https://docs.getdbt.com/blog/essential-dbt-project-checklist
-docs__blog__test-smarter-not-harder.md	Test smarter not harder: add the right tests to your dbt project	md-endpoint	2811	https://docs.getdbt.com/blog/test-smarter-not-harder
-docs__blog__test-smarter-where-tests-should-go.md	Test smarter not harder: Where should tests go in your pipeline?	md-endpoint	3468	https://docs.getdbt.com/blog/test-smarter-where-tests-should-go
-docs__blog__to-defer-or-to-clone.md	To defer or to clone, that is the question	md-endpoint	3020	https://docs.getdbt.com/blog/to-defer-or-to-clone
-docs__community__resources__viewpoint.md	The dbt Viewpoint	md-endpoint	5634	https://docs.getdbt.com/community/resources/viewpoint
-docs__docs__build__data-tests.md	Add data tests to your DAG	md-endpoint	13758	https://docs.getdbt.com/docs/build/data-tests
-docs__docs__build__empty-flag.md	About the `--empty` flag	md-endpoint	1347	https://docs.getdbt.com/docs/build/empty-flag
-docs__docs__build__exposures.md	Add Exposures to your DAG	md-endpoint	4190	https://docs.getdbt.com/docs/build/exposures
-docs__docs__build__incremental-microbatch.md	About microbatch incremental models	md-endpoint	17954	https://docs.getdbt.com/docs/build/incremental-microbatch
-docs__docs__build__incremental-models-overview.md	About incremental models	md-endpoint	3689	https://docs.getdbt.com/docs/build/incremental-models-overview
-docs__docs__build__incremental-strategy.md	About incremental strategy	md-endpoint	13304	https://docs.getdbt.com/docs/build/incremental-strategy
-docs__docs__build__materializations.md	Materializations	md-endpoint	10577	https://docs.getdbt.com/docs/build/materializations
-docs__docs__build__packages.md	Packages	md-endpoint	22017	https://docs.getdbt.com/docs/build/packages
-docs__docs__build__python-models.md	Python models	md-endpoint	28583	https://docs.getdbt.com/docs/build/python-models
-docs__docs__build__sample-flag.md	About the `--sample` flag	md-endpoint	3136	https://docs.getdbt.com/docs/build/sample-flag
-docs__docs__build__snapshots.md	Add snapshots to your DAG	md-endpoint	27159	https://docs.getdbt.com/docs/build/snapshots
-docs__docs__build__sources.md	Add sources to your DAG	md-endpoint	8970	https://docs.getdbt.com/docs/build/sources
-docs__docs__build__unit-tests.md	Unit tests	md-endpoint	15867	https://docs.getdbt.com/docs/build/unit-tests
-docs__docs__deploy__source-freshness.md	Source freshness	md-endpoint	3808	https://docs.getdbt.com/docs/deploy/source-freshness
-docs__docs__mesh__govern__about-model-governance.md	About model governance	md-endpoint	2439	https://docs.getdbt.com/docs/mesh/govern/about-model-governance
-docs__docs__mesh__govern__model-contracts.md	Model contracts	md-endpoint	5954	https://docs.getdbt.com/docs/mesh/govern/model-contracts
-docs__docs__mesh__govern__model-versions.md	Model versions	md-endpoint	25411	https://docs.getdbt.com/docs/mesh/govern/model-versions
-docs__guides__debug-errors.md	Debug errors	md-endpoint	13925	https://docs.getdbt.com/guides/debug-errors
-docs__guides__refactoring-legacy-sql.md	Refactoring legacy SQL to dbt	md-endpoint	12917	https://docs.getdbt.com/guides/refactoring-legacy-sql
-docs__reference__commands__build.md	About dbt build command	md-endpoint	6722	https://docs.getdbt.com/reference/commands/build
-docs__reference__commands__clone.md	About dbt clone command	md-endpoint	3882	https://docs.getdbt.com/reference/commands/clone
-docs__reference__commands__cmd-docs.md	About dbt docs commands	md-endpoint	9962	https://docs.getdbt.com/reference/commands/cmd-docs
-docs__reference__commands__compile.md	About dbt compile command	md-endpoint	5288	https://docs.getdbt.com/reference/commands/compile
-docs__reference__commands__retry.md	About dbt retry command	md-endpoint	10277	https://docs.getdbt.com/reference/commands/retry
-docs__reference__commands__run.md	About dbt run command	md-endpoint	4003	https://docs.getdbt.com/reference/commands/run
-docs__reference__commands__seed.md	About dbt seed command	md-endpoint	4470	https://docs.getdbt.com/reference/commands/seed
-docs__reference__commands__snapshot.md	About dbt snapshot command	md-endpoint	1411	https://docs.getdbt.com/reference/commands/snapshot
-docs__reference__commands__source.md	About dbt source command	md-endpoint	5530	https://docs.getdbt.com/reference/commands/source
-docs__reference__commands__test.md	About dbt test command	md-endpoint	1234	https://docs.getdbt.com/reference/commands/test
-docs__reference__data-test-configs.md	Data test configurations	md-endpoint	14873	https://docs.getdbt.com/reference/data-test-configs
-docs__reference__dbt-commands.md	dbt Command reference	md-endpoint	9138	https://docs.getdbt.com/reference/dbt-commands
-docs__reference__dbt_project.yml.md	docs__reference__dbt_project.yml.md	md-endpoint	6966	https://docs.getdbt.com/reference/dbt_project.yml
-docs__reference__exposure-properties.md	Exposure properties	md-endpoint	3623	https://docs.getdbt.com/reference/exposure-properties
-docs__reference__global-configs__about-global-configs.md	About flags (global configs)	md-endpoint	21150	https://docs.getdbt.com/reference/global-configs/about-global-configs
-docs__reference__global-configs__behavior-changes.md	Behavior changes	md-endpoint	14791	https://docs.getdbt.com/reference/global-configs/behavior-changes
-docs__reference__node-selection__defer.md	Defer	md-endpoint	7185	https://docs.getdbt.com/reference/node-selection/defer
-docs__reference__node-selection__methods.md	Node selector methods	md-endpoint	23436	https://docs.getdbt.com/reference/node-selection/methods
-docs__reference__node-selection__state-selection.md	About local state in dbt	md-endpoint	2667	https://docs.getdbt.com/reference/node-selection/state-selection
-docs__reference__node-selection__syntax.md	Syntax overview	md-endpoint	10763	https://docs.getdbt.com/reference/node-selection/syntax
-docs__reference__resource-configs__contract.md	docs__reference__resource-configs__contract.md	md-endpoint	9069	https://docs.getdbt.com/reference/resource-configs/contract
-docs__reference__resource-configs__grants.md	docs__reference__resource-configs__grants.md	md-endpoint	11489	https://docs.getdbt.com/reference/resource-configs/grants
-docs__reference__resource-properties__constraints.md	docs__reference__resource-properties__constraints.md	md-endpoint	17989	https://docs.getdbt.com/reference/resource-properties/constraints
-docs__reference__resource-properties__freshness.md	docs__reference__resource-properties__freshness.md	md-endpoint	10834	https://docs.getdbt.com/reference/resource-properties/freshness
-docs__reference__resource-properties__versions.md	docs__reference__resource-properties__versions.md	md-endpoint	9659	https://docs.getdbt.com/reference/resource-properties/versions
-docs__reference__source-configs.md	Source configurations	md-endpoint	9178	https://docs.getdbt.com/reference/source-configs
-getdbt__blog__data-product-management.md	Data product management: Best practices	md-endpoint	18802	https://www.getdbt.com/blog/data-product-management
+docs__docs__build__sources.md	Add sources to your DAG	md-endpoint	8969	https://docs.getdbt.com/docs/build/sources
+docs__reference__source-configs.md	Source configurations	md-endpoint	9177	https://docs.getdbt.com/reference/source-configs
+docs__docs__deploy__source-freshness.md	Source freshness	md-endpoint	3807	https://docs.getdbt.com/docs/deploy/source-freshness
+docs__docs__build__materializations.md	Materializations	md-endpoint	10576	https://docs.getdbt.com/docs/build/materializations
+docs__best-practices__how-we-structure__1-guide-overview.md	How we structure our dbt projects	md-endpoint	8366	https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview
+docs__guides__refactoring-legacy-sql.md	Refactoring legacy SQL to dbt	md-endpoint	12916	https://docs.getdbt.com/guides/refactoring-legacy-sql
+docs__community__resources__viewpoint.md	The dbt Viewpoint	md-endpoint	5633	https://docs.getdbt.com/community/resources/viewpoint
+docs__reference__commands__build.md	About dbt build command	md-endpoint	6721	https://docs.getdbt.com/reference/commands/build
+docs__reference__commands__run.md	About dbt run command	md-endpoint	4002	https://docs.getdbt.com/reference/commands/run
+docs__reference__commands__test.md	About dbt test command	md-endpoint	1233	https://docs.getdbt.com/reference/commands/test
+docs__reference__commands__cmd-docs.md	About dbt docs commands	md-endpoint	9961	https://docs.getdbt.com/reference/commands/cmd-docs
+docs__reference__dbt-commands.md	dbt Command reference	md-endpoint	9390	https://docs.getdbt.com/reference/dbt-commands
+docs__reference__commands__snapshot.md	About dbt snapshot command	md-endpoint	1410	https://docs.getdbt.com/reference/commands/snapshot
+docs__reference__commands__seed.md	About dbt seed command	md-endpoint	4469	https://docs.getdbt.com/reference/commands/seed
+docs__reference__node-selection__syntax.md	Syntax overview	md-endpoint	10762	https://docs.getdbt.com/reference/node-selection/syntax
+docs__reference__dbt_project.yml.md		md-endpoint	7055	https://docs.getdbt.com/reference/dbt_project.yml
+docs__docs__build__packages.md	Packages	md-endpoint	23279	https://docs.getdbt.com/docs/build/packages
+docs__docs__build__python-models.md	Python models	md-endpoint	28582	https://docs.getdbt.com/docs/build/python-models
+docs__reference__resource-configs__grants.md		md-endpoint	11488	https://docs.getdbt.com/reference/resource-configs/grants
+docs__docs__build__snapshots.md	Add snapshots to your DAG	md-endpoint	27158	https://docs.getdbt.com/docs/build/snapshots
+docs__docs__build__incremental-strategy.md	About incremental strategy	md-endpoint	13358	https://docs.getdbt.com/docs/build/incremental-strategy
+docs__docs__build__incremental-models-overview.md	About incremental models	md-endpoint	4101	https://docs.getdbt.com/docs/build/incremental-models-overview
+docs__docs__build__empty-flag.md	About the `--empty` flag	md-endpoint	1346	https://docs.getdbt.com/docs/build/empty-flag
+docs__docs__build__sample-flag.md	About the `--sample` flag	md-endpoint	3135	https://docs.getdbt.com/docs/build/sample-flag
+docs__docs__build__incremental-microbatch.md	About microbatch incremental models	md-endpoint	17953	https://docs.getdbt.com/docs/build/incremental-microbatch
+docs__docs__mesh__govern__model-contracts.md	Model contracts	md-endpoint	5953	https://docs.getdbt.com/docs/mesh/govern/model-contracts
+docs__reference__resource-configs__contract.md		md-endpoint	9068	https://docs.getdbt.com/reference/resource-configs/contract
+docs__docs__mesh__govern__model-versions.md	Model versions	md-endpoint	25410	https://docs.getdbt.com/docs/mesh/govern/model-versions
+docs__reference__resource-properties__versions.md		md-endpoint	9658	https://docs.getdbt.com/reference/resource-properties/versions
+docs__reference__resource-properties__constraints.md		md-endpoint	17988	https://docs.getdbt.com/reference/resource-properties/constraints
+docs__docs__mesh__govern__about-model-governance.md	About model governance	md-endpoint	2438	https://docs.getdbt.com/docs/mesh/govern/about-model-governance
+docs__guides__debug-errors.md	Debug errors	md-endpoint	13924	https://docs.getdbt.com/guides/debug-errors
+docs__reference__commands__compile.md	About dbt compile command	md-endpoint	5287	https://docs.getdbt.com/reference/commands/compile
+docs__best-practices__best-practice-workflows.md	Best practices for workflows	md-endpoint	14183	https://docs.getdbt.com/best-practices/best-practice-workflows
+docs__reference__global-configs__about-global-configs.md	About flags (global configs)	md-endpoint	21149	https://docs.getdbt.com/reference/global-configs/about-global-configs
+docs__reference__global-configs__behavior-changes.md	Behavior changes	md-endpoint	14979	https://docs.getdbt.com/reference/global-configs/behavior-changes
+docs__reference__commands__retry.md	About dbt retry command	md-endpoint	10276	https://docs.getdbt.com/reference/commands/retry
+docs__reference__commands__clone.md	About dbt clone command	md-endpoint	3881	https://docs.getdbt.com/reference/commands/clone
+docs__best-practices__clone-incremental-models.md	Clone incremental models as the first step of your CI job	md-endpoint	6056	https://docs.getdbt.com/best-practices/clone-incremental-models
+docs__docs__build__data-tests.md	Add data tests to your DAG	md-endpoint	13757	https://docs.getdbt.com/docs/build/data-tests
+docs__docs__build__unit-tests.md	Unit tests	md-endpoint	15866	https://docs.getdbt.com/docs/build/unit-tests
+docs__best-practices__writing-custom-generic-tests.md	Writing custom generic data tests	md-endpoint	8044	https://docs.getdbt.com/best-practices/writing-custom-generic-tests
+docs__reference__data-test-configs.md	Data test configurations	md-endpoint	14872	https://docs.getdbt.com/reference/data-test-configs
+docs__docs__build__exposures.md	Add Exposures to your DAG	md-endpoint	4189	https://docs.getdbt.com/docs/build/exposures
+docs__reference__exposure-properties.md	Exposure properties	md-endpoint	3622	https://docs.getdbt.com/reference/exposure-properties
+docs__reference__commands__source.md	About dbt source command	md-endpoint	5529	https://docs.getdbt.com/reference/commands/source
+docs__reference__resource-properties__freshness.md		md-endpoint	10833	https://docs.getdbt.com/reference/resource-properties/freshness
+docs__reference__node-selection__state-selection.md	About local state in dbt	md-endpoint	2990	https://docs.getdbt.com/reference/node-selection/state-selection
+docs__reference__node-selection__methods.md	Node selector methods	md-endpoint	23561	https://docs.getdbt.com/reference/node-selection/methods
+docs__reference__node-selection__defer.md	Defer	md-endpoint	7184	https://docs.getdbt.com/reference/node-selection/defer
+docs__blog__to-defer-or-to-clone.md		html-extract	1	https://docs.getdbt.com/blog/to-defer-or-to-clone
+docs__blog__test-smarter-not-harder.md		html-extract	1	https://docs.getdbt.com/blog/test-smarter-not-harder
+docs__blog__test-smarter-where-tests-should-go.md		html-extract	1	https://docs.getdbt.com/blog/test-smarter-where-tests-should-go
+docs__blog__essential-dbt-project-checklist.md		html-extract	1	https://docs.getdbt.com/blog/essential-dbt-project-checklist
+getdbt__blog__data-product-management.md	Data product management: Best practices	html-extract	19011	https://www.getdbt.com/blog/data-product-management

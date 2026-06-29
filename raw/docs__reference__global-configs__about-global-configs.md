@@ -2,7 +2,7 @@
 title: "About flags (global configs)"
 source_url: https://docs.getdbt.com/reference/global-configs/about-global-configs
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About flags (global configs)

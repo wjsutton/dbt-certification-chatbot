@@ -2,7 +2,7 @@
 title: "Source configurations"
 source_url: https://docs.getdbt.com/reference/source-configs
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Source configurations

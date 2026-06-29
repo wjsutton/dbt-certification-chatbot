@@ -2,7 +2,7 @@
 title: "Data test configurations"
 source_url: https://docs.getdbt.com/reference/data-test-configs
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Data test configurations

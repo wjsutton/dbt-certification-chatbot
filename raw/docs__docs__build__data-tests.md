@@ -2,7 +2,7 @@
 title: "Add data tests to your DAG"
 source_url: https://docs.getdbt.com/docs/build/data-tests
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Add data tests to your DAG

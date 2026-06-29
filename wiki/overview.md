@@ -1,7 +1,7 @@
 ---
 title: "Overview — dbt Analytics Engineering Certification wiki"
 tags: [overview]
-updated: 2026-06-12
+updated: 2026-06-29
 ---
 
 

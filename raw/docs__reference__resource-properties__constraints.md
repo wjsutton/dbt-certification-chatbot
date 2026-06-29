@@ -2,7 +2,7 @@
 title: "docs__reference__resource-properties__constraints.md"
 source_url: https://docs.getdbt.com/reference/resource-properties/constraints
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 Constraints are a feature of many data platforms. When specified, the platform will perform additional validation on data as it is being populated in a new table or inserted into a preexisting table. If the validation fails, the table creation or update fails, the operation is rolled back, and you will see a clear error message.

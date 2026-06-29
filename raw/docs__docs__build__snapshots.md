@@ -2,7 +2,7 @@
 title: "Add snapshots to your DAG"
 source_url: https://docs.getdbt.com/docs/build/snapshots
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Add snapshots to your DAG

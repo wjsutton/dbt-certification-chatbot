@@ -2,7 +2,7 @@
 title: "Debug errors"
 source_url: https://docs.getdbt.com/guides/debug-errors
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Debug errors

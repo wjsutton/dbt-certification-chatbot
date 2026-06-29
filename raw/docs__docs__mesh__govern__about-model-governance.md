@@ -2,7 +2,7 @@
 title: "About model governance"
 source_url: https://docs.getdbt.com/docs/mesh/govern/about-model-governance
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # About model governance

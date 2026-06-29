@@ -2,7 +2,7 @@
 title: "Refactoring legacy SQL to dbt"
 source_url: https://docs.getdbt.com/guides/refactoring-legacy-sql
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Refactoring legacy SQL to dbt

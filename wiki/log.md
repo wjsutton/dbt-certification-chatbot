@@ -81,3 +81,62 @@ Append-only timeline. Prefix entries `## [YYYY-MM-DD] <op> | <subject>` so they 
 ## [2026-06-12] ingest | Domains 01-06 fully ingested + questions
 - Added ~50 source summaries (sources/), filled all concept syntheses (status: done).
 - Question bank grown to 66 items across all 7 domains and 5 formats.
+
+## [2026-06-29] build | updated 4, 55 changed raw
+- updated concepts/01-developing-and-optimizing-dbt-models.md
+- updated concepts/05-implementing-dbt-tests.md
+- updated overview.md
+- updated index.md
+- (!) stale: sources/best-practice-workflows.md (raw changed) — re-ingest
+- (!) stale: sources/clone-incremental-models.md (raw changed) — re-ingest
+- (!) stale: sources/writing-custom-generic-tests.md (raw changed) — re-ingest
+- (!) stale: sources/test-smarter-not-harder.md (raw changed) — re-ingest
+- (!) stale: sources/test-smarter-where-tests-should-go.md (raw changed) — re-ingest
+- (!) stale: sources/to-defer-or-to-clone.md (raw changed) — re-ingest
+- (!) stale: sources/viewpoint.md (raw changed) — re-ingest
+- (!) stale: sources/data-tests.md (raw changed) — re-ingest
+- (!) stale: sources/empty-flag.md (raw changed) — re-ingest
+- (!) stale: sources/exposures.md (raw changed) — re-ingest
+- (!) stale: sources/incremental-microbatch.md (raw changed) — re-ingest
+- (!) stale: sources/incremental-models-overview.md (raw changed) — re-ingest
+- (!) stale: sources/incremental-strategy.md (raw changed) — re-ingest
+- (!) stale: sources/materializations.md (raw changed) — re-ingest
+- (!) stale: sources/packages.md (raw changed) — re-ingest
+- (!) stale: sources/python-models.md (raw changed) — re-ingest
+- (!) stale: sources/sample-flag.md (raw changed) — re-ingest
+- (!) stale: sources/snapshots.md (raw changed) — re-ingest
+- (!) stale: sources/sources.md (raw changed) — re-ingest
+- (!) stale: sources/unit-tests.md (raw changed) — re-ingest
+- (!) stale: sources/source-freshness.md (raw changed) — re-ingest
+- (!) stale: sources/about-model-governance.md (raw changed) — re-ingest
+- (!) stale: sources/model-contracts.md (raw changed) — re-ingest
+- (!) stale: sources/model-versions.md (raw changed) — re-ingest
+- (!) stale: sources/debug-errors.md (raw changed) — re-ingest
+- (!) stale: sources/refactoring-legacy-sql.md (raw changed) — re-ingest
+- (!) stale: sources/build.md (raw changed) — re-ingest
+- (!) stale: sources/clone.md (raw changed) — re-ingest
+- (!) stale: sources/cmd-docs.md (raw changed) — re-ingest
+- (!) stale: sources/compile.md (raw changed) — re-ingest
+- (!) stale: sources/retry.md (raw changed) — re-ingest
+- (!) stale: sources/run.md (raw changed) — re-ingest
+- (!) stale: sources/seed.md (raw changed) — re-ingest
+- (!) stale: sources/snapshot.md (raw changed) — re-ingest
+- (!) stale: sources/source.md (raw changed) — re-ingest
+- (!) stale: sources/test.md (raw changed) — re-ingest
+- (!) stale: sources/data-test-configs.md (raw changed) — re-ingest
+- (!) stale: sources/dbt-commands.md (raw changed) — re-ingest
+- (!) stale: sources/dbt_project.yml.md (raw changed) — re-ingest
+- (!) stale: sources/exposure-properties.md (raw changed) — re-ingest
+- (!) stale: sources/about-global-configs.md (raw changed) — re-ingest
+- (!) stale: sources/behavior-changes.md (raw changed) — re-ingest
+- (!) stale: sources/defer.md (raw changed) — re-ingest
+- (!) stale: sources/methods.md (raw changed) — re-ingest
+- (!) stale: sources/state-selection.md (raw changed) — re-ingest
+- (!) stale: sources/syntax.md (raw changed) — re-ingest
+- (!) stale: sources/contract.md (raw changed) — re-ingest
+- (!) stale: sources/grants.md (raw changed) — re-ingest
+- (!) stale: sources/constraints.md (raw changed) — re-ingest
+- (!) stale: sources/freshness.md (raw changed) — re-ingest
+- (!) stale: sources/versions.md (raw changed) — re-ingest
+- (!) stale: sources/source-configs.md (raw changed) — re-ingest
+- (!) stale: sources/data-product-management.md (raw changed) — re-ingest

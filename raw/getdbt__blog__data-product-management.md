@@ -2,7 +2,7 @@
 title: "Data product management: Best practices"
 source_url: https://www.getdbt.com/blog/data-product-management
 retrieved_via: html-extract
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 [Blog](/blog "Blog")
@@ -200,7 +200,7 @@ Take the free [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamenta
 
 Join the analytics engineers building data infrastructure that actually scales.
 
-[Get started with dbt](/signup)
+Get started with dbt
 
 ### Install dbt Wizard CLI
 
@@ -212,41 +212,41 @@ Copy post link
 
 ### Latest posts
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F8277fc38a3385532e6e107d1b1c549fc1f8f8e16-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/your-ai-isn-t-broken-your-data-model-is "Your AI isn't broken. Your data model is.")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F770071cb7e1112b255600772a7a60f900821a5a4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/what-fivetran-dbt-labs-brought-to-databricks-data-ai-summit-and-what-you-can-take-home "What Fivetran + dbt Labs brought to Databricks Data + AI Summit (and what you can take home)")
 
-Insights15 min
+Partnerships7 min
 
-### [Your AI isn't broken. Your data model is.](/blog/your-ai-isn-t-broken-your-data-model-is)
-
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
-
-[Dustin Dorsey](/authors/dustin-dorsey)
-
-on  Jun 08, 2026
-
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd86b1e41536f4c2bf3add533eef53acb5ac8b3e4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/data-stack-trusted-ai "Building a data stack for trusted AI")
-
-Insights11 min
-
-### [Building a data stack for trusted AI](/blog/data-stack-trusted-ai)
+### [What Fivetran + dbt Labs brought to Databricks Data + AI Summit (and what you can take home)](/blog/what-fivetran-dbt-labs-brought-to-databricks-data-ai-summit-and-what-you-can-take-home)
 
 ![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
 [Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 03, 2026
+on  Jun 23, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F30789616b363397d5dc5bcfd0a477cd0ba53f9f9-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year "dbt Labs Named Snowflake Data Integration Product Partner of the Year")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fb465470dbce64c2bc8b1f279958441e36fe6bbca-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/the-semantic-debt-crisis-no-one-is-talking-about "The semantic debt crisis no one is talking about")
 
-Press5 min
+Insights16 min
 
-### [dbt Labs Named Snowflake Data Integration Product Partner of the Year](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year)
+### [The semantic debt crisis no one is talking about](/blog/the-semantic-debt-crisis-no-one-is-talking-about)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe6328278cb5c9c731817e3fb55ddf708bb914197-512x512.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
 
-[Elaine Green](/authors/elaine-green)
+[Dustin Dorsey](/authors/dustin-dorsey)
 
-on  Jun 02, 2026
+on  Jun 22, 2026
+
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F2639a5ed613e1226a60f070802ce6fef5c734011-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/start-fresh-don-t-lift-and-shift-a-dbt-migration-guide "Start fresh, don't lift and shift: a dbt migration guide")
+
+Pulse9 min
+
+### [Start fresh, don't lift and shift: a dbt migration guide](/blog/start-fresh-don-t-lift-and-shift-a-dbt-migration-guide)
+
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+
+[Daniel Poppy](/authors/daniel-poppy)
+
+on  Jun 16, 2026
 
 The dbt Community
 

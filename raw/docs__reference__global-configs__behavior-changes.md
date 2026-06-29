@@ -2,7 +2,7 @@
 title: "Behavior changes"
 source_url: https://docs.getdbt.com/reference/global-configs/behavior-changes
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 # Behavior changes
@@ -130,6 +130,7 @@ This table outlines which version of the dbt adapter contains the behavior chang
 | [use_managed_iceberg](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-managed-iceberg)  | Databricks 1.11.0  |  1.12.0                                                     | - |
 | [use_materialization_v2](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-restructured-materializations)      | Databricks 1.10.0                  | -| - |
 | [use_replace_on_for_insert_overwrite](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy)   | Databricks 1.11.0  | 1.11.0  | - |
+| [use_describe_as_json_for_relation_metadata](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-describe-as-json-for-relation-metadata) | Databricks 1.12.0 | - | - |
 | [redshift_skip_autocommit_transaction_statements](https://docs.getdbt.com/reference/global-configs/redshift-changes#redshift_skip_autocommit_transaction_statements-flag) | Redshift 1.12.0 | - | - |
 | [bigquery_use_batch_source_freshness](https://docs.getdbt.com/reference/global-configs/bigquery-changes#bigquery-use-batch-source-freshness) | BigQuery 1.11.0rc2 | - | - |
 | [bigquery_reject_wildcard_metadata_source_freshness](https://docs.getdbt.com/reference/global-configs/bigquery-changes#the-bigquery_reject_wildcard_metadata_source_freshness-flag) | BigQuery 1.12.0 | - | - |

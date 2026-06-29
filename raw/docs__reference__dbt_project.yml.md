@@ -2,7 +2,7 @@
 title: "docs__reference__dbt_project.yml.md"
 source_url: https://docs.getdbt.com/reference/dbt_project.yml
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-06-29
 ---
 
 Every [dbt project](https://docs.getdbt.com/docs/build/projects) needs a `dbt_project.yml` file — this is how dbt knows a directory is a dbt project. It also contains important information that tells dbt how to operate your project. It works as follows:
@@ -34,6 +34,7 @@ The following example is a list of all available configurations in the `dbt_proj
 [docs-paths](https://docs.getdbt.com/reference/project-configs/docs-paths): [directorypath]
 [asset-paths](https://docs.getdbt.com/reference/project-configs/asset-paths): [directorypath]
 [function-paths](https://docs.getdbt.com/reference/project-configs/function-paths): [directorypath]
+[osi-paths](https://docs.getdbt.com/reference/project-configs/osi-paths): [directorypath]
 
 [packages-install-path](https://docs.getdbt.com/reference/project-configs/packages-install-path): directorypath
 

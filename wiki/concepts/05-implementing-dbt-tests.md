@@ -2,7 +2,7 @@
 title: "05 — Implementing dbt tests"
 tags: [exam-domain, concept]
 status: done
-updated: 2026-06-12
+updated: 2026-06-29
 ---
 
 # 05 — Implementing dbt tests
@@ -12,7 +12,7 @@ updated: 2026-06-12
 
 - **Generic, singular, custom, custom generic & unit tests** — [Add data tests to your DAG](../sources/data-tests.md) · [Unit tests](../sources/unit-tests.md) · [Writing custom generic data tests](../sources/writing-custom-generic-tests.md) · [Data test configurations](../sources/data-test-configs.md)
 - **Testing assumptions for models and sources** — [Add data tests to your DAG](../sources/data-tests.md)
-- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests to your dbt project](../sources/test-smarter-not-harder.md) · [Test smarter not harder: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
+- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests](../sources/test-smarter-not-harder.md) · [Test smarter: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
 <!-- /dbtwiki:auto:subtopics -->
 
 ## Synthesis
@@ -27,6 +27,6 @@ These tests express **assumpti
 - [Unit tests](../raw/docs__docs__build__unit-tests.md) · summary: [unit-tests](../sources/unit-tests.md) · [original](https://docs.getdbt.com/docs/build/unit-tests) · `Doc`
 - [Writing custom generic data tests](../raw/docs__best-practices__writing-custom-generic-tests.md) · summary: [writing-custom-generic-tests](../sources/writing-custom-generic-tests.md) · [original](https://docs.getdbt.com/best-practices/writing-custom-generic-tests) · `Guide`
 - [Data test configurations](../raw/docs__reference__data-test-configs.md) · summary: [data-test-configs](../sources/data-test-configs.md) · [original](https://docs.getdbt.com/reference/data-test-configs) · `Doc`
-- [Test smarter not harder: add the right tests to your dbt project](../raw/docs__blog__test-smarter-not-harder.md) · summary: [test-smarter-not-harder](../sources/test-smarter-not-harder.md) · [original](https://docs.getdbt.com/blog/test-smarter-not-harder) · `Blog`
-- [Test smarter not harder: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · summary: [test-smarter-where-tests-should-go](../sources/test-smarter-where-tests-should-go.md) · [original](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go) · `Blog`
+- [Test smarter not harder: add the right tests](../raw/docs__blog__test-smarter-not-harder.md) · summary: [test-smarter-not-harder](../sources/test-smarter-not-harder.md) · [original](https://docs.getdbt.com/blog/test-smarter-not-harder) · `Blog`
+- [Test smarter: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · summary: [test-smarter-where-tests-should-go](../sources/test-smarter-where-tests-should-go.md) · [original](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go) · `Blog`
 <!-- /dbtwiki:auto:sources -->

@@ -1,7 +1,7 @@
 ---
 title: "Index"
 tags: [index]
-updated: 2026-06-12
+updated: 2026-09-07
 ---
 
 
@@ -22,10 +22,10 @@ Catalog of the wiki. Read this first when answering a query.
 - **Modularity & DRY principles** — [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md) · [Refactoring legacy SQL to dbt](../sources/refactoring-legacy-sql.md) · [The dbt Viewpoint](../sources/viewpoint.md)
 - **Commands: build, run, test, docs, show, snapshot, seed** — [About dbt build command](../sources/build.md) · [About dbt run command](../sources/run.md) · [About dbt test command](../sources/test.md) · [About dbt docs commands](../sources/cmd-docs.md) · [dbt Command reference](../sources/dbt-commands.md) · [About dbt snapshot command](../sources/snapshot.md) · [About dbt seed command](../sources/seed.md)
 - **Logical flow of models & clean DAGs** — [Syntax overview](../sources/syntax.md) · [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md)
-- **Defining configurations in dbt_project.yml** — [dbt_project.yml reference](../sources/dbt_project.yml.md)
+- **Defining configurations in dbt_project.yml** — [dbt\_project.yml](../sources/dbt_project.yml.md)
 - **Using dbt Packages** — [Packages](../sources/packages.md)
 - **Creating Python Models** — [Python models](../sources/python-models.md)
-- **Providing access with the grants config** — [grants (resource config)](../sources/grants.md)
+- **Providing access with the grants config** — [grants](../sources/grants.md)
 - **Creating snapshots in YAML** — [Add snapshots to your DAG](../sources/snapshots.md)
 - **Selecting the optimal incremental strategy** — [About incremental strategy](../sources/incremental-strategy.md) · [About incremental models](../sources/incremental-models-overview.md)
 - **Validating logic/schema in dry-runs (--empty flag)** — [About the `--empty` flag](../sources/empty-flag.md)
@@ -34,9 +34,9 @@ Catalog of the wiki. Read this first when answering a query.
 
 ### [02 — Managing dbt models governance](concepts/02-managing-dbt-models-governance.md)
 
-- **Adding contracts to ensure model shape** — [Model contracts](../sources/model-contracts.md) · [contract (resource config)](../sources/contract.md)
-- **Creating model versions & deprecating old ones** — [Model versions](../sources/model-versions.md) · [versions (resource property)](../sources/versions.md)
-- **Defining constraints in YAML for data integrity** — [constraints (resource property)](../sources/constraints.md)
+- **Adding contracts to ensure model shape** — [Model contracts](../sources/model-contracts.md) · [contract](../sources/contract.md)
+- **Creating model versions & deprecating old ones** — [Model versions](../sources/model-versions.md) · [versions](../sources/versions.md)
+- **Defining constraints in YAML for data integrity** — [constraints](../sources/constraints.md)
 - **Model governance overview** — [About model governance](../sources/about-model-governance.md)
 - **Data product management (reading)** — [Data product management: Best practices](../sources/data-product-management.md)
 
@@ -46,7 +46,7 @@ Catalog of the wiki. Read this first when answering a query.
 - **Troubleshooting using compiled code** — [About dbt compile command](../sources/compile.md)
 - **Troubleshooting .yml compilation errors** — [Debug errors](../sources/debug-errors.md)
 - **Developing, implementing & testing a fix before merge** — [Best practices for workflows](../sources/best-practice-workflows.md)
-- **Managing dbt behavior with flags** — [About flags (global configs)](../sources/about-global-configs.md) · [Behavior changes](../sources/behavior-changes.md)
+- **Managing dbt behavior with flags** — [About flags (global configs)](../sources/about-global-configs.md) · [About behavior changes](../sources/behavior-changes.md)
 
 ### [04 — Troubleshooting & optimizing pipelines](concepts/04-troubleshooting-and-optimizing-pipelines.md)
 
@@ -57,12 +57,12 @@ Catalog of the wiki. Read this first when answering a query.
 
 - **Generic, singular, custom, custom generic & unit tests** — [Add data tests to your DAG](../sources/data-tests.md) · [Unit tests](../sources/unit-tests.md) · [Writing custom generic data tests](../sources/writing-custom-generic-tests.md) · [Data test configurations](../sources/data-test-configs.md)
 - **Testing assumptions for models and sources** — [Add data tests to your DAG](../sources/data-tests.md)
-- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests to your dbt project](../sources/test-smarter-not-harder.md) · [Test smarter not harder: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
+- **Implementing testing steps in the workflow** — [Test smarter not harder: add the right tests](../sources/test-smarter-not-harder.md) · [Test smarter: Where should tests go in your pipeline?](../sources/test-smarter-where-tests-should-go.md)
 
 ### [06 — External dependencies](concepts/06-external-dependencies.md)
 
 - **Implementing dbt exposures** — [Add Exposures to your DAG](../sources/exposures.md) · [Exposure properties](../sources/exposure-properties.md)
-- **Implementing source freshness** — [Source freshness](../sources/source-freshness.md) · [About dbt source command](../sources/source.md) · [freshness (resource property)](../sources/freshness.md)
+- **Implementing source freshness** — [Source freshness](../sources/source-freshness.md) · [About dbt source command](../sources/source.md) · [freshness](../sources/freshness.md)
 
 ### [07 — Leveraging the dbt state](concepts/07-leveraging-the-dbt-state.md)
 
@@ -136,8 +136,8 @@ Catalog of the wiki. Read this first when answering a query.
 - [Materializations best practices](../raw/docs__best-practices__materializations__1-guide-overview.md) · `Guide` · [source](https://docs.getdbt.com/best-practices/materializations/1-guide-overview)
 - [Best practices for materializations](../raw/docs__best-practices__materializations__5-best-practices.md) · `Doc` · [source](https://docs.getdbt.com/best-practices/materializations/5-best-practices)
 - [Writing custom generic data tests](../raw/docs__best-practices__writing-custom-generic-tests.md) · `Guide` · [source](https://docs.getdbt.com/best-practices/writing-custom-generic-tests)
-- [Test smarter not harder: add the right tests to your dbt project](../raw/docs__blog__test-smarter-not-harder.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-not-harder)
-- [Test smarter not harder: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go)
+- [Test smarter not harder: add the right tests](../raw/docs__blog__test-smarter-not-harder.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-not-harder)
+- [Test smarter: Where should tests go in your pipeline?](../raw/docs__blog__test-smarter-where-tests-should-go.md) · `Blog` · [source](https://docs.getdbt.com/blog/test-smarter-where-tests-should-go)
 - [To defer or to clone, that is the question](../raw/docs__blog__to-defer-or-to-clone.md) · `Blog` · [source](https://docs.getdbt.com/blog/to-defer-or-to-clone)
 - [The dbt Viewpoint](../raw/docs__community__resources__viewpoint.md) · `Doc` · [source](https://docs.getdbt.com/community/resources/viewpoint)
 - [Add data tests to your DAG](../raw/docs__docs__build__data-tests.md) · `Doc` · [source](https://docs.getdbt.com/docs/build/data-tests)
@@ -171,18 +171,18 @@ Catalog of the wiki. Read this first when answering a query.
 - [About dbt test command](../raw/docs__reference__commands__test.md) · `Doc` · [source](https://docs.getdbt.com/reference/commands/test)
 - [Data test configurations](../raw/docs__reference__data-test-configs.md) · `Doc` · [source](https://docs.getdbt.com/reference/data-test-configs)
 - [dbt Command reference](../raw/docs__reference__dbt-commands.md) · `Doc` · [source](https://docs.getdbt.com/reference/dbt-commands)
-- [dbt_project.yml reference](../raw/docs__reference__dbt_project.yml.md) · `Doc` · [source](https://docs.getdbt.com/reference/dbt_project.yml)
+- [dbt\_project.yml](../raw/docs__reference__dbt_project.yml.md) · `Doc` · [source](https://docs.getdbt.com/reference/dbt_project.yml)
 - [Exposure properties](../raw/docs__reference__exposure-properties.md) · `Doc` · [source](https://docs.getdbt.com/reference/exposure-properties)
 - [About flags (global configs)](../raw/docs__reference__global-configs__about-global-configs.md) · `Doc` · [source](https://docs.getdbt.com/reference/global-configs/about-global-configs)
-- [Behavior changes](../raw/docs__reference__global-configs__behavior-changes.md) · `Doc` · [source](https://docs.getdbt.com/reference/global-configs/behavior-changes)
+- [About behavior changes](../raw/docs__reference__global-configs__behavior-changes.md) · `Doc` · [source](https://docs.getdbt.com/reference/global-configs/behavior-changes)
 - [Defer](../raw/docs__reference__node-selection__defer.md) · `Doc` · [source](https://docs.getdbt.com/reference/node-selection/defer)
 - [Node selector methods](../raw/docs__reference__node-selection__methods.md) · `Doc` · [source](https://docs.getdbt.com/reference/node-selection/methods)
 - [About local state in dbt](../raw/docs__reference__node-selection__state-selection.md) · `Doc` · [source](https://docs.getdbt.com/reference/node-selection/state-selection)
 - [Syntax overview](../raw/docs__reference__node-selection__syntax.md) · `Doc` · [source](https://docs.getdbt.com/reference/node-selection/syntax)
-- [contract (resource config)](../raw/docs__reference__resource-configs__contract.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-configs/contract)
-- [grants (resource config)](../raw/docs__reference__resource-configs__grants.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-configs/grants)
-- [constraints (resource property)](../raw/docs__reference__resource-properties__constraints.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/constraints)
-- [freshness (resource property)](../raw/docs__reference__resource-properties__freshness.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/freshness)
-- [versions (resource property)](../raw/docs__reference__resource-properties__versions.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/versions)
+- [contract](../raw/docs__reference__resource-configs__contract.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-configs/contract)
+- [grants](../raw/docs__reference__resource-configs__grants.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-configs/grants)
+- [constraints](../raw/docs__reference__resource-properties__constraints.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/constraints)
+- [freshness](../raw/docs__reference__resource-properties__freshness.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/freshness)
+- [versions](../raw/docs__reference__resource-properties__versions.md) · `Doc` · [source](https://docs.getdbt.com/reference/resource-properties/versions)
 - [Source configurations](../raw/docs__reference__source-configs.md) · `Doc` · [source](https://docs.getdbt.com/reference/source-configs)
 - [Data product management: Best practices](../raw/getdbt__blog__data-product-management.md) · `Blog` · [source](https://www.getdbt.com/blog/data-product-management)

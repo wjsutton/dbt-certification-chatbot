@@ -2,7 +2,7 @@
 title: "01 — Developing & optimizing dbt models"
 tags: [exam-domain, concept]
 status: done
-updated: 2026-06-12
+updated: 2026-09-07
 ---
 
 
@@ -16,10 +16,10 @@ updated: 2026-06-12
 - **Modularity & DRY principles** — [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md) · [Refactoring legacy SQL to dbt](../sources/refactoring-legacy-sql.md) · [The dbt Viewpoint](../sources/viewpoint.md)
 - **Commands: build, run, test, docs, show, snapshot, seed** — [About dbt build command](../sources/build.md) · [About dbt run command](../sources/run.md) · [About dbt test command](../sources/test.md) · [About dbt docs commands](../sources/cmd-docs.md) · [dbt Command reference](../sources/dbt-commands.md) · [About dbt snapshot command](../sources/snapshot.md) · [About dbt seed command](../sources/seed.md)
 - **Logical flow of models & clean DAGs** — [Syntax overview](../sources/syntax.md) · [How we structure our dbt projects](../sources/how-we-structure-1-guide-overview.md)
-- **Defining configurations in dbt_project.yml** — [dbt_project.yml reference](../sources/dbt_project.yml.md)
+- **Defining configurations in dbt_project.yml** — [dbt\_project.yml](../sources/dbt_project.yml.md)
 - **Using dbt Packages** — [Packages](../sources/packages.md)
 - **Creating Python Models** — [Python models](../sources/python-models.md)
-- **Providing access with the grants config** — [grants (resource config)](../sources/grants.md)
+- **Providing access with the grants config** — [grants](../sources/grants.md)
 - **Creating snapshots in YAML** — [Add snapshots to your DAG](../sources/snapshots.md)
 - **Selecting the optimal incremental strategy** — [About incremental strategy](../sources/incremental-strategy.md) · [About incremental models](../sources/incremental-models-overview.md)
 - **Validating logic/schema in dry-runs (--empty flag)** — [About the `--empty` flag](../sources/empty-flag.md)
@@ -60,10 +60,10 @@ updated: 2026-06-12
 - [About dbt snapshot command](../raw/docs__reference__commands__snapshot.md) · summary: [snapshot](../sources/snapshot.md) · [original](https://docs.getdbt.com/reference/commands/snapshot) · `Doc`
 - [About dbt seed command](../raw/docs__reference__commands__seed.md) · summary: [seed](../sources/seed.md) · [original](https://docs.getdbt.com/reference/commands/seed) · `Doc`
 - [Syntax overview](../raw/docs__reference__node-selection__syntax.md) · summary: [syntax](../sources/syntax.md) · [original](https://docs.getdbt.com/reference/node-selection/syntax) · `Doc`
-- [dbt_project.yml reference](../raw/docs__reference__dbt_project.yml.md) · summary: [dbt_project.yml](../sources/dbt_project.yml.md) · [original](https://docs.getdbt.com/reference/dbt_project.yml) · `Doc`
+- [dbt\_project.yml](../raw/docs__reference__dbt_project.yml.md) · summary: [dbt_project.yml](../sources/dbt_project.yml.md) · [original](https://docs.getdbt.com/reference/dbt_project.yml) · `Doc`
 - [Packages](../raw/docs__docs__build__packages.md) · summary: [packages](../sources/packages.md) · [original](https://docs.getdbt.com/docs/build/packages) · `Doc`
 - [Python models](../raw/docs__docs__build__python-models.md) · summary: [python-models](../sources/python-models.md) · [original](https://docs.getdbt.com/docs/build/python-models) · `Doc`
-- [grants (resource config)](../raw/docs__reference__resource-configs__grants.md) · summary: [grants](../sources/grants.md) · [original](https://docs.getdbt.com/reference/resource-configs/grants) · `Doc`
+- [grants](../raw/docs__reference__resource-configs__grants.md) · summary: [grants](../sources/grants.md) · [original](https://docs.getdbt.com/reference/resource-configs/grants) · `Doc`
 - [Add snapshots to your DAG](../raw/docs__docs__build__snapshots.md) · summary: [snapshots](../sources/snapshots.md) · [original](https://docs.getdbt.com/docs/build/snapshots) · `Doc`
 - [About incremental strategy](../raw/docs__docs__build__incremental-strategy.md) · summary: [incremental-strategy](../sources/incremental-strategy.md) · [original](https://docs.getdbt.com/docs/build/incremental-strategy) · `Doc`
 - [About incremental models](../raw/docs__docs__build__incremental-models-overview.md) · summary: [incremental-models-overview](../sources/incremental-models-overview.md) · [original](https://docs.getdbt.com/docs/build/incremental-models-overview) · `Doc`

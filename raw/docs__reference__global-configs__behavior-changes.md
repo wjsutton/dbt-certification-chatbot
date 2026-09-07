@@ -1,80 +1,132 @@
 ---
-title: "Behavior changes"
+title: "About behavior changes"
 source_url: https://docs.getdbt.com/reference/global-configs/behavior-changes
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
-# Behavior changes
+# About behavior changes
 
-> **How this relates to other changes**
->
-> 
-> Since behavior change flags are different from other dbt changes, it's important to understand the difference:
-> - [Deprecation warnings](https://docs.getdbt.com/reference/deprecations) &mdash; Features in your project code that will stop working (behavior flags often control when these become errors)
-> - [Deprecated CLI flags](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v2#deprecated-flags) &mdash; Command-line flags being removed in dbt Fusion
-> 
-> See the [Changes overview](https://docs.getdbt.com/reference/changes-overview) for a quick comparison.
-> 
-> If you're upgrading to [dbt Fusion](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v2) or [core_v2](https://docs.getdbt.com/docs/dbt-versions/core-upgrade/upgrading-to-v2), a subset of behavior change flags are removed and their new behavior is always enabled.
-> 
+A behavior change is a deliberate update to dbt where the same project code and commands produce a different result than before—for example, a new validation error, a changed macro signature, or a breaking change to artifacts or structured logs. It is not a bug fix, a new warning, or a non-breaking addition.
 
-Most flags exist to configure runtime behaviors with multiple valid choices. The right choice may vary based on the environment, user preference, or the specific invocation.
+dbt gates these changes behind behavior change flags, so you control when to adopt the new behavior.
 
-Another category of flags provides existing projects with a migration window for runtime behaviors that are changing in newer releases of dbt. These flags help us achieve a balance between these goals, which can otherwise be in tension, by:
-- Providing a better, more sensible, and more consistent default behavior for new users/projects.
-- Providing a migration window for existing users/projects &mdash; nothing changes overnight without warning.
-- Providing maintainability of dbt software. Every fork in behavior requires additional testing & cognitive overhead that slows future development. These flags exist to facilitate migration from "current" to "better," not to stick around forever.
+The following are examples of behavior changes:
 
-These flags go through three phases of development:
-1. **Introduction (disabled by default):** dbt adds logic to support both 'old' and 'new' behaviors. The 'new' behavior is gated behind a flag, disabled by default, preserving the old behavior. For flags still in the introduction phase, refer to [Introduced behavior flags](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction). 
-2. **Maturity (enabled by default):** The default value of the flag is switched, from `false` to `true`, enabling the new behavior by default. Users can preserve the 'old' behavior and opt out of the 'new' behavior by setting the flag to `false` in their projects. They may see deprecation warnings when they do so. For flags that have already reached maturity, refer to [Mature behavior flags](https://docs.getdbt.com/reference/global-configs/behavior-flag-maturity).
-3. **Removal (generally enabled):** After marking the flag for deprecation, we remove it along with the 'old' behavior it supported from the dbt codebases. We aim to support most flags indefinitely, but we're not committed to supporting them forever. If we choose to remove a flag, we'll offer significant advance notice. For flags removed in core_v2, refer to [Removed behavior flags](https://docs.getdbt.com/reference/global-configs/behavior-flag-removed).
+* dbt begins raising a validation *error* that it didn't previously.
+* dbt changes the signature of a built-in macro. Your project has a custom reimplementation of that macro. This could lead to errors, because your custom reimplementation will be passed arguments it cannot accept.
+* A dbt adapter renames or removes a method that was previously available on the `{{ adapter }}` object in the dbt-Jinja context.
 
-## What is a behavior change?
+The following are *not* behavior changes:
 
-The same dbt project code and the same dbt commands return one result before the behavior change, and they return a different result after the behavior change.
-
-Examples of behavior changes:
-- dbt begins raising a validation _error_ that it didn't previously.
-- dbt changes the signature of a built-in macro. Your project has a custom reimplementation of that macro. This could lead to errors, because your custom reimplementation will be passed arguments it cannot accept.
-- A dbt adapter renames or removes a method that was previously available on the `{{ adapter }}` object in the dbt-Jinja context.
-- dbt makes a breaking change to contracted metadata artifacts by deleting a required field, changing the name or type of an existing field, or removing the default value of an existing field ([README](https://github.com/dbt-labs/dbt-core/blob/1.latest/docs/arch/7_Artifacts.md#breaking-changes)).
-- dbt removes one of the fields from [structured logs](https://docs.getdbt.com/reference/events-logging#structured-logging).
-
-The following are **not** behavior changes:
-- Fixing a bug where the previous behavior was defective, undesirable, or undocumented.
-- dbt begins raising a _warning_ that it didn't previously.
-- dbt updates the language of human-friendly messages in log events.
-- dbt makes a non-breaking change to contracted metadata artifacts by adding a new field with a default, or deleting a field with a default ([README](https://github.com/dbt-labs/dbt-core/blob/1.latest/docs/arch/7_Artifacts.md#non-breaking-changes)).
-
-The vast majority of changes are not behavior changes. Because introducing these changes does not require any action on the part of users, they are included in continuous releases of dbt and patch releases of core.
-
-By contrast, behavior change migrations happen slowly, over the course of months, facilitated by behavior change flags. The flags are loosely coupled to the specific dbt runtime version. By setting flags, users have control over opting in (and later opting out) of these changes.
+* Fixing a bug where the previous behavior was defective, undesirable, or undocumented.
+* dbt begins raising a *warning* that it didn't previously.
+* dbt updates the language of human-friendly messages in log events.
 
 ## Behavior change flags
 
-These flags _must_ be set in the `flags` dictionary in `dbt_project.yml`. They configure behaviors closely tied to project code, which means they should be defined in version control and modified through pull or merge requests, with the same testing and peer review.
+These flags *must* be set in the `flags` dictionary in `dbt_project.yml`. They configure behaviors closely tied to project code, which means they should be defined in version control and modified through pull or merge requests, with the same testing and peer review.
 
-The following example displays the current flags and their current default values in the latest dbt and core versions. To opt out of a specific behavior change, set the values of the flag to `false` in `dbt_project.yml`. You will continue to see warnings for legacy behaviors you've opted out of, until you either:
+### Flag lifecycle
 
-- Resolve the issue (by switching the flag to `true`)
-- Silence the warnings using the `warn_error_options.silence` flag
+Behavior change flags go through three phases of development:
 
-Here's an example of the available behavior change flags with their default values:
+1. **Introduced (disabled by default):** dbt adds logic to support both 'old' and 'new' behaviors. The 'new' behavior is gated behind a flag, disabled by default, preserving the old behavior.
+2. **Mature (enabled by default):** The default value of the flag is switched to the new behavior by default. You can still preserve the old behavior, but you may see deprecation warnings.
+3. **Removed (generally enabled):** The old behavior is removed from the dbt codebase(s). Most flags are supported indefinitely, but there is no committement to supporting them forever. If a flag is removed, there will be significant advanced warning.
+
+### Introduced in dbt Core v1.x
+
+This table outlines which month of the **Latest** release track in dbt and which version of dbt Core contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+
+| Flag                                                                                                                                                                                                        | dbt **Latest**: Intro | dbt **Latest**: Maturity | dbt Core: Intro | dbt Core: Maturity | dbt Core: Removed |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | --------------- | ------------------ | ----------------- |
+| [require\_explicit\_package\_overrides\_for\_builtin\_materializations](./behavior-flags/require_explicit_package_overrides_for_builtin_materializations.md) | 2024.04               | 2024.06                  | 1.6.14, 1.7.14  | 1.8.0              | 2.0               |
+| [require\_resource\_names\_without\_spaces](./behavior-flags/require_resource_names_without_spaces.md)                                                       | 2024.05               | 2025.05                  | 1.8.0           | 1.10.0             | 2.0               |
+| [source\_freshness\_run\_project\_hooks](./behavior-flags/source_freshness_run_project_hooks.md)                                                             | 2024.03               | 2025.05                  | 1.8.0           | 1.10.0             | 2.0               |
+| [skip\_nodes\_if\_on\_run\_start\_fails](./behavior-flags/skip_nodes_if_on_run_start_fails.md)                                                               | 2024.10               | 2026.09                  | 1.9.0           | 1.12.0             | 2.0               |
+| [state\_modified\_compare\_more\_unrendered\_values](./behavior-flags/state_modified_compare_more_unrendered_values.md)                                      | 2024.10               | 2026.09                  | 1.9.0           | 1.12.0             | 2.0               |
+| [require\_yaml\_configuration\_for\_mf\_time\_spines](./behavior-flags/require_yaml_configuration_for_mf_time_spines.md)                                     | 2024.10               | 2026.09                  | 1.9.0           | 1.12.0             | 2.0               |
+| [require\_batched\_execution\_for\_custom\_microbatch\_strategy](./behavior-flags/require_batched_execution_for_custom_microbatch_strategy.md)               | 2024.11               | 2026.09                  | 1.9.0           | 1.12.0             | 2.0               |
+| [require\_nested\_cumulative\_type\_params](./behavior-flags/require_nested_cumulative_type_params.md)                                                       | 2024.11               | 2026.09                  | 1.9.0           | 1.12.0             | -                 |
+| [enable\_truthy\_nulls\_equals\_macro](./behavior-flags/enable_truthy_nulls_equals_macro.md)                                                                 | 2025.02               | -                        | 1.9.0           | -                  | -                 |
+| [validate\_macro\_args](./behavior-flags/validate_macro_args.md)                                                                                             | 2025.03               | 2026.09                  | 1.10.0          | 1.12.0             | -                 |
+| [require\_all\_warnings\_handled\_by\_warn\_error](./behavior-flags/require_all_warnings_handled_by_warn_error.md)                                           | 2025.06               | 2026.09                  | 1.10.0          | 1.12.0             | -                 |
+| [require\_generic\_test\_arguments\_property](./behavior-flags/require_generic_test_arguments_property.md)                                                   | 2025.07               | 2025.08                  | 1.10.5          | 1.10.8             | -                 |
+| [require\_unique\_project\_resource\_names](./behavior-flags/require_unique_project_resource_names.md)                                                       | 2025.12               | -                        | 1.11.0          | -                  | -                 |
+| [require\_ref\_searches\_node\_package\_before\_root](./behavior-flags/require_ref_searches_node_package_before_root.md)                                     | 2025.12               | -                        | 1.11.0          | -                  | -                 |
+| [require\_valid\_schema\_from\_generate\_schema\_name](./behavior-flags/require_valid_schema_from_generate_schema_name.md)                                   | 2026.1                | -                        | 1.12.0a1        | -                  | -                 |
+| [require\_sql\_header\_in\_test\_configs](./behavior-flags/require_sql_header_in_test_configs.md)                                                            | 2026.3                | -                        | 1.12.0          | -                  | -                 |
+| [require\_corrected\_analysis\_fqns](./behavior-flags/require_corrected_analysis_fqns.md)                                                                    | 2026.3                | -                        | 1.12.0          | -                  | -                 |
+| [require\_source\_and\_semantic\_model\_names\_without\_spaces](./behavior-flags/require_source_and_semantic_model_names_without_spaces.md)                  | 2026.4                | -                        | 1.12.0          | -                  | -                 |
+| [allow\_jinja\_file\_extensions](./behavior-flags/allow_jinja_file_extensions.md)                                                                            | 2026.5                | -                        | 1.12.0          | -                  | -                 |
+| [latest\_version\_pointer\_enabled\_by\_default](./behavior-flags/latest_version_pointer_enabled_by_default.md)                                              | 2026.5                | -                        | 1.12.0          | -                  | -                 |
+
+### Flags reaching maturity
+
+Several behavior change flags on the dbt platform `Latest` release track are planned to reach maturity on September 1, 2026, switching their default values from `false` to `true`. The September 1 date applies only to the dbt platform release tracks. The flags have reached maturity in dbt Core v1.12. For intro dates, refer to the dbt Core behavior changes table.
+
+| Flag                                                                                                                                                                                          | Impact                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [skip\_nodes\_if\_on\_run\_start\_fails](./behavior-flags/skip_nodes_if_on_run_start_fails.md)                                                 | Can stop build                                                         |
+| [require\_nested\_cumulative\_type\_params](./behavior-flags/require_nested_cumulative_type_params.md)                                         | Can stop build (parse error)                                           |
+| [require\_all\_warnings\_handled\_by\_warn\_error](./behavior-flags/require_all_warnings_handled_by_warn_error.md)                             | Can stop build (when `--warn-error` is set)                            |
+| [require\_batched\_execution\_for\_custom\_microbatch\_strategy](./behavior-flags/require_batched_execution_for_custom_microbatch_strategy.md) | Behavior change for custom microbatch macros                           |
+| [state\_modified\_compare\_more\_unrendered\_values](./behavior-flags/state_modified_compare_more_unrendered_values.md)                        | Selection-set change with potential CI impact                          |
+| [require\_yaml\_configuration\_for\_mf\_time\_spines](./behavior-flags/require_yaml_configuration_for_mf_time_spines.md)                       | Suppresses a deprecation warning (no functional change)                |
+| [validate\_macro\_args](./behavior-flags/validate_macro_args.md)                                                                               | New warning for mismatched macro arguments; errors with `--warn-error` |
+
+### Introduced in Fusion and dbt Core 2.0
+
+The following flags are specific to Fusion and have no equivalent in dbt Core. They are configured the same way — in the `flags:` block of `dbt_project.yml`.
+
+| Flag                                                                                                                                                             | Adapter  | Default | Introduced         | Becomes default |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- | ------------------ | --------------- |
+| [require\_resource\_names\_without\_plus\_prefix](./behavior-flags/require_resource_names_without_plus_prefix.md) | All      | `false` | 2.0.0-preview\.208 | Not yet set     |
+| use\_catalogs\_v2                                                                                                                                                | All      | `false` | 2.0.0-preview\.174 | Not yet set     |
+| bigquery\_noop\_alter\_relation\_comment                                                                                                                         | BigQuery | `false` | 2.0.0-preview\.124 | Not yet set     |
+
+### Adapter-specific behavior change flags
+
+This table outlines which version of the dbt adapter contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+
+| Flag                                                                                                                                                                                        | dbt-ADAPTER: Intro | dbt-ADAPTER: Maturity | dbt Core: Removed |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | --------------------- | ----------------- |
+| [use\_info\_schema\_for\_columns](./databricks-changes.md#use-information-schema-for-columns)                                                | Databricks 1.9.0   | -                     | 2.0               |
+| [use\_user\_folder\_for\_python](./databricks-changes.md#use-users-folder-for-python-model-notebooks)                                        | Databricks 1.9.0   | -                     | 2.0               |
+| [use\_managed\_iceberg](./databricks-changes.md#use-managed-iceberg)                                                                         | Databricks 1.11.0  | 1.12.0                | -                 |
+| [use\_materialization\_v2](./databricks-changes.md#use-restructured-materializations)                                                        | Databricks 1.10.0  | -                     | -                 |
+| [use\_replace\_on\_for\_insert\_overwrite](./databricks-changes.md#use-replace-on-for-insert_overwrite-strategy)                             | Databricks 1.11.0  | 1.11.0                | -                 |
+| [use\_describe\_as\_json\_for\_relation\_metadata](./databricks-changes.md#use-describe-as-json-for-relation-metadata)                       | Databricks 1.12.0  | -                     | -                 |
+| [redshift\_skip\_autocommit\_transaction\_statements](./redshift-changes.md#redshift_skip_autocommit_transaction_statements-flag)            | Redshift 1.12.0    | -                     | -                 |
+| [bigquery\_use\_batch\_source\_freshness](./bigquery-changes.md#bigquery-use-batch-source-freshness)                                         | BigQuery 1.11.0rc2 | -                     | -                 |
+| [bigquery\_reject\_wildcard\_metadata\_source\_freshness](./bigquery-changes.md#the-bigquery_reject_wildcard_metadata_source_freshness-flag) | BigQuery 1.12.0    | -                     | -                 |
+| [bigquery\_use\_standard\_sql\_for\_partitions](./bigquery-changes.md#the-bigquery_use_standard_sql_for_partitions-flag)                     | BigQuery 1.12.0    | 1.12.0                | -                 |
+| [snowflake\_default\_transient\_dynamic\_tables](./snowflake-changes.md#the-snowflake_default_transient_dynamic_tables-flag)                 | Snowflake 1.12.0   | -                     | -                 |
+
+## FAQs
+
+ How do I implement behavior change flags in my project?
+
+The following example displays the current flags and their current default values in the latest dbt and dbt Core versions. To opt out of a specific behavior change, set the value of the flag to `false` in `dbt_project.yml`. You will continue to see warnings for legacy behaviors you've opted out of, until you either:
+
+* Resolve the issue (by switching the flag to `true`)
+* Silence the warnings using the `warn_error_options.silence` flag
+
+dbt\_project.yml
 
 ```yml
 flags:
   require_explicit_package_overrides_for_builtin_materializations: true
   require_resource_names_without_spaces: true
   source_freshness_run_project_hooks: true
-  skip_nodes_if_on_run_start_fails: false
-  state_modified_compare_more_unrendered_values: false
-  require_yaml_configuration_for_mf_time_spines: false
-  require_batched_execution_for_custom_microbatch_strategy: false
-  require_nested_cumulative_type_params: false
-  validate_macro_args: false
-  require_all_warnings_handled_by_warn_error: false
+  skip_nodes_if_on_run_start_fails: true
+  state_modified_compare_more_unrendered_values: true
+  require_yaml_configuration_for_mf_time_spines: true
+  require_batched_execution_for_custom_microbatch_strategy: true
+  require_nested_cumulative_type_params: true
+  validate_macro_args: true
+  require_all_warnings_handled_by_warn_error: true
   require_generic_test_arguments_property: true
   require_unique_project_resource_names: false
   require_ref_searches_node_package_before_root: false
@@ -87,50 +139,20 @@ flags:
   latest_version_pointer_enabled_by_default: false
 ```
 
-#### dbt Core behavior changes
+ What does it mean if there's no maturity date?
 
-This table outlines which month of the **Latest** release track in dbt and which version of core contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+When a maturity date has not yet been set (shown as -), we have not yet determined the exact date when the flag's default value will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
 
-| Flag                                                            | dbt **Latest**: Intro | dbt **Latest**: Maturity | core: Intro | core: Maturity | core: Removed |
-|-----------------------------------------------------------------|------------------|---------------------|-----------------|--------------------|----|
-| [require_explicit_package_overrides_for_builtin_materializations](https://docs.getdbt.com/reference/global-configs/behavior-flag-maturity#require_explicit_package_overrides_for_builtin_materializations) | 2024.04          | 2024.06             | 1.6.14, 1.7.14  | 1.8.0             | 2.0 |
-| [require_resource_names_without_spaces](https://docs.getdbt.com/reference/global-configs/behavior-flag-maturity#require_resource_names_without_spaces)                           | 2024.05          | 2025.05                | 1.8.0           | 1.10.0             | 2.0 |
-| [source_freshness_run_project_hooks](https://docs.getdbt.com/reference/global-configs/behavior-flag-maturity#source_freshness_run_project_hooks)                              | 2024.03          | 2025.05                | 1.8.0           | 1.10.0             | 2.0 |
-| [skip_nodes_if_on_run_start_fails](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#failures-in-on-run-start-hooks)                                | 2024.10          | -                | 1.9.0           | -              | 2.0 |
-| [state_modified_compare_more_unrendered_values](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#source-definitions-for-statemodified)                   | 2024.10          | -                | 1.9.0           | -              | 2.0 |
-| [require_yaml_configuration_for_mf_time_spines](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#metricflow-time-spine-yaml)                  | 2024.10          | -                | 1.9.0           | -              | 2.0 |
-| [require_batched_execution_for_custom_microbatch_strategy](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#custom-microbatch-strategy)                  | 2024.11         | -                | 1.9.0           | -              | 2.0 |
-| [require_nested_cumulative_type_params](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#cumulative-metrics)         |   2024.11         | -                 | 1.9.0           | -            | - |
-| [enable_truthy_nulls_equals_macro](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#null-safe-equality) | 2025.02 | - | 1.9.0 | - | - |
-| [validate_macro_args](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#macro-argument-validation)         | 2025.03           | -                 | 1.10.0          | -            | - |
-| [require_all_warnings_handled_by_warn_error](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#warn-error-handler-for-all-warnings)         |   2025.06         | -                 | 1.10.0          | -            | - |
-| [require_generic_test_arguments_property](https://docs.getdbt.com/reference/global-configs/behavior-flag-maturity#require_generic_test_arguments_property) | 2025.07 | 2025.08 | 1.10.5 | 1.10.8 | - |
-| [require_unique_project_resource_names](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#unique-project-resource-names) | 2025.12 | - | 1.11.0 | - | - |
-| [require_ref_searches_node_package_before_root](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#package-ref-search-order) | 2025.12 | - | 1.11.0 | - | - |
-| [require_valid_schema_from_generate_schema_name](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#valid-schema-from-generate_schema_name) | 2026.1 | - | 1.12.0a1 | - | - |
-| [require_sql_header_in_test_configs](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#sql_header-in-data-tests) | 2026.3 | - | 1.12.0 | - | - |
-| [require_corrected_analysis_fqns](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#project-level-configuration-for-analyses) | 2026.3 | - | 1.12.0 | - | - |
-| [require_source_and_semantic_model_names_without_spaces](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#no-spaces-in-source-and-semantic-model-names) | 2026.4 | - | 1.12.0 | - | - |
-| [allow_jinja_file_extensions](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#jinja-file-extensions) | 2026.5 | - | 1.12.0 | - | - |
-| [latest_version_pointer_enabled_by_default](https://docs.getdbt.com/reference/global-configs/behavior-flag-introduction#latest-version-pointer-for-versioned-models) | 2026.5 | - | 1.12.0 | - | - |
+* Migrate your project to support the new behavior, and then set the flag to true to stop seeing the warnings.
+* Explicitly set the flag to `false`. You will continue to see warnings, and you will retain the legacy behavior even after the maturity date (when the default value changes).
 
-When a maturity date has not yet been set (shown as `-`), we have not yet determined the exact date when the flag's default value will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
+ How do behavior change flags related to other changes?
 
-- Migrate your project to support the new behavior, and then set the flag to `true` to stop seeing the warnings.
-- Explicitly set the flag to `false`. You will continue to see warnings, and you will retain the legacy behavior even after the maturity date (when the default value changes).
+Since behavior change flags are different from other dbt changes, it's important to understand the difference:
 
-#### dbt adapter behavior changes
+* [Deprecation warnings](../deprecations.md) — Features in your project code that will stop working (behavior flags often control when these become errors)
+* [Deprecated CLI flags](../../docs/dbt-versions/dbt-upgrade/upgrading-to-v2.md#deprecated-flags) — Command-line flags being removed in dbt Fusion
 
-This table outlines which version of the dbt adapter contains the behavior change's introduction (disabled by default) or maturity (enabled by default).
+See the [Changes overview](../changes-overview.md) for a quick comparison.
 
-| Flag                          | dbt-ADAPTER: Intro | dbt-ADAPTER: Maturity | core: Removed |
-| ----------------------------- | ----------------------- | -------------------------- |-----------------|
-| [use_info_schema_for_columns](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-information-schema-for-columns) | Databricks 1.9.0                   | - | 2.0 |
-| [use_user_folder_for_python](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-users-folder-for-python-model-notebooks)  | Databricks 1.9.0                   | -  | 2.0 |
-| [use_managed_iceberg](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-managed-iceberg)  | Databricks 1.11.0  |  1.12.0                                                     | - |
-| [use_materialization_v2](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-restructured-materializations)      | Databricks 1.10.0                  | -| - |
-| [use_replace_on_for_insert_overwrite](https://docs.getdbt.com/reference/global-configs/databricks-changes#use-replace-on-for-insert_overwrite-strategy)   | Databricks 1.11.0  | 1.11.0  | - |
-| [redshift_skip_autocommit_transaction_statements](https://docs.getdbt.com/reference/global-configs/redshift-changes#redshift_skip_autocommit_transaction_statements-flag) | Redshift 1.12.0 | - | - |
-| [bigquery_use_batch_source_freshness](https://docs.getdbt.com/reference/global-configs/bigquery-changes#bigquery-use-batch-source-freshness) | BigQuery 1.11.0rc2 | - | - |
-| [bigquery_reject_wildcard_metadata_source_freshness](https://docs.getdbt.com/reference/global-configs/bigquery-changes#the-bigquery_reject_wildcard_metadata_source_freshness-flag) | BigQuery 1.12.0 | - | - |
-| [snowflake_default_transient_dynamic_tables](https://docs.getdbt.com/reference/global-configs/snowflake-changes#the-snowflake_default_transient_dynamic_tables-flag) | Snowflake 1.12.0 | - | - |
+If you're upgrading to [dbt Fusion](../../docs/dbt-versions/dbt-upgrade/upgrading-to-v2.md) or [dbt Core 2.0](../../docs/dbt-versions/dbt-upgrade/upgrading-to-v2.md), a subset of behavior change flags are removed and their new behavior is always enabled.

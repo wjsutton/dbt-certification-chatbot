@@ -2,65 +2,47 @@
 title: "About dbt retry command"
 source_url: https://docs.getdbt.com/reference/commands/retry
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
 # About dbt retry command
 
 Retry re-executes the last invocation from the point of failure.
 
-- If no nodes are executed before the failure (for example, if a run failed early due to a warehouse connection or permission errors), retry won't run anything since there are no recorded nodes to retry from.
-- In these cases, we recommend checking your [`run_results.json` file](https://docs.getdbt.com/reference/artifacts/run-results-json) and manually re-running the full job so the nodes build. 
-- Once some nodes have run, you can use retry to re-execute from any new point of failure.
-- If the previously executed command completed successfully, retry will finish as `no operation`. 
+* If no nodes are executed before the failure (for example, if a run failed early due to a warehouse connection or permission errors), retry won't run anything since there are no recorded nodes to retry from.
+* In these cases, we recommend checking your [`run_results.json` file](../artifacts/run-results-json.md) and manually re-running the full job so the nodes build.
+* Once some nodes have run, you can use retry to re-execute from any new point of failure.
+* If the previously executed command completed successfully, retry will finish as `no operation`.
 
 ## Retry flags
 
-The `dbt retry` flags apply when you use a local dbt installation or the studio_ide.
+The `dbt retry` flags apply when you use a self-hosted dbt installation or the Studio IDE.
 
-> **dbt platform CLI**
->
-> If you use the [dbt_platform CLI](https://docs.getdbt.com/docs/platform/dbt-cli-installation) against your cloud environment, `dbt retry` accepts only a small subset of overrides—typically `--threads`, `--vars`, and related options. Use `dbt retry --help` on your machine for the exact list your CLI build supports.
+dbt platform CLI
 
-<VersionBlock lastVersion="1.99">
+If you use the [dbt platform CLI](../../docs/platform/dbt-cli-installation.md) against your cloud environment, `dbt retry` accepts only a small subset of overrides—typically `--threads`, `--vars`, and related options. Use `dbt retry --help` on your machine for the exact list your CLI build supports.
 
-The following flags are supported when you run `dbt retry` with the core engine:
+(Applies to dbt v2.0 and later)
 
-| Flag | Input value | Description | Example |
-|------|-------------|-------------|---------|
-| <code style={{ whiteSpace: 'nowrap' }}>--threads</code> | int | Override the number of threads used in the original run | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --threads 8</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--vars</code> | YAML | Override variables from the original run | <code style={{ whiteSpace: 'nowrap' }}>{`dbt retry --vars '{"my_var": "new_value"}'`}</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--target</code> | target | Override the target from the original run | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --target prod</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--profile</code> | profile | Override the profile from the original run | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --profile jaffle_shop</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--profiles-dir</code> | path | Path to the directory containing `profiles.yml` | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --profiles-dir ~/.dbt</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--project-dir</code> | path | Path to the directory containing `dbt_project.yml` | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --project-dir .</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--target-path</code> | path | Override the target directory path | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --target-path target</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--state</code> | path | Path to a directory containing `run_results.json` from a previous run (defaults to the target directory) | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --state path/to/previous/run</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--full-refresh</code> | — | Override incremental models to run as full refreshes | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --full-refresh</code> |
-<br />
-Run `dbt retry --help` for the full list of flags available.
-</VersionBlock>
+The following flags are supported when you run `dbt retry` with the dbt Fusion engine:
 
-<VersionBlock firstVersion="2.0">
-
-The following flags are supported when you run `dbt retry` with the fusion_engine:
-
-| Flag | Input value | Description | Example |
-|------|-------------|-------------|---------|
-| <code style={{ whiteSpace: 'nowrap' }}>-t, --target</code> | target | The target to execute | <code style={{ whiteSpace: 'nowrap' }}>dbt retry -t prod</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--project-dir</code> | path | The directory to load the dbt project from | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --project-dir .</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--profile</code> | profile | The profile to use | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --profile jaffle_shop</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--profiles-dir</code> | path | The directory to load the profiles from | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --profiles-dir ~/.dbt</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--packages-install-path</code> | path | The directory to install packages | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --packages-install-path dbt_packages</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--target-path</code> | path | The output directory for all produced assets | <code style={{ whiteSpace: 'nowrap' }}>dbt retry --target-path target</code> |
-| <code style={{ whiteSpace: 'nowrap' }}>--vars</code> | vars | Variables for the project (use the format shown in the CLI help) | <code style={{ whiteSpace: 'nowrap' }}>{`dbt retry --vars '{"my_var": "new_value"}'`}</code> |
+| Flag                      | Input value | Description                                                      | Example                                          |
+| ------------------------- | ----------- | ---------------------------------------------------------------- | ------------------------------------------------ |
+| `-t, --target`            | target      | The target to execute                                            | `dbt retry -t prod`                              |
+| `--project-dir`           | path        | The directory to load the dbt project from                       | `dbt retry --project-dir .`                      |
+| `--profile`               | profile     | The profile to use                                               | `dbt retry --profile jaffle_shop`                |
+| `--profiles-dir`          | path        | The directory to load the profiles from                          | `dbt retry --profiles-dir ~/.dbt`                |
+| `--packages-install-path` | path        | The directory to install packages                                | `dbt retry --packages-install-path dbt_packages` |
+| `--target-path`           | path        | The output directory for all produced assets                     | `dbt retry --target-path target`                 |
+| `--vars`                  | vars        | Variables for the project (use the format shown in the CLI help) | `dbt retry --vars '{"my_var": "new_value"}'`     |
 
 <br />
+
 Run `dbt retry --help` for the full list of flags available.
 
 ### Fusion node selection
 
-Unlike `dbt retry` with core, fusion lets you narrow what gets retried using [`--select`](https://docs.getdbt.com/reference/node-selection/syntax), [`--exclude`](https://docs.getdbt.com/reference/node-selection/syntax), and [`--selector`](https://docs.getdbt.com/reference/node-selection/yaml-selectors). Those arguments override the prior invocation’s selection set for the retry run instead of only inheriting it.
+Unlike `dbt retry` with dbt Core, Fusion lets you narrow what gets retried using [`--select`](../node-selection/syntax.md), [`--exclude`](../node-selection/syntax.md), and [`--selector`](../node-selection/yaml-selectors.md). Those arguments override the prior invocation’s selection set for the retry run instead of only inheriting it.
 
 #### Examples
 
@@ -72,35 +54,25 @@ dbt retry --select my_model+
 dbt retry --exclude package:analytics --selector nightly_models
 ```
 
-</VersionBlock>
-
 ## Supported commands
 
 Retry works with the following commands:
 
-- [`build`](https://docs.getdbt.com/reference/commands/build)
-- [`compile`](https://docs.getdbt.com/reference/commands/compile)
-- [`clone`](https://docs.getdbt.com/reference/commands/clone)
-- [`docs generate`](https://docs.getdbt.com/reference/commands/cmd-docs#dbt-docs-generate)
-- [`seed`](https://docs.getdbt.com/reference/commands/seed)
-- [`snapshot`](https://docs.getdbt.com/reference/commands/snapshot)
-- [`test`](https://docs.getdbt.com/reference/commands/test)
-- [`run`](https://docs.getdbt.com/reference/commands/run)
-- [`run-operation`](https://docs.getdbt.com/reference/commands/run-operation)
+* [`build`](./build.md)
+* [`compile`](./compile.md)
+* [`clone`](./clone.md)
+* [`docs generate`](./cmd-docs.md#dbt-docs-generate)
+* [`seed`](./seed.md)
+* [`snapshot`](./snapshot.md)
+* [`test`](./test.md)
+* [`run`](./run.md)
+* [`run-operation`](./run-operation.md)
 
-Retry references [run_results.json](https://docs.getdbt.com/reference/artifacts/run-results-json) to determine where to start. Executing retry without correcting the previous failures yields idempotent results.
+Retry references [run\_results.json](../artifacts/run-results-json.md) to determine where to start. Executing retry without correcting the previous failures yields idempotent results.
 
-<VersionBlock lastVersion="1.99">
+(Applies to dbt v2.0 and later)
 
-`dbt retry` reuses the prior command’s selection, including any [`--select`](https://docs.getdbt.com/reference/node-selection/syntax), [`--exclude`](https://docs.getdbt.com/reference/node-selection/syntax), or [`--selector`](https://docs.getdbt.com/reference/node-selection/yaml-selectors) arguments. You cannot override those selectors on retry with core or the dbt_platform CLI.
-
-</VersionBlock>
-
-<VersionBlock firstVersion="2.0">
-
-With `dbt retry`, you can optionally pass new [`--select`](https://docs.getdbt.com/reference/node-selection/syntax), [`--exclude`](https://docs.getdbt.com/reference/node-selection/syntax), or [`--selector`](https://docs.getdbt.com/reference/node-selection/yaml-selectors) arguments to narrow the retry scope, as described in [Retry flags](#retry-flags).
-
-</VersionBlock>
+With `dbt retry`, you can optionally pass new [`--select`](../node-selection/syntax.md), [`--exclude`](../node-selection/syntax.md), or [`--selector`](../node-selection/yaml-selectors.md) arguments to narrow the retry scope, as described in [Retry flags](#retry-flags).
 
 Example results of executing `dbt retry` after a successful `dbt run`:
 

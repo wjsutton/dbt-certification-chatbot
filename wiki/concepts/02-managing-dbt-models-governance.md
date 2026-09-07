@@ -2,7 +2,7 @@
 title: "02 — Managing dbt models governance"
 tags: [exam-domain, concept]
 status: done
-updated: 2026-06-12
+updated: 2026-09-07
 ---
 
 # 02 — Managing dbt models governance
@@ -10,9 +10,9 @@ updated: 2026-06-12
 <!-- dbtwiki:auto:subtopics -->
 ## Sub-topics assessed
 
-- **Adding contracts to ensure model shape** — [Model contracts](../sources/model-contracts.md) · [contract (resource config)](../sources/contract.md)
-- **Creating model versions & deprecating old ones** — [Model versions](../sources/model-versions.md) · [versions (resource property)](../sources/versions.md)
-- **Defining constraints in YAML for data integrity** — [constraints (resource property)](../sources/constraints.md)
+- **Adding contracts to ensure model shape** — [Model contracts](../sources/model-contracts.md) · [contract](../sources/contract.md)
+- **Creating model versions & deprecating old ones** — [Model versions](../sources/model-versions.md) · [versions](../sources/versions.md)
+- **Defining constraints in YAML for data integrity** — [constraints](../sources/constraints.md)
 - **Model governance overview** — [About model governance](../sources/about-model-governance.md)
 - **Data product management (reading)** — [Data product management: Best practices](../sources/data-product-management.md)
 <!-- /dbtwiki:auto:subtopics -->
@@ -26,10 +26,10 @@ A **contract** is a set of upfront guarantees about a model's shape. Setting `co
 ## Source material
 
 - [Model contracts](../raw/docs__docs__mesh__govern__model-contracts.md) · summary: [model-contracts](../sources/model-contracts.md) · [original](https://docs.getdbt.com/docs/mesh/govern/model-contracts) · `Doc`
-- [contract (resource config)](../raw/docs__reference__resource-configs__contract.md) · summary: [contract](../sources/contract.md) · [original](https://docs.getdbt.com/reference/resource-configs/contract) · `Doc`
+- [contract](../raw/docs__reference__resource-configs__contract.md) · summary: [contract](../sources/contract.md) · [original](https://docs.getdbt.com/reference/resource-configs/contract) · `Doc`
 - [Model versions](../raw/docs__docs__mesh__govern__model-versions.md) · summary: [model-versions](../sources/model-versions.md) · [original](https://docs.getdbt.com/docs/mesh/govern/model-versions) · `Doc`
-- [versions (resource property)](../raw/docs__reference__resource-properties__versions.md) · summary: [versions](../sources/versions.md) · [original](https://docs.getdbt.com/reference/resource-properties/versions) · `Doc`
-- [constraints (resource property)](../raw/docs__reference__resource-properties__constraints.md) · summary: [constraints](../sources/constraints.md) · [original](https://docs.getdbt.com/reference/resource-properties/constraints) · `Doc`
+- [versions](../raw/docs__reference__resource-properties__versions.md) · summary: [versions](../sources/versions.md) · [original](https://docs.getdbt.com/reference/resource-properties/versions) · `Doc`
+- [constraints](../raw/docs__reference__resource-properties__constraints.md) · summary: [constraints](../sources/constraints.md) · [original](https://docs.getdbt.com/reference/resource-properties/constraints) · `Doc`
 - [About model governance](../raw/docs__docs__mesh__govern__about-model-governance.md) · summary: [about-model-governance](../sources/about-model-governance.md) · [original](https://docs.getdbt.com/docs/mesh/govern/about-model-governance) · `Doc`
 - [Data product management: Best practices](../raw/getdbt__blog__data-product-management.md) · summary: [data-product-management](../sources/data-product-management.md) · [original](https://www.getdbt.com/blog/data-product-management) · `Blog`
 <!-- /dbtwiki:auto:sources -->

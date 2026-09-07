@@ -2,7 +2,7 @@
 title: "06 — External dependencies"
 tags: [exam-domain, concept]
 status: done
-updated: 2026-06-12
+updated: 2026-09-07
 ---
 
 # 06 — External dependencies
@@ -11,7 +11,7 @@ updated: 2026-06-12
 ## Sub-topics assessed
 
 - **Implementing dbt exposures** — [Add Exposures to your DAG](../sources/exposures.md) · [Exposure properties](../sources/exposure-properties.md)
-- **Implementing source freshness** — [Source freshness](../sources/source-freshness.md) · [About dbt source command](../sources/source.md) · [freshness (resource property)](../sources/freshness.md)
+- **Implementing source freshness** — [Source freshness](../sources/source-freshness.md) · [About dbt source command](../sources/source.md) · [freshness](../sources/freshness.md)
 <!-- /dbtwiki:auto:subtopics -->
 
 ## Synthesis
@@ -26,5 +26,5 @@ On t
 - [Exposure properties](../raw/docs__reference__exposure-properties.md) · summary: [exposure-properties](../sources/exposure-properties.md) · [original](https://docs.getdbt.com/reference/exposure-properties) · `Doc`
 - [Source freshness](../raw/docs__docs__deploy__source-freshness.md) · summary: [source-freshness](../sources/source-freshness.md) · [original](https://docs.getdbt.com/docs/deploy/source-freshness) · `Doc`
 - [About dbt source command](../raw/docs__reference__commands__source.md) · summary: [source](../sources/source.md) · [original](https://docs.getdbt.com/reference/commands/source) · `Doc`
-- [freshness (resource property)](../raw/docs__reference__resource-properties__freshness.md) · summary: [freshness](../sources/freshness.md) · [original](https://docs.getdbt.com/reference/resource-properties/freshness) · `Doc`
+- [freshness](../raw/docs__reference__resource-properties__freshness.md) · summary: [freshness](../sources/freshness.md) · [original](https://docs.getdbt.com/reference/resource-properties/freshness) · `Doc`
 <!-- /dbtwiki:auto:sources -->

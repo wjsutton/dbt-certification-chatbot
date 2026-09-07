@@ -2,60 +2,76 @@
 title: "About dbt build command"
 source_url: https://docs.getdbt.com/reference/commands/build
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
 # About dbt build command
 
 The `dbt build` command will:
-- run [models](https://docs.getdbt.com/docs/build/models)
-- test [tests](https://docs.getdbt.com/docs/build/data-tests)
-- snapshot [snapshots](https://docs.getdbt.com/docs/build/snapshots)
-- seed [seeds](https://docs.getdbt.com/docs/build/seeds)
-- build [user-defined functions](https://docs.getdbt.com/docs/build/udfs) (available from dbt Core v1.11 and in the fusion_engine)
+
+* run [models](../../docs/build/models.md)
+* test [tests](../../docs/build/data-tests.md)
+* snapshot [snapshots](../../docs/build/snapshots.md)
+* seed [seeds](../../docs/build/seeds.md)
+* build [user-defined functions](../../docs/build/udfs.md) (available from dbt Core v1.11 and in the dbt Fusion engine)
 
 In DAG order, for selected resources or an entire project.
 
 ## Details
 
-**Artifacts:** The `build` task will write a single [manifest](https://docs.getdbt.com/reference/artifacts/manifest-json) and a single [run results artifact](https://docs.getdbt.com/reference/artifacts/run-results-json). The run results will include information about all models, tests, seeds, and snapshots that were selected to build, combined into one file.
+**Artifacts:** The `build` task will write a single [manifest](../artifacts/manifest-json.md) and a single [run results artifact](../artifacts/run-results-json.md). The run results will include information about all models, tests, seeds, and snapshots that were selected to build, combined into one file.
 
 **Skipping on failures:** Tests on upstream resources will block downstream resources from running, and a test failure will cause those downstream resources to skip entirely. E.g. If `model_b` depends on `model_a`, and a `unique` test on `model_a` fails, then `model_b` will `SKIP`.
-- Don't want a test to cause skipping? Adjust its [severity or thresholds](https://docs.getdbt.com/reference/resource-configs/severity) to `warn` instead of `error`
-- In the case of a test with multiple parents, where one parent depends on the other (e.g. a `relationships` test between `model_a` + `model_b`), that test will block-and-skip children of the most-downstream parent only (`model_b`).
-- If you have a test with multiple parents that are independent of each other, dbt [skips](https://github.com/dbt-labs/dbt-core/blob/d5071fa13502be273596a0b7c8b13d14b6c68655/core/dbt/compilation.py#L224-L257) the downstream node only if that node depends on all of those parents.
 
-<VersionBlock firstVersion="1.12">
+* Don't want a test to cause skipping? Adjust its [severity or thresholds](../resource-configs/severity.md) to `warn` instead of `error`
+* In the case of a test with multiple parents, where one parent depends on the other (e.g. a `relationships` test between `model_a` + `model_b`), that test will block-and-skip children of the most-downstream parent only (`model_b`).
+* If you have a test with multiple parents that are independent of each other, dbt [skips](https://github.com/dbt-labs/dbt-core/blob/d5071fa13502be273596a0b7c8b13d14b6c68655/core/dbt/compilation.py#L224-L257) the downstream node only if that node depends on all of those parents.
 
-**Skipping on model errors:** By default, if a model fails, all downstream models are skipped. Set [`on_error: continue`](https://docs.getdbt.com/reference/resource-configs/on_error) on a model to allow its downstream models to run even when that model fails.
+(Applies to dbt v1.12 and later)
 
-</VersionBlock>
+**Skipping on model errors:** By default, if a model fails, all downstream models are skipped. Set [`on_error: continue`](../resource-configs/on_error.md) on a model to allow its downstream models to run even when that model fails.
 
-<VersionBlock lastVersion="1.11">
-
-**Selecting resources:** The `build` task supports standard selection syntax (`--select`, `--exclude`, `--selector`), as well as a `--resource-type` flag that offers a final filter (just like `list`). Whichever resources are selected, those are the ones that `build` will run/test/snapshot/seed.
-</VersionBlock>
-
-<VersionBlock firstVersion="1.12">
+(Applies to dbt v1.12 and later)
 
 **Selecting resources:** The `build` task supports standard selection syntax (`--select`, `--exclude`), as well as a `--resource-type` flag that offers a final filter (just like `list`). Whichever resources are selected, those are the ones that `build` will run/test/snapshot/seed.
-</VersionBlock>
 
-- Remember that tests support indirect selection, so `dbt build -s model_a` will both run _and_ test `model_a`. What does that mean? Any tests that directly depend on `model_a` will be included, so long as those tests don't also depend on other unselected parents. See [test selection](https://docs.getdbt.com/reference/node-selection/test-selection-examples) for details and examples.
+* Remember that tests support indirect selection, so `dbt build -s model_a` will both run *and* test `model_a`. What does that mean? Any tests that directly depend on `model_a` will be included, so long as those tests don't also depend on other unselected parents. See [test selection](../node-selection/test-selection-examples.md) for details and examples.
 
-**Flags:** The `build` task supports all the same flags as `run`, `test`, `snapshot`, and `seed`. For flags that are shared between multiple tasks (e.g. `--full-refresh`), `build` will use the same value for all selected resource types (e.g. both models and seeds will be full refreshed).
+**Flags:** The `build` task supports all the same flags as `run`, `test`, `snapshot`, and `seed`. For flags that are shared between multiple tasks (e.g. `--full-refresh`), `build` will use the same value for all selected resource types that support it (e.g. both models and seeds will be full refreshed).
+
+Snapshots ignore full refresh
+
+Snapshots ignore both the `full_refresh` config and the `--full-refresh` flag. A command such as `dbt build --full-refresh` or `dbt snapshot --full-refresh` that includes a snapshot node runs the snapshot as normal — it won't drop or recreate the snapshot table, so existing snapshot history is preserved.
 
 ### The `--empty` flag
 
 The `build` command supports the `--empty` flag for building schema-only dry runs. The `--empty` flag limits the refs and sources to zero rows. dbt will still execute the model SQL against the target data warehouse but will avoid expensive reads of input data. This validates dependencies and ensures your models will build properly.
 
+#### The render method
+
+The `.render()` method is generally used to resolve or evaluate Jinja expressions (such as `{{ source(...) }}`) during runtime.
+
+When using the `--empty flag`, dbt may skip processing `ref()` or `source()` for optimization. To avoid compilation errors and to explicitly tell dbt to process a specific relation (`ref()` or `source()`), use the `.render()` method in your model file. For example:
+
+models.sql
+
+```jinja
+{{ config(
+    pre_hook = [
+        "alter external table {{ source('sys', 'customers').render() }} refresh"
+    ]
+) }}
+
+select ...
+```
+
 ## Tests
 
 When `dbt build` is executed with unit tests applied, the models will be processed according to their lineage and dependencies. The tests will be executed as follows:
 
-- [Unit tests](https://docs.getdbt.com/docs/build/unit-tests) are run on a SQL model.
-- The model is materialized.
-- [Data tests](https://docs.getdbt.com/docs/build/data-tests) are run on the model.
+* [Unit tests](../../docs/build/unit-tests.md) are run on a SQL model.
+* The model is materialized.
+* [Data tests](../../docs/build/data-tests.md) are run on the model.
 
 This saves on warehouse spend as the model will only be materialized if the unit tests pass successfully.
 
@@ -63,7 +79,7 @@ Unit tests and data tests can be selected using `--select test_type:unit` or `--
 
 ### Examples
 
-```
+```text
 $ dbt build
 Running with dbt=1.9.0-b2
 Found 1 model, 4 tests, 1 snapshot, 1 analysis, 341 macros, 0 operations, 1 seed file, 2 sources, 2 exposures
@@ -93,9 +109,10 @@ Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
 ```
 
 ## Functions
-_Available from dbt Core v1.11 and in the fusion_engine_
 
-The `build` command builds [user-defined functions](https://docs.getdbt.com/docs/build/udfs) as part of the DAG execution. To build or rebuild only `functions` in your project, run `dbt build --select "resource_type:function"`. For example:
+*Available from dbt Core v1.11 and in the dbt Fusion engine*
+
+The `build` command builds [user-defined functions](../../docs/build/udfs.md) as part of the DAG execution. To build or rebuild only `functions` in your project, run `dbt build --select "resource_type:function"`. For example:
 
 ```bash
 dbt build --select "resource_type:function"

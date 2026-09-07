@@ -2,7 +2,7 @@
 title: "03 — Debugging data modeling errors"
 tags: [exam-domain, concept]
 status: done
-updated: 2026-06-12
+updated: 2026-09-07
 ---
 
 # 03 — Debugging data modeling errors
@@ -14,7 +14,7 @@ updated: 2026-06-12
 - **Troubleshooting using compiled code** — [About dbt compile command](../sources/compile.md)
 - **Troubleshooting .yml compilation errors** — [Debug errors](../sources/debug-errors.md)
 - **Developing, implementing & testing a fix before merge** — [Best practices for workflows](../sources/best-practice-workflows.md)
-- **Managing dbt behavior with flags** — [About flags (global configs)](../sources/about-global-configs.md) · [Behavior changes](../sources/behavior-changes.md)
+- **Managing dbt behavior with flags** — [About flags (global configs)](../sources/about-global-configs.md) · [About behavior changes](../sources/behavior-changes.md)
 <!-- /dbtwiki:auto:subtopics -->
 
 ## Synthesis
@@ -29,5 +29,5 @@ When the message isn't enough, **inspect the compiled code**. `target/compiled` 
 - [About dbt compile command](../raw/docs__reference__commands__compile.md) · summary: [compile](../sources/compile.md) · [original](https://docs.getdbt.com/reference/commands/compile) · `Doc`
 - [Best practices for workflows](../raw/docs__best-practices__best-practice-workflows.md) · summary: [best-practice-workflows](../sources/best-practice-workflows.md) · [original](https://docs.getdbt.com/best-practices/best-practice-workflows) · `Doc`
 - [About flags (global configs)](../raw/docs__reference__global-configs__about-global-configs.md) · summary: [about-global-configs](../sources/about-global-configs.md) · [original](https://docs.getdbt.com/reference/global-configs/about-global-configs) · `Doc`
-- [Behavior changes](../raw/docs__reference__global-configs__behavior-changes.md) · summary: [behavior-changes](../sources/behavior-changes.md) · [original](https://docs.getdbt.com/reference/global-configs/behavior-changes) · `Doc`
+- [About behavior changes](../raw/docs__reference__global-configs__behavior-changes.md) · summary: [behavior-changes](../sources/behavior-changes.md) · [original](https://docs.getdbt.com/reference/global-configs/behavior-changes) · `Doc`
 <!-- /dbtwiki:auto:sources -->

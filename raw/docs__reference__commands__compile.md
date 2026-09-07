@@ -2,44 +2,40 @@
 title: "About dbt compile command"
 source_url: https://docs.getdbt.com/reference/commands/compile
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
 # About dbt compile command
 
 `dbt compile` generates executable SQL from source files for:
 
-<VersionBlock lastVersion="1.11">
-- [Models](https://docs.getdbt.com/docs/build/models)
-- [Data tests](https://docs.getdbt.com/docs/build/data-tests)
-- [Analyses](https://docs.getdbt.com/docs/build/analyses)
-- [Functions](https://docs.getdbt.com/docs/build/udfs)
-</VersionBlock>
-<VersionBlock firstVersion="1.12">
-- [Models](https://docs.getdbt.com/docs/build/models)
-- [Data tests](https://docs.getdbt.com/docs/build/data-tests)
-- [Analyses](https://docs.getdbt.com/docs/build/analyses)
-- [Functions](https://docs.getdbt.com/docs/build/udfs)
-- [Snapshots](https://docs.getdbt.com/docs/build/snapshots) (available in core v1.12)
-</VersionBlock>
+(Applies to dbt v1.12 and later)
+
+* [Models](../../docs/build/models.md)
+* [Data tests](../../docs/build/data-tests.md)
+* [Analyses](../../docs/build/analyses.md)
+* [Functions](../../docs/build/udfs.md)
+* [Snapshots](../../docs/build/snapshots.md) (available in dbt Core v1.12)
 
 You can find these compiled SQL files in the `target/` directory of your dbt project.
 
 The `compile` command is useful for:
 
-- Visually inspecting the compiled output of resource files. This is useful for validating complex Jinja logic or macro usage.
-- Manually running compiled SQL. While debugging a model or [data test](https://docs.getdbt.com/docs/build/data-tests), it's often useful to execute the underlying `select` statement to find the source of the bug.
-- Compiling `analysis` files. Read more about analysis files [here](https://docs.getdbt.com/docs/build/analyses).
+* Visually inspecting the compiled output of resource files. This is useful for validating complex Jinja logic or macro usage.
+* Manually running compiled SQL. While debugging a model or [data test](../../docs/build/data-tests.md), it's often useful to execute the underlying `select` statement to find the source of the bug.
+* Compiling `analysis` files. Read more about analysis files [here](../../docs/build/analyses.md).
 
 Some common misconceptions:
-- `dbt compile` is _not_ a pre-requisite of `dbt run`, or other building commands. Those commands will handle compilation themselves.
-- If you just want dbt to read and validate your project code, without connecting to the data warehouse, use `dbt parse` instead.
+
+* `dbt compile` is *not* a pre-requisite of `dbt run`, or other building commands. Those commands will handle compilation themselves.
+* If you just want dbt to read and validate your project code, without connecting to the data warehouse, use `dbt parse` instead.
 
 ### Interactive compile
 
 Starting in dbt v1.5, `compile` can be "interactive" in the CLI, by displaying the compiled code of a node or arbitrary dbt-SQL query:
-- `--select` a specific node _by name_
-- `--inline` an arbitrary dbt-SQL query
+
+* `--select` a specific node *by name*
+* `--inline` an arbitrary dbt-SQL query
 
 This will log the compiled SQL to the terminal, in addition to writing to the `target/` directory.
 
@@ -96,12 +92,13 @@ select * from "jaffle_shop"."main"."raw_orders"
 ```
 
 The command accesses the data platform to cache-related metadata, and to run introspective queries. Use the flags:
-- `--no-populate-cache` to disable the initial cache population. If metadata is needed, it will be a cache miss, requiring dbt to run the metadata query. This is a `dbt` flag, which means you need to add `dbt` as a prefix. For example: `dbt --no-populate-cache`.
-- `--no-introspect` to disable [introspective queries](https://docs.getdbt.com/faqs/Warehouse/db-connection-dbt-compile#introspective-queries). dbt will raise an error if a resource's definition requires running one. This is a `dbt compile` flag, which means you need to add `dbt compile` as a prefix. For example: `dbt compile --no-introspect`.
 
-> **Resources that use introspective queries**
->
-> Compiled SQL for resources that use introspective queries may depend on metadata from your warehouse. Compilation may be incomplete or may differ depending on the state of that metadata.
+* `--no-populate-cache` to disable the initial cache population. If metadata is needed, it will be a cache miss, requiring dbt to run the metadata query. This is a `dbt` flag, which means you need to add `dbt` as a prefix. For example: `dbt --no-populate-cache`.
+* `--no-introspect` to disable [introspective queries](../../faqs/Warehouse/db-connection-dbt-compile.md#introspective-queries). dbt will raise an error if a resource's definition requires running one. This is a `dbt compile` flag, which means you need to add `dbt compile` as a prefix. For example: `dbt compile --no-introspect`.
+
+Resources that use introspective queries
+
+Compiled SQL for resources that use introspective queries may depend on metadata from your warehouse. Compilation may be incomplete or may differ depending on the state of that metadata.
 
 ### Compiling tests with `--select`
 
@@ -149,6 +146,33 @@ FULL_TEST_NODE_NAME
 
 3. If no tests are returned, check test definitions and project paths before running `compile` again.
 
-For more selector patterns, refer to [Test selection examples](https://docs.getdbt.com/reference/node-selection/test-selection-examples).
+For more selector patterns, refer to [Test selection examples](../node-selection/test-selection-examples.md).
 
 ### FAQs
+
+Why dbt compile needs a data platform connection
+
+`dbt compile` needs a data platform connection in order to gather the info it needs (including from introspective queries) to prepare the SQL for every model in your project.
+
+### dbt compile
+
+The [`dbt compile` command](./compile.md) generates executable SQL from `source`, `model`, `test`, and `analysis` files. `dbt compile` is similar to `dbt run` except that it doesn't materialize the model's compiled SQL into an existing table. So, up until the point of materialization, `dbt compile` and `dbt run` are similar because they both require a data platform connection, run queries, and have an [`execute` variable](../dbt-jinja-functions/execute.md) set to `True`.
+
+However, here are some things to consider:
+
+* You don't need to execute `dbt compile` before `dbt run`
+* In dbt, `compile` doesn't mean `parse`. This is because `parse` validates your written `YAML`, configured tags, and so on.
+
+### Introspective queries
+
+To generate the compiled SQL for many models, dbt needs to run introspective queries, (which is when dbt needs to run SQL in order to pull data back and do something with it) against the data platform.
+
+These introspective queries include:
+
+* Populating the relation cache. For more information, refer to the [Create new materializations](../../guides/create-new-materializations.md) guide. Caching speeds up the metadata checks, including whether an [incremental model](../../docs/build/incremental-models.md) already exists in the data platform.
+* Resolving [macros](../../docs/build/jinja-macros.md#macros), such as `run_query` or `dbt_utils.get_column_values` that you're using to template out your SQL. This is because dbt needs to run those queries during model SQL compilation.
+* [`dbt docs generate`](./cmd-docs.md) compiles your project by default (unless you pass [`--no-compile`](./cmd-docs.md)), so introspective macros such as [`run_query`](../dbt-jinja-functions/run_query.md) run against the warehouse during documentation builds the same way they do during other compile workflows. Refer to [`run_query`](../dbt-jinja-functions/run_query.md) for how that works and for using `flags.WHICH` when you want to limitDML or other side-effecting SQL to specific dbt commands.
+
+Without a data platform connection, dbt can't perform these introspective queries and won't be able to generate the compiled SQL needed for the next steps in the dbt workflow. You can [`parse`](./parse.md) a project and use the [`list`](./list.md) resources in the project, without an internet or data platform connection. Parsing a project is enough to produce a [manifest](../artifacts/manifest-json.md), however, keep in mind that the written-out manifest won't include compiled SQL.
+
+To configure a project, you do need a [connection profile](../../docs/local/profiles.yml.md) (`profiles.yml` if using the CLI). You need this file because the project's configuration depends on its contents. For example, you may need to use [`{{target}}`](../dbt-jinja-functions/target.md) for conditional configs or know what platform you're running against so that you can choose the right flavor of SQL.

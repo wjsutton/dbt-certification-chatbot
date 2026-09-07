@@ -2,7 +2,7 @@
 title: "Data product management: Best practices"
 source_url: https://www.getdbt.com/blog/data-product-management
 retrieved_via: html-extract
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
 [Blog](/blog "Blog")
@@ -200,7 +200,7 @@ Take the free [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamenta
 
 Join the analytics engineers building data infrastructure that actually scales.
 
-[Get started with dbt](/signup)
+Get started with dbt
 
 ### Install dbt Wizard CLI
 
@@ -212,41 +212,41 @@ Copy post link
 
 ### Latest posts
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F8277fc38a3385532e6e107d1b1c549fc1f8f8e16-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/your-ai-isn-t-broken-your-data-model-is "Your AI isn't broken. Your data model is.")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fea5e2fd0c181cc7e2f06d6c938d8152a20d1c552-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/why-your-ai-pilot-stalled-at-the-context-gap "Why your AI pilot stalled at the context gap")
 
-Insights15 min
+Insights5 min
 
-### [Your AI isn't broken. Your data model is.](/blog/your-ai-isn-t-broken-your-data-model-is)
-
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
-
-[Dustin Dorsey](/authors/dustin-dorsey)
-
-on  Jun 08, 2026
-
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd86b1e41536f4c2bf3add533eef53acb5ac8b3e4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/data-stack-trusted-ai "Building a data stack for trusted AI")
-
-Insights11 min
-
-### [Building a data stack for trusted AI](/blog/data-stack-trusted-ai)
+### [Why your AI pilot stalled at the context gap](/blog/why-your-ai-pilot-stalled-at-the-context-gap)
 
 ![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
 [Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 03, 2026
+on  Aug 27, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F30789616b363397d5dc5bcfd0a477cd0ba53f9f9-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year "dbt Labs Named Snowflake Data Integration Product Partner of the Year")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F2303ba64b4eca09831a60566e42d2085d9d61429-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/scaling-ai-is-easy-trusting-it-is-hard "Scaling AI is easy. Trusting it is hard.")
 
-Press5 min
+Insights5 min
 
-### [dbt Labs Named Snowflake Data Integration Product Partner of the Year](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year)
+### [Scaling AI is easy. Trusting it is hard.](/blog/scaling-ai-is-easy-trusting-it-is-hard)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe6328278cb5c9c731817e3fb55ddf708bb914197-512x512.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
-[Elaine Green](/authors/elaine-green)
+[Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 02, 2026
+on  Aug 25, 2026
+
+[![Databricks processes your data. dbt defines what it means](/_next/image?url=%2Fimg%2Fplaceholder.jpg&w=828&q=75)](/blog/databricks-processes-your-data-dbt-defines-what-it-means)
+
+Pulse8 min
+
+### [Databricks processes your data. dbt defines what it means](/blog/databricks-processes-your-data-dbt-defines-what-it-means)
+
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+
+[Daniel Poppy](/authors/daniel-poppy)
+
+on  Aug 17, 2026
 
 The dbt Community
 

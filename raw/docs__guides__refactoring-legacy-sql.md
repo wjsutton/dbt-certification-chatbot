@@ -2,10 +2,18 @@
 title: "Refactoring legacy SQL to dbt"
 source_url: https://docs.getdbt.com/guides/refactoring-legacy-sql
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-07
 ---
 
 # Refactoring legacy SQL to dbt
+
+[Back to guides](../guides.md)
+
+SQL
+
+Advanced
+
+[Menu ]()
 
 ## Introduction
 
@@ -24,9 +32,9 @@ When migrating and refactoring code, it’s of course important to stay organize
 
 Let's get into it!
 
-> **More resources**
->
-> This guide is excerpted from the new dbt Learn On-demand Course, "Refactoring SQL for Modularity" - if you're curious, pick up the [free refactoring course here](https://learn.getdbt.com/courses/refactoring-sql-for-modularity), which includes example and practice refactoring projects. Or for a more in-depth look at migrating DDL and DML from stored procedures, refer to the[Migrate from stored procedures](https://docs.getdbt.com/guides/migrate-from-stored-procedures) guide.
+More resources
+
+This guide is excerpted from the new dbt Learn On-demand Course, "Refactoring SQL for Modularity" - if you're curious, pick up the [free refactoring course here](https://learn.getdbt.com/courses/refactoring-sql-for-modularity), which includes example and practice refactoring projects. Or for a more in-depth look at migrating DDL and DML from stored procedures, refer to the[Migrate from stored procedures](./migrate-from-stored-procedures.md) guide.
 
 ## Migrate your existing SQL code
 
@@ -36,11 +44,13 @@ While refactoring you'll be **moving around** a lot of logic, but ideally you wo
 
 To get going, you'll copy your legacy SQL query into your dbt project, by saving it in a `.sql` file under the `/models` directory of your project.
 
+[![Your dbt project's folder structure](https://docs.getdbt.com/img/tutorial/refactoring/legacy-query-model.png?v=2 "Your dbt project's folder structure")](#)Your dbt project's folder structure
+
 Once you've copied it over, you'll want to `dbt run` to execute the query and populate the table in your warehouse.
 
-If this is your first time running dbt, you may want to start with the [Introduction to dbt](https://docs.getdbt.com/docs/introduction) and the earlier sections of the [quickstart guide](https://docs.getdbt.com/guides) before diving into refactoring.
+If this is your first time running dbt, you may want to start with the [Introduction to dbt](../docs/introduction.md) and the earlier sections of the [quickstart guide](../guides.md) before diving into refactoring.
 
-This step may sound simple, but if you're porting over an existing set of SQL transformations to a new SQL dialect, you will need to consider how your legacy SQL dialect differs from your new SQL flavor, and you may need to modify your legacy code to get it to run at all.  
+This step may sound simple, but if you're porting over an existing set of SQL transformations to a new SQL dialect, you will need to consider how your legacy SQL dialect differs from your new SQL flavor, and you may need to modify your legacy code to get it to run at all.
 
 This will commonly happen if you're migrating from a [stored procedure workflow on a legacy database](https://getdbt.com/analytics-engineering/case-for-elt-workflow/) into dbt + a cloud data warehouse.
 
@@ -50,21 +60,26 @@ If you're not migrating data warehouses at the moment, then you can keep your SQ
 
 ## Create sources from table references
 
-To query from your data warehouse, we recommend creating [sources in dbt](https://docs.getdbt.com/docs/build/sources) rather than querying the database table directly.
+To query from your data warehouse, we recommend creating [sources in dbt](../docs/build/sources.md) rather than querying the database table directly.
 
 This allows you to call the same table in multiple places with `{{ src('my_source', 'my_table') }}` rather than `my_database.my_schema.my_table`.
 
 We start here for several reasons:
 
 #### Source freshness reporting
-Using sources unlocks the ability to run [source freshness reporting](https://docs.getdbt.com/docs/build/sources#source-data-freshness) to make sure your raw data isn't stale.
+
+Using sources unlocks the ability to run [source freshness reporting](../docs/build/sources.md#source-data-freshness) to make sure your raw data isn't stale.
 
 #### Easy dependency tracing
+
 If you're migrating multiple stored procedures into dbt, with sources you can see which queries depend on the same raw tables.
 
 This allows you to consolidate modeling work on those base tables, rather than calling them separately in multiple places.
 
+[![Sources appear in green in your DAG in dbt docs](https://docs.getdbt.com/img/docs/building-a-dbt-project/sources-dag.png?v=2 "Sources appear in green in your DAG in dbt docs")](#)Sources appear in green in your DAG in dbt docs
+
 #### Build the habit of analytics-as-code
+
 Sources are an easy way to get your feet wet using config files to define aspects of your transformation pipeline.
 
 ```yml
@@ -80,43 +95,53 @@ With a few lines of code in a `.yml` file in your dbt project's `/models` subfol
 For example, let's say you migrate from one ETL tool to another, and the new tool writes to a new schema in your warehouse. dbt sources allow you to make that update in a single config file, and flip on the change with one pull request to your dbt project.
 
 ## Choose a refactoring strategy
+
 There are two ways you can choose to refactor: in-place or alongside.
 
 #### In-place refactoring
+
 Means that you will work directly on the SQL script that you ported over in the first step.
 
 You'll move it into a `/marts` subfolder within your project's `/models` folder and go to town.
 
 **Pros**:
-- You won't have any old models to delete once refactoring is done.
+
+* You won't have any old models to delete once refactoring is done.
 
 **Cons**:
-- More pressure to get it right the first time, especially if you've referenced this model from any BI tool or downstream process.
-- Harder to audit, since you've overwritten your audit comparison model.
-- Requires navigating through git commits to see what code you've changed throughout.
+
+* More pressure to get it right the first time, especially if you've referenced this model from any BI tool or downstream process.
+* Harder to audit, since you've overwritten your audit comparison model.
+* Requires navigating through Git commits to see what code you've changed throughout.
 
 #### Alongside refactoring
+
 Means that you will copy your model to a `/marts` folder, and work on changes on that copy.
 
 **Pros**:
-- Less impact on end users - anything that is referencing the model you're refactoring can keep that reference until you can safely deprecate that model.
-- Less pressure to get it right the first time, meaning you can push/merge smaller PRs. This is better for you and your reviewers.
-- You can audit easier by running the old and new models in your dev branch and comparing the results. This ensures the datasets you're comparing have the same or very close to the same records.
-- You can look at old code more easily, as it has not been changed.
-- You can decide when the old model is ready to be deprecated.
+
+* Less impact on end users - anything that is referencing the model you're refactoring can keep that reference until you can safely deprecate that model.
+* Less pressure to get it right the first time, meaning you can push/merge smaller PRs. This is better for you and your reviewers.
+* You can audit easier by running the old and new models in your dev branch and comparing the results. This ensures the datasets you're comparing have the same or very close to the same records.
+* You can look at old code more easily, as it has not been changed.
+* You can decide when the old model is ready to be deprecated.
 
 **Cons**:
-- You'll have the old file(s) in your project until you can deprecate them - running side-by-side like this can feel duplicative, and may be a headache to manage if you're migrating a number of queries in bulk.
+
+* You'll have the old file(s) in your project until you can deprecate them - running side-by-side like this can feel duplicative, and may be a headache to manage if you're migrating a number of queries in bulk.
 
 We generally recommend the **alongside** approach, which we'll follow in this tutorial.
 
 ## Implement CTE groupings
-Once you choose your refactoring strategy, you'll want to do some cosmetic cleanups according to your data modeling best practices and start moving code into CTE groupings. This will give you a head start on porting SQL snippets from CTEs into modular [dbt data models](https://docs.getdbt.com/docs/build/models).
+
+Once you choose your refactoring strategy, you'll want to do some cosmetic cleanups according to your data modeling best practices and start moving code into CTE groupings. This will give you a head start on porting SQL snippets from CTEs into modular [dbt data models](../docs/build/models.md).
 
 ### What's a CTE?
+
 CTE stands for “Common Table Expression”, which is a temporary result set available for use until the end of SQL script execution. Using the `with` keyword at the top of a query allows us to use CTEs in our code.
 
 Inside of the model we're refactoring, we’re going to use a 4-part layout:
+
 1. 'Import' CTEs
 2. 'Logical' CTEs
 3. A 'Final' CTE
@@ -164,9 +189,9 @@ Notice there are no nested queries here, which makes reading our logic much more
 
 Let's start with our components, and identify raw data that is being used in our analysis. For this exercise, the components are three sources:
 
-- jaffle_shop.customers
-- jaffle_shop.orders
-- stripe.payment
+* jaffle\_shop.customers
+* jaffle\_shop.orders
+* stripe.payment
 
 Let's make a CTE for each of these under the `Import CTEs` comment. These import CTEs should be only simple `select *` statements, but can have filters if necessary.
 
@@ -192,12 +217,13 @@ After you have moved everything into CTEs, you'll want to write a `select * from
 
 This allows anyone after us to easily step through the CTEs when troubleshooting, rather than having to untangle nested queries.
 
-> For more background on CTEs, check out the [dbt Labs style guide](https://docs.getdbt.com/best-practices/how-we-style/0-how-we-style-our-dbt-projects).
+> For more background on CTEs, check out the [dbt Labs style guide](../best-practices/how-we-style/0-how-we-style-our-dbt-projects.md).
 
 ## Port CTEs to individual data models
-Rather than keep our SQL code confined to one long SQL file, we'll now start splitting it into modular + reusable [dbt data models](https://docs.getdbt.com/docs/build/models).
 
-Internally at dbt Labs, we follow roughly this [data modeling technique](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) and we [structure our dbt projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) accordingly.
+Rather than keep our SQL code confined to one long SQL file, we'll now start splitting it into modular + reusable [dbt data models](../docs/build/models.md).
+
+Internally at dbt Labs, we follow roughly this [data modeling technique](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) and we [structure our dbt projects](../best-practices/how-we-structure/1-guide-overview.md) accordingly.
 
 We'll follow those structures in this walkthrough, but your team's conventions may of course differ from ours.
 
@@ -216,17 +242,19 @@ We'll start by using CTEs, but when a model becomes complex or can be divided ou
 Intermediate models are optional and are not always needed, but do help when you have large data flows coming together.
 
 ### Final model
+
 Our final model accomplishes the result set we want, and it uses the components we've built. By this point we've identified what we think should stay in our final model.
 
 ## Data model auditing
 
-We'll want to audit our results using the dbt [audit_helper package](https://hub.getdbt.com/dbt-labs/audit_helper/latest/).
+We'll want to audit our results using the dbt [audit\_helper package](https://hub.getdbt.com/dbt-labs/audit_helper/latest/).
 
 Under the hood, it generates comparison queries between our before and after states, so that we can compare our original query results to our refactored results to identify differences.
 
-Sure, we could write our own query manually to audit these models, but using the dbt `audit_helper` package gives us a head start and allows us to identify variances more quickly.  
+Sure, we could write our own query manually to audit these models, but using the dbt `audit_helper` package gives us a head start and allows us to identify variances more quickly.
 
 ### Ready for refactoring practice?
+
 Head to the free on-demand course, [Refactoring from Procedural SQL to dbt](https://learn.getdbt.com/courses/refactoring-sql-for-modularity) for a more in-depth refactoring example + a practice refactoring problem to test your skills.
 
 Questions on this guide or the course? Drop a note in #learn-on-demand in [dbt Community Slack](https://getdbt.com/community).

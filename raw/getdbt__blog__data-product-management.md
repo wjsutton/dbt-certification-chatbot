@@ -2,7 +2,7 @@
 title: "Data product management: Best practices"
 source_url: https://www.getdbt.com/blog/data-product-management
 retrieved_via: html-extract
-fetched: 2026-06-12
+fetched: 2026-09-28
 ---
 
 [Blog](/blog "Blog")
@@ -200,7 +200,7 @@ Take the free [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamenta
 
 Join the analytics engineers building data infrastructure that actually scales.
 
-[Get started with dbt](/signup)
+Get started with dbt
 
 ### Install dbt Wizard CLI
 
@@ -212,41 +212,41 @@ Copy post link
 
 ### Latest posts
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F8277fc38a3385532e6e107d1b1c549fc1f8f8e16-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/your-ai-isn-t-broken-your-data-model-is "Your AI isn't broken. Your data model is.")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F7371ab28f17ef194611e80b90b1ad8f78eb47c47-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/context-engineering-in-your-warehouse "Context engineering is already possible in your warehouse. Here's how to get started.")
 
-Insights15 min
+Insights14 min
 
-### [Your AI isn't broken. Your data model is.](/blog/your-ai-isn-t-broken-your-data-model-is)
+### [Context engineering is already possible in your warehouse. Here's how to get started.](/blog/context-engineering-in-your-warehouse)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F6c81c2a071d687cbda819d578a59480d3a1b38ab-800x800.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)
 
-[Dustin Dorsey](/authors/dustin-dorsey)
+[Britton Stamper](/authors/britton-stamper)
 
-on  Jun 08, 2026
+on  Sep 24, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd86b1e41536f4c2bf3add533eef53acb5ac8b3e4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/data-stack-trusted-ai "Building a data stack for trusted AI")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F468a8271886928a738ab3e399f4587039adb7f39-1600x904.png%3Ffit%3Dmax%26auto%3Dformat&w=3840&q=75)](/blog/fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-data-agent-ready-at-dbt-summit "Fivetran + dbt Labs Announces New Capabilities to Make Enterprise Data Agent-Ready at dbt Summit 2026")
 
-Insights11 min
+Press9 min
 
-### [Building a data stack for trusted AI](/blog/data-stack-trusted-ai)
-
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
-
-[Daniel Poppy](/authors/daniel-poppy)
-
-on  Jun 03, 2026
-
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F30789616b363397d5dc5bcfd0a477cd0ba53f9f9-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year "dbt Labs Named Snowflake Data Integration Product Partner of the Year")
-
-Press5 min
-
-### [dbt Labs Named Snowflake Data Integration Product Partner of the Year](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year)
+### [Fivetran + dbt Labs Announces New Capabilities to Make Enterprise Data Agent-Ready at dbt Summit 2026](/blog/fivetran-dbt-labs-announces-new-capabilities-to-make-enterprise-data-agent-ready-at-dbt-summit)
 
 ![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe6328278cb5c9c731817e3fb55ddf708bb914197-512x512.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
 [Elaine Green](/authors/elaine-green)
 
-on  Jun 02, 2026
+on  Sep 16, 2026
+
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F940dfcd38844985d3ce8a67012cefc92b108e8a0-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-summit-2026-product-announcements "Everything we announced at dbt Summit and why it matters")
+
+Product13 min
+
+### [Everything we announced at dbt Summit and why it matters](/blog/dbt-summit-2026-product-announcements)
+
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd2ad67b7790d1fdc54518dcba2e525dba85cf39e-273x273.jpg%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
+
+[Corinne Hallander](/authors/corinne-hallander)
+
+on  Sep 16, 2026
 
 The dbt Community
 

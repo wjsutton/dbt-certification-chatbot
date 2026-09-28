@@ -2,28 +2,34 @@
 title: "Add sources to your DAG"
 source_url: https://docs.getdbt.com/docs/build/sources
 retrieved_via: md-endpoint
-fetched: 2026-06-12
+fetched: 2026-09-28
 ---
 
 # Add sources to your DAG
 
 ## Related reference docs
-* [Source properties](https://docs.getdbt.com/reference/source-properties)
-* [Source configurations](https://docs.getdbt.com/reference/source-configs)
-* [`{{ source() }}` Jinja function](https://docs.getdbt.com/reference/dbt-jinja-functions/source)
-* [`source freshness` command](https://docs.getdbt.com/reference/commands/source)
+
+* [Source properties](../../reference/source-properties.md)
+* [Source configurations](../../reference/source-configs.md)
+* [`{{ source() }}` Jinja function](../../reference/dbt-jinja-functions/source.md)
+
+(Applies to dbt v2.0 and later)
+
+* [`dbt freshness` command](../../reference/commands/freshness.md)
 
 ## Using sources
+
 Sources make it possible to name and describe the data loaded into your warehouse by your Extract and Load tools. By declaring these tables as sources in dbt, you can then
-- select from source tables in your models using the [`{{ source() }}` function,](https://docs.getdbt.com/reference/dbt-jinja-functions/source) helping define the lineage of your data
-- test your assumptions about your source data
-- calculate the freshness of your source data
+
+* select from source tables in your models using the [`{{ source() }}` function,](../../reference/dbt-jinja-functions/source.md) helping define the lineage of your data
+* test your assumptions about your source data
+* calculate the freshness of your source data
 
 ### Declaring a source
 
 Sources are defined in `.yml` files nested under a `sources:` key.
 
-.yml'>
+models/\<filename>.yml
 
 ```yaml
 
@@ -40,13 +46,17 @@ sources:
       - name: payments
 ```
 
-*By default, `schema` will be the same as `name`. Add `schema` only if you want to use a source name that differs from the existing schema.
+Report incorrect code
 
-If you're not already familiar with these files, be sure to check out [the documentation on properties.yml files](https://docs.getdbt.com/reference/configs-and-properties) before proceeding.
+\*By default, `schema` will be the same as `name`. Add `schema` only if you want to use a source name that differs from the existing schema.
+
+If you're not already familiar with these files, be sure to check out [the documentation on properties.yml files](../../reference/configs-and-properties.md) before proceeding.
 
 ### Selecting from a source
 
-Once a source has been defined, it can be referenced from a model using the [`{{ source()}}` function](https://docs.getdbt.com/reference/dbt-jinja-functions/source).
+Once a source has been defined, it can be referenced from a model using the [`{{ source()}}` function](../../reference/dbt-jinja-functions/source.md).
+
+models/orders.sql
 
 ```sql
 select
@@ -55,10 +65,13 @@ select
 from {{ source('jaffle_shop', 'orders') }}
 
 left join {{ source('jaffle_shop', 'customers') }} using (customer_id)
-
 ```
 
+Report incorrect code
+
 dbt will compile this to the full table name:
+
+target/compiled/jaffle\_shop/models/my\_model.sql
 
 ```sql
 
@@ -68,19 +81,24 @@ select
 from raw.jaffle_shop.orders
 
 left join raw.jaffle_shop.customers using (customer_id)
-
 ```
+
+Report incorrect code
 
 Using the `{{ source () }}` function also creates a dependency between the model and the source table.
 
+[![The source function tells dbt a model is dependent on a source ](https://docs.getdbt.com/img/docs/building-a-dbt-project/sources-dag.png?v=2 "The source function tells dbt a model is dependent on a source ")](#)The source function tells dbt a model is dependent on a source
+
 ### Testing and documenting sources
+
 You can also:
-- Add data tests to sources
-- Add descriptions to sources, that get rendered as part of your documentation site
 
-These should be familiar concepts if you've already added data tests and descriptions to your models (if not check out the guides on [testing](https://docs.getdbt.com/docs/build/data-tests) and [documentation](https://docs.getdbt.com/docs/build/documentation)).
+* Add data tests to sources
+* Add descriptions to sources, that get rendered as part of your documentation site
 
-.yml'>
+These should be familiar concepts if you've already added data tests and descriptions to your models (if not check out the guides on [testing](./data-tests.md) and [documentation](./documentation.md)).
+
+models/\<filename>.yml
 
 ```yaml
 
@@ -106,28 +124,173 @@ sources:
   - name: ...
 ```
 
-You can find more details on the available properties for sources in the [reference section](https://docs.getdbt.com/reference/source-properties).
+Report incorrect code
+
+You can find more details on the available properties for sources in the [reference section](../../reference/source-properties.md).
 
 ### FAQs
 
+What if my source is in a poorly named schema or table?
+
+By default, dbt will use the `name:` parameters to construct the source reference.
+
+If these names are a little less-than-perfect, use the [schema](../../reference/resource-properties/schema.md) and [identifier](../../reference/resource-properties/identifier.md) properties to define the names as per the database, and use your `name:` property for the name that makes sense!
+
+models/\<filename>.yml
+
+```yml
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: postgres_backend_public_schema
+    tables:
+      - name: orders
+        identifier: api_orders
+```
+
+Report incorrect code
+
+In a downstream model:
+
+```sql
+select * from {{ source('jaffle_shop', 'orders') }}
+```
+
+Report incorrect code
+
+Will get compiled to:
+
+```sql
+select * from raw.postgres_backend_public_schema.api_orders
+```
+
+Report incorrect code
+
+What if my source is in a different database to my target database?
+
+Use the [`database` property](../../reference/resource-properties/database.md) to define the database that the source is in.
+
+models/\<filename>.yml
+
+```yml
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    tables:
+      - name: orders
+      - name: customers
+```
+
+Report incorrect code
+
+I need to use quotes to select from my source, what should I do?
+
+This is reasonably common on Snowflake in particular.
+
+By default, dbt will not quote the database, schema, or identifier for the source tables that you've specified.
+
+To force dbt to quote one of these values, use the [`quoting` property](../../reference/resource-properties/quoting.md):
+
+models/\<filename>.yml
+
+```yaml
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+
+    tables:
+      - name: order_items
+      - name: orders
+        # This overrides the `jaffle_shop` quoting config
+        quoting:
+          identifier: false
+```
+
+Report incorrect code
+
+How do I run data tests on just my sources?
+
+To run data tests on all sources, use the following command:
+
+```shell
+  dbt test --select "source:*"
+```
+
+Report incorrect code
+
+(You can also use the `-s` shorthand here instead of `--select`)
+
+To run data tests on one source (and all of its tables):
+
+```shell
+$ dbt test --select source:jaffle_shop
+```
+
+Report incorrect code
+
+And, to run data tests on one source table only:
+
+```shell
+$ dbt test --select source:jaffle_shop.orders
+```
+
+Report incorrect code
+
+How do I run models downstream of one source?
+
+To run models downstream of a source, use the `source:` selector:
+
+```shell
+$ dbt run --select source:jaffle_shop+
+```
+
+Report incorrect code
+
+(You can also use the `-s` shorthand here instead of `--select`)
+
+To run models downstream of one source table:
+
+```shell
+$ dbt run --select source:jaffle_shop.orders+
+```
+
+Report incorrect code
+
+Check out the [model selection syntax](../../reference/node-selection/syntax.md) for more examples!
+
 ## Source data freshness
+
 With a couple of extra configs, dbt can optionally capture the "freshness" of the data in your source tables. This is useful for understanding if your data pipelines are in a healthy state, and is a critical component of defining Service Level Agreements (SLAs) for your warehouse.
 
-### Fusion and dbt State
+### dbt v2 and dbt State
 
-If you're using the fusion_engine with [state-aware orchestration](https://docs.getdbt.com/docs/deploy/state-aware-about), dbt automatically tracks source freshness using warehouse metadata. You don't need to configure `warn_after` or `error_after` for dbt to detect when source data changes.
+State-aware orchestration is now dbt State
 
-If you're using [dbt State](https://docs.getdbt.com/docs/deploy/dbt-state-about), use [`lag_tolerance`](https://docs.getdbt.com/reference/resource-configs/lag-tolerance) to control how frequently models rebuild based on upstream data changes. You can also configure `loaded_at_field` or `loaded_at_query` on your source for more accurate freshness detection (for example, for streaming data or late-arriving records).
+[dbt State](../deploy/dbt-state-about.md) works with all engines and environments: dbt v1, dbt platform, and dbt v2
+
+If you were using state-aware orchestration prior to June 1, 2026, you can continue using it. Once you start your free dbt State trial, it will be extended beyond the standard 30-day period. If the extension isn't applied to your account, contact your account team. To get started, refer to [Migrate from state-aware orchestration](../deploy/dbt-state-migration.md).
+
+If you're using dbt v2 with [dbt State](../deploy/dbt-state-about.md), dbt automatically tracks source freshness using warehouse metadata. You don't need to configure `warn_after` or `error_after` for dbt to detect when source data changes.
+
+If you're using [dbt State](../deploy/dbt-state-about.md), use [`lag_tolerance`](../../reference/resource-configs/lag-tolerance.md) to control how frequently models rebuild based on upstream data changes. You can also configure `loaded_at_field` or `loaded_at_query` on your source for more accurate freshness detection (for example, for streaming data or late-arriving records).
 
 However, you should still configure source freshness if you want to:
-- Receive SLA alerts when sources don't update within expected timeframes.
-- Define custom freshness logic using `loaded_at_field` or `loaded_at_query` (for example, for streaming data or partial loads).
-- Track freshness for source views. Fusion treats views as "always fresh" since it can't determine freshness from view metadata.
+
+* Receive SLA alerts when sources don't update within expected timeframes.
+* Define custom freshness logic using `loaded_at_field` or `loaded_at_query` (for example, for streaming data or partial loads).
+* Track freshness for source views. dbt v2 treats views as "always fresh" since it can't determine freshness from view metadata.
 
 ### Declaring source freshness
+
 To configure source freshness information, add a `freshness` block to your source and `loaded_at_field` to your table declaration:
 
-.yml'>
+models/\<filename>.yml
 
 ```yaml
 
@@ -155,43 +318,71 @@ sources:
           freshness: null # do not check freshness for this table
 ```
 
+Report incorrect code
+
 In the `freshness` block, one or both of `warn_after` and `error_after` can be provided. If neither is provided, then dbt will not calculate freshness for the tables in this source.
 
 Additionally, the `loaded_at_field` is required to calculate freshness for a table (except for cases where dbt can leverage warehouse metadata to calculate freshness). If a `loaded_at_field`, or viable alternative, is not provided, then dbt will not calculate freshness for the table.
 
 These configs are applied hierarchically, so `freshness` and `loaded_at_field` values specified for a `source` will flow through to all of the `tables` defined in that source. This is useful when all of the tables in a source have the same `loaded_at_field`, as the config can just be specified once in the top-level source definition.
 
-### Checking source freshness
-To obtain freshness information for your sources, use the `dbt source freshness` command ([reference docs](https://docs.getdbt.com/reference/commands/source)):
+### Evaluate source freshness
 
-```
-$ dbt source freshness
+(Applies to dbt v2.0 and later)
+
+To evaluate freshness for your sources, use [`dbt freshness`](../../reference/commands/freshness.md) with `--resource-type source`:
+
+```shell
+dbt freshness --resource-type source
 ```
 
-Behind the scenes, dbt uses the freshness properties to construct a `select` query, shown below. You can find this query in the [query logs](https://docs.getdbt.com/faqs/Runs/checking-logs).
+Report incorrect code
+
+Running `dbt freshness` without a resource type evaluates every source *and* model that has a `freshness` config.
+
+Behind the scenes, dbt uses the freshness properties to construct a `select` query, shown below. You can find this query in the [query logs](../../faqs/Runs/checking-logs.md).
 
 ```sql
 select
   max(_etl_loaded_at) as max_loaded_at,
   convert_timezone('UTC', current_timestamp()) as calculated_at
 from raw.jaffle_shop.orders
-
 ```
+
+Report incorrect code
 
 The results of this query are used to determine whether the source is fresh or not:
 
+(Applies to dbt v2.0 and later)
+
+```text
+$ dbt freshness --resource-type source
+
+    Passed source jaffle_shop.orders (last updated 32m 14s ago) [0.42s]
+     Stale source jaffle_shop.customers (last updated 2days 6h 18m ago) [0.39s]
+
+[error] [StaleSource (dbt1063)]: Stale source source.jaffle_shop.jaffle_shop.customers
+  --> models/<filename>.yml
+```
+
+Report incorrect code
+
 ### Build models based on source freshness
 
-Our best practice recommendation is to use [data source freshness](https://docs.getdbt.com/docs/build/sources#declaring-source-freshness). This will allow settings to be transfered into a `.yml` file where source freshness is defined on [model level](https://docs.getdbt.com/reference/resource-properties/freshness).
+Our best practice recommendation is to use [data source freshness](./sources.md#declaring-source-freshness), configured in your `.yml` files using the [`freshness`](../../reference/resource-configs/freshness.md) config.
 
 To build models based on source freshness in dbt:
 
-1. Run `dbt source freshness` to check the freshness of your sources.
+1. (Applies to dbt v2.0 and later) Run [`dbt freshness --resource-type source`](../../reference/commands/freshness.md) to check the freshness of your sources.
 2. Use the `dbt build --select source_status:fresher+` command to build and test models downstream of fresher sources.
 
-Using these commands in order makes sure models update with the latest data. This eliminates wasted compute cycles on unchanged data and builds models _only_ when necessary. 
+Using these commands in order makes sure models update with the latest data. This eliminates wasted compute cycles on unchanged data and builds models *only* when necessary.
 
-Set [source freshness snapshots](https://docs.getdbt.com/docs/deploy/source-freshness#enabling-source-freshness-snapshots) to 30 minutes to check for source freshness, then run a job which rebuilds every hour to rebuild model. This setup retrieves all the models and rebuild them in one attempt if their source freshness has expired. For more information, refer to [Source freshness snapshot frequency](https://docs.getdbt.com/docs/deploy/source-freshness#source-freshness-snapshot-frequency).
+Set [source freshness checks](../deploy/source-freshness.md#enabling-source-freshness-checks) to 30 minutes, then run a job which rebuilds every hour. This setup retrieves all the models and rebuilds them in one attempt if their source freshness has expired. For more information, refer to [Source freshness check frequency](../deploy/source-freshness.md#source-freshness-check-frequency).
+
+tip
+
+You can also use [dbt State](../deploy/dbt-state-about.md) for this use case. Set the [`lag_tolerance`](../../reference/resource-configs/lag-tolerance.md) config to control how much time must pass since the last upstream data change before dbt triggers a rebuild, without chaining commands manually.
 
 ### Filter
 
@@ -205,4 +396,65 @@ from raw.jaffle_shop.orders
 where _etl_loaded_at >= date_sub(current_date(), interval 1 day)
 ```
 
+Report incorrect code
+
 ### FAQs
+
+How do I exclude a table from a freshness snapshot?
+
+Some tables in a data source may be updated infrequently. If you've set a `freshness` property at the source level, this table is likely to fail checks.
+
+To work around this, you can set the table's freshness to null (`freshness: null`) to "unset" the freshness for a particular table:
+
+models/\<filename>.yml
+
+```yaml
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    config: 
+      freshness:
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 24, period: hour}
+      loaded_at_field: _etl_loaded_at
+
+    tables:
+      - name: orders
+      - name: product_skus
+        config:
+          freshness: null # do not check freshness for this table
+```
+
+Report incorrect code
+
+How do I snapshot freshness for one source only?
+
+Use the `--select` flag to snapshot freshness for specific sources. Eg:
+
+```shell
+# Snapshot freshness for all Jaffle Shop tables:
+$ dbt source freshness --select source:jaffle_shop
+
+# Snapshot freshness for a particular source table:
+$ dbt source freshness --select source:jaffle_shop.orders
+
+# Snapshot freshness for multiple particular source tables:
+$ dbt source freshness --select source:jaffle_shop.orders source:jaffle_shop.customers
+```
+
+Report incorrect code
+
+See the [`source freshness` command reference](../../reference/commands/source.md) for more information.
+
+Are the results of freshness stored anywhere?
+
+Yes!
+
+(Applies to dbt v2.0 and later)
+
+The [`dbt freshness`](../../reference/commands/freshness.md) command measures how recently data was loaded and reports a pass/warning/error for each source or model based on your `warn_after` and `error_after` thresholds.
+
+dbt writes the model and source freshness results to `target/freshness.json`. When sources are included, it also writes `target/sources.json` for backward compatibility.
+
+After enabling source freshness within a job, configure [Artifacts](../deploy/artifacts.md) in your **Project Details** page, which you can find by selecting your account name on the left side menu in dbt and clicking **Account settings**. You can see the current status for source freshness by clicking **View Sources** in the job page.

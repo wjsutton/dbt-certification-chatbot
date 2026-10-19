@@ -2,7 +2,7 @@
 title: "Data product management: Best practices"
 source_url: https://www.getdbt.com/blog/data-product-management
 retrieved_via: html-extract
-fetched: 2026-06-12
+fetched: 2026-10-19
 ---
 
 [Blog](/blog "Blog")
@@ -200,7 +200,7 @@ Take the free [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamenta
 
 Join the analytics engineers building data infrastructure that actually scales.
 
-[Get started with dbt](/signup)
+Get started with dbt
 
 ### Install dbt Wizard CLI
 
@@ -212,41 +212,41 @@ Copy post link
 
 ### Latest posts
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F8277fc38a3385532e6e107d1b1c549fc1f8f8e16-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/your-ai-isn-t-broken-your-data-model-is "Your AI isn't broken. Your data model is.")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe7b6a59e1ed4b7f794c4a5fcd8e6d0ec26f1ddb7-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-now-supports-amazon-redshift-data-sharing "dbt now supports Amazon Redshift data sharing — and your pipelines just got a lot faster")
 
-Insights15 min
+Partnerships12 min
 
-### [Your AI isn't broken. Your data model is.](/blog/your-ai-isn-t-broken-your-data-model-is)
+### [dbt now supports Amazon Redshift data sharing — and your pipelines just got a lot faster](/blog/dbt-now-supports-amazon-redshift-data-sharing)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F07b0ced79f9703d74ad204bc5bea8ad4b4f5af7e-496x492.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
-[Dustin Dorsey](/authors/dustin-dorsey)
+[Stephen Robb](/authors/stephen-robb)
 
-on  Jun 08, 2026
+on  Oct 09, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd86b1e41536f4c2bf3add533eef53acb5ac8b3e4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/data-stack-trusted-ai "Building a data stack for trusted AI")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fb465470dbce64c2bc8b1f279958441e36fe6bbca-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-state-stop-rebuilding "With dbt State, stop rebuilding what didn't change")
 
-Insights11 min
+Product10 min
 
-### [Building a data stack for trusted AI](/blog/data-stack-trusted-ai)
+### [With dbt State, stop rebuilding what didn't change](/blog/dbt-state-stop-rebuilding)
 
 ![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
 [Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 03, 2026
+on  Oct 05, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F30789616b363397d5dc5bcfd0a477cd0ba53f9f9-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year "dbt Labs Named Snowflake Data Integration Product Partner of the Year")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F7371ab28f17ef194611e80b90b1ad8f78eb47c47-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/context-engineering-in-your-warehouse "Context engineering is already possible in your warehouse. Here's how to get started.")
 
-Press5 min
+Insights14 min
 
-### [dbt Labs Named Snowflake Data Integration Product Partner of the Year](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year)
+### [Context engineering is already possible in your warehouse. Here's how to get started.](/blog/context-engineering-in-your-warehouse)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe6328278cb5c9c731817e3fb55ddf708bb914197-512x512.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F6c81c2a071d687cbda819d578a59480d3a1b38ab-800x800.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)
 
-[Elaine Green](/authors/elaine-green)
+[Britton Stamper](/authors/britton-stamper)
 
-on  Jun 02, 2026
+on  Sep 24, 2026
 
 The dbt Community
 

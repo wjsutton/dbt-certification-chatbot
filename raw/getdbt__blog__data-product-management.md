@@ -2,7 +2,7 @@
 title: "Data product management: Best practices"
 source_url: https://www.getdbt.com/blog/data-product-management
 retrieved_via: html-extract
-fetched: 2026-06-12
+fetched: 2026-11-02
 ---
 
 [Blog](/blog "Blog")
@@ -200,7 +200,7 @@ Take the free [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamenta
 
 Join the analytics engineers building data infrastructure that actually scales.
 
-[Get started with dbt](/signup)
+Get started with dbt
 
 ### Install dbt Wizard CLI
 
@@ -212,41 +212,41 @@ Copy post link
 
 ### Latest posts
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F8277fc38a3385532e6e107d1b1c549fc1f8f8e16-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/your-ai-isn-t-broken-your-data-model-is "Your AI isn't broken. Your data model is.")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F65fd6e0eaece478524afc51fc5474027eb736e23-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/ramp-internal-ai-agents-million-sessions "How Ramp's internal AI agents crossed a million sessions")
 
-Insights15 min
+Learn3 min
 
-### [Your AI isn't broken. Your data model is.](/blog/your-ai-isn-t-broken-your-data-model-is)
-
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fefbd3f584a5d64af51207c1a83b300d108f67b41-200x200.png%3Ffit%3Dmax%26auto%3Dformat&w=640&q=75)
-
-[Dustin Dorsey](/authors/dustin-dorsey)
-
-on  Jun 08, 2026
-
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd86b1e41536f4c2bf3add533eef53acb5ac8b3e4-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/data-stack-trusted-ai "Building a data stack for trusted AI")
-
-Insights11 min
-
-### [Building a data stack for trusted AI](/blog/data-stack-trusted-ai)
+### [How Ramp's internal AI agents crossed a million sessions](/blog/ramp-internal-ai-agents-million-sessions)
 
 ![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
 [Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 03, 2026
+on  Oct 27, 2026
 
-[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F30789616b363397d5dc5bcfd0a477cd0ba53f9f9-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year "dbt Labs Named Snowflake Data Integration Product Partner of the Year")
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fc5693746808852b73dbf16cddd3aa6b9a3a63733-800x452.png%3Ffit%3Dmax%26auto%3Dformat&w=1920&q=75)](/blog/obie-insurance-month-end-close-dbt-state-lakehouse "How Obie Insurance cut its month-end close from 25 hours to 2 with dbt State and a lake house rebuild")
 
-Press5 min
+Learn4 min
 
-### [dbt Labs Named Snowflake Data Integration Product Partner of the Year](/blog/dbt-labs-named-snowflake-data-integration-product-partner-of-the-year)
+### [How Obie Insurance cut its month-end close from 25 hours to 2 with dbt State and a lake house rebuild](/blog/obie-insurance-month-end-close-dbt-state-lakehouse)
 
-![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fe6328278cb5c9c731817e3fb55ddf708bb914197-512x512.png%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
 
-[Elaine Green](/authors/elaine-green)
+[Daniel Poppy](/authors/daniel-poppy)
 
-on  Jun 02, 2026
+on  Oct 27, 2026
+
+[![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2F468a8271886928a738ab3e399f4587039adb7f39-1600x904.png%3Ffit%3Dmax%26auto%3Dformat&w=3840&q=75)](/blog/virgin-media-o2-dbt-state-compute-costs "How Virgin Media O2 cut compute costs 30% by giving dbt a memory")
+
+Learn5 min
+
+### [How Virgin Media O2 cut compute costs 30% by giving dbt a memory](/blog/virgin-media-o2-dbt-state-compute-costs)
+
+![](/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fwl0ndo6t%2Fmain%2Fd307e0a9a7dfa9c7b5f92d288b404955c979eb0c-512x512.jpg%3Ffit%3Dmax%26auto%3Dformat&w=1080&q=75)
+
+[Daniel Poppy](/authors/daniel-poppy)
+
+on  Oct 27, 2026
 
 The dbt Community
 
